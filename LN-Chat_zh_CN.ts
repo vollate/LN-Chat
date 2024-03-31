@@ -4,13 +4,13 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="mainwindow.ui" line="14"/>
+        <location filename="src/mainwindow.ui" line="14"/>
         <location filename="build/LN-Chat_autogen/include/ui_mainwindow.h" line="58"/>
         <source>MainWindow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="28"/>
+        <location filename="src/mainwindow.ui" line="28"/>
         <location filename="build/LN-Chat_autogen/include/ui_mainwindow.h" line="59"/>
         <source>Hello world!</source>
         <translation type="unfinished"></translation>
