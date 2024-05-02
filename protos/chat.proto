@@ -2,23 +2,16 @@ syntax = "proto3";
 package LN_Chat;
 
 service ChatService {
-  rpc PublishRoom(PublishRoomRequest) returns (PublishRoomResponse) 
-  rpc RoomHeartBeat(HeartBeatRequest) returns (HeartBeatResponse) 
+  rpc PublishRoom(PublishRoomRequest) returns (PublishRoomResponse);
 }
 
 message PublishRoomRequest {
-    string foo = 1;
+    string name = 1;
+    string password = 2;
 }
 
 message PublishRoomResponse {
-string foo = 1;
-}
-
-message HeartBeatRequest {
-string foo = 1;
-}
-
-message HeartBeatResponse {
-string foo = 1;
+    bool success = 1;
+    string message = 2;
 }
 

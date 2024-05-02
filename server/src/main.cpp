@@ -1,9 +1,10 @@
+#include "server.hpp"
 #include <iostream>
 
 int main(int argc, char **argv) {
-
-  if (argc > 1) {
+  if (argc == 1) {
+  } else if (argc % 2 == 1) {
+  } else {
   }
-  std::cout << "Hello World!" << std::endl;
   return 0;
 }

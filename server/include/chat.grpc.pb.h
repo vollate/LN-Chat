@@ -15,13 +15,13 @@
 #include <grpcpp/completion_queue.h>
 #include <grpcpp/support/message_allocator.h>
 #include <grpcpp/support/method_handler.h>
-#include <grpcpp/impl/proto_utils.h>
+#include <grpcpp/impl/codegen/proto_utils.h>
 #include <grpcpp/impl/rpc_method.h>
 #include <grpcpp/support/server_callback.h>
-#include <grpcpp/impl/server_callback_handlers.h>
+#include <grpcpp/impl/codegen/server_callback_handlers.h>
 #include <grpcpp/server_context.h>
 #include <grpcpp/impl/service_type.h>
-#include <grpcpp/support/status.h>
+#include <grpcpp/impl/codegen/status.h>
 #include <grpcpp/support/stub_options.h>
 #include <grpcpp/support/sync_stream.h>
 
@@ -42,20 +42,11 @@ class ChatService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::PublishRoomResponse>> PrepareAsyncPublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::PublishRoomResponse>>(PrepareAsyncPublishRoomRaw(context, request, cq));
     }
-    virtual ::grpc::Status RoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::LN_Chat::HeartBeatResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::HeartBeatResponse>> AsyncRoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::HeartBeatResponse>>(AsyncRoomHeartBeatRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::HeartBeatResponse>> PrepareAsyncRoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::HeartBeatResponse>>(PrepareAsyncRoomHeartBeatRaw(context, request, cq));
-    }
     class async_interface {
      public:
       virtual ~async_interface() {}
       virtual void PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void RoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest* request, ::LN_Chat::HeartBeatResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void RoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest* request, ::LN_Chat::HeartBeatResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -63,8 +54,6 @@ class ChatService final {
    private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::PublishRoomResponse>* AsyncPublishRoomRaw(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::PublishRoomResponse>* PrepareAsyncPublishRoomRaw(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::HeartBeatResponse>* AsyncRoomHeartBeatRaw(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::LN_Chat::HeartBeatResponse>* PrepareAsyncRoomHeartBeatRaw(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -76,20 +65,11 @@ class ChatService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::LN_Chat::PublishRoomResponse>> PrepareAsyncPublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::LN_Chat::PublishRoomResponse>>(PrepareAsyncPublishRoomRaw(context, request, cq));
     }
-    ::grpc::Status RoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::LN_Chat::HeartBeatResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::LN_Chat::HeartBeatResponse>> AsyncRoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::LN_Chat::HeartBeatResponse>>(AsyncRoomHeartBeatRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::LN_Chat::HeartBeatResponse>> PrepareAsyncRoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::LN_Chat::HeartBeatResponse>>(PrepareAsyncRoomHeartBeatRaw(context, request, cq));
-    }
     class async final :
       public StubInterface::async_interface {
      public:
       void PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomResponse* response, std::function<void(::grpc::Status)>) override;
       void PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void RoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest* request, ::LN_Chat::HeartBeatResponse* response, std::function<void(::grpc::Status)>) override;
-      void RoomHeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest* request, ::LN_Chat::HeartBeatResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -103,10 +83,7 @@ class ChatService final {
     class async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::LN_Chat::PublishRoomResponse>* AsyncPublishRoomRaw(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::LN_Chat::PublishRoomResponse>* PrepareAsyncPublishRoomRaw(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::LN_Chat::HeartBeatResponse>* AsyncRoomHeartBeatRaw(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::LN_Chat::HeartBeatResponse>* PrepareAsyncRoomHeartBeatRaw(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_PublishRoom_;
-    const ::grpc::internal::RpcMethod rpcmethod_RoomHeartBeat_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -115,7 +92,6 @@ class ChatService final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status PublishRoom(::grpc::ServerContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomResponse* response);
-    virtual ::grpc::Status RoomHeartBeat(::grpc::ServerContext* context, const ::LN_Chat::HeartBeatRequest* request, ::LN_Chat::HeartBeatResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_PublishRoom : public BaseClass {
@@ -137,27 +113,7 @@ class ChatService final {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  template <class BaseClass>
-  class WithAsyncMethod_RoomHeartBeat : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithAsyncMethod_RoomHeartBeat() {
-      ::grpc::Service::MarkMethodAsync(1);
-    }
-    ~WithAsyncMethod_RoomHeartBeat() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status RoomHeartBeat(::grpc::ServerContext* /*context*/, const ::LN_Chat::HeartBeatRequest* /*request*/, ::LN_Chat::HeartBeatResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestRoomHeartBeat(::grpc::ServerContext* context, ::LN_Chat::HeartBeatRequest* request, ::grpc::ServerAsyncResponseWriter< ::LN_Chat::HeartBeatResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  typedef WithAsyncMethod_PublishRoom<WithAsyncMethod_RoomHeartBeat<Service > > AsyncService;
+  typedef WithAsyncMethod_PublishRoom<Service > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_PublishRoom : public BaseClass {
    private:
@@ -185,34 +141,7 @@ class ChatService final {
     virtual ::grpc::ServerUnaryReactor* PublishRoom(
       ::grpc::CallbackServerContext* /*context*/, const ::LN_Chat::PublishRoomRequest* /*request*/, ::LN_Chat::PublishRoomResponse* /*response*/)  { return nullptr; }
   };
-  template <class BaseClass>
-  class WithCallbackMethod_RoomHeartBeat : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithCallbackMethod_RoomHeartBeat() {
-      ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::LN_Chat::HeartBeatRequest, ::LN_Chat::HeartBeatResponse>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::LN_Chat::HeartBeatRequest* request, ::LN_Chat::HeartBeatResponse* response) { return this->RoomHeartBeat(context, request, response); }));}
-    void SetMessageAllocatorFor_RoomHeartBeat(
-        ::grpc::MessageAllocator< ::LN_Chat::HeartBeatRequest, ::LN_Chat::HeartBeatResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::LN_Chat::HeartBeatRequest, ::LN_Chat::HeartBeatResponse>*>(handler)
-              ->SetMessageAllocator(allocator);
-    }
-    ~WithCallbackMethod_RoomHeartBeat() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status RoomHeartBeat(::grpc::ServerContext* /*context*/, const ::LN_Chat::HeartBeatRequest* /*request*/, ::LN_Chat::HeartBeatResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* RoomHeartBeat(
-      ::grpc::CallbackServerContext* /*context*/, const ::LN_Chat::HeartBeatRequest* /*request*/, ::LN_Chat::HeartBeatResponse* /*response*/)  { return nullptr; }
-  };
-  typedef WithCallbackMethod_PublishRoom<WithCallbackMethod_RoomHeartBeat<Service > > CallbackService;
+  typedef WithCallbackMethod_PublishRoom<Service > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_PublishRoom : public BaseClass {
@@ -227,23 +156,6 @@ class ChatService final {
     }
     // disable synchronous version of this method
     ::grpc::Status PublishRoom(::grpc::ServerContext* /*context*/, const ::LN_Chat::PublishRoomRequest* /*request*/, ::LN_Chat::PublishRoomResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-  };
-  template <class BaseClass>
-  class WithGenericMethod_RoomHeartBeat : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithGenericMethod_RoomHeartBeat() {
-      ::grpc::Service::MarkMethodGeneric(1);
-    }
-    ~WithGenericMethod_RoomHeartBeat() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status RoomHeartBeat(::grpc::ServerContext* /*context*/, const ::LN_Chat::HeartBeatRequest* /*request*/, ::LN_Chat::HeartBeatResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -269,26 +181,6 @@ class ChatService final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_RoomHeartBeat : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawMethod_RoomHeartBeat() {
-      ::grpc::Service::MarkMethodRaw(1);
-    }
-    ~WithRawMethod_RoomHeartBeat() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status RoomHeartBeat(::grpc::ServerContext* /*context*/, const ::LN_Chat::HeartBeatRequest* /*request*/, ::LN_Chat::HeartBeatResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestRoomHeartBeat(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
   class WithRawCallbackMethod_PublishRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -308,28 +200,6 @@ class ChatService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* PublishRoom(
-      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
-  class WithRawCallbackMethod_RoomHeartBeat : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawCallbackMethod_RoomHeartBeat() {
-      ::grpc::Service::MarkMethodRawCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RoomHeartBeat(context, request, response); }));
-    }
-    ~WithRawCallbackMethod_RoomHeartBeat() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status RoomHeartBeat(::grpc::ServerContext* /*context*/, const ::LN_Chat::HeartBeatRequest* /*request*/, ::LN_Chat::HeartBeatResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* RoomHeartBeat(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -359,36 +229,9 @@ class ChatService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedPublishRoom(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::LN_Chat::PublishRoomRequest,::LN_Chat::PublishRoomResponse>* server_unary_streamer) = 0;
   };
-  template <class BaseClass>
-  class WithStreamedUnaryMethod_RoomHeartBeat : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithStreamedUnaryMethod_RoomHeartBeat() {
-      ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler<
-          ::LN_Chat::HeartBeatRequest, ::LN_Chat::HeartBeatResponse>(
-            [this](::grpc::ServerContext* context,
-                   ::grpc::ServerUnaryStreamer<
-                     ::LN_Chat::HeartBeatRequest, ::LN_Chat::HeartBeatResponse>* streamer) {
-                       return this->StreamedRoomHeartBeat(context,
-                         streamer);
-                  }));
-    }
-    ~WithStreamedUnaryMethod_RoomHeartBeat() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable regular version of this method
-    ::grpc::Status RoomHeartBeat(::grpc::ServerContext* /*context*/, const ::LN_Chat::HeartBeatRequest* /*request*/, ::LN_Chat::HeartBeatResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedRoomHeartBeat(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::LN_Chat::HeartBeatRequest,::LN_Chat::HeartBeatResponse>* server_unary_streamer) = 0;
-  };
-  typedef WithStreamedUnaryMethod_PublishRoom<WithStreamedUnaryMethod_RoomHeartBeat<Service > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_PublishRoom<Service > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_PublishRoom<WithStreamedUnaryMethod_RoomHeartBeat<Service > > StreamedService;
+  typedef WithStreamedUnaryMethod_PublishRoom<Service > StreamedService;
 };
 
 }  // namespace LN_Chat
