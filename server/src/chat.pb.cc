@@ -35,20 +35,20 @@ struct PublishRoomRequestDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PublishRoomRequestDefaultTypeInternal _PublishRoomRequest_default_instance_;
-PROTOBUF_CONSTEXPR PublishRoomResponse::PublishRoomResponse(
+PROTOBUF_CONSTEXPR PublishRoomReply::PublishRoomReply(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.message_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.success_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct PublishRoomResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PublishRoomResponseDefaultTypeInternal()
+struct PublishRoomReplyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PublishRoomReplyDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PublishRoomResponseDefaultTypeInternal() {}
+  ~PublishRoomReplyDefaultTypeInternal() {}
   union {
-    PublishRoomResponse _instance;
+    PublishRoomReply _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PublishRoomResponseDefaultTypeInternal _PublishRoomResponse_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PublishRoomReplyDefaultTypeInternal _PublishRoomReply_default_instance_;
 }  // namespace LN_Chat
 static ::_pb::Metadata file_level_metadata_chat_2eproto[2];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_chat_2eproto = nullptr;
@@ -64,35 +64,35 @@ const uint32_t TableStruct_chat_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(pro
   PROTOBUF_FIELD_OFFSET(::LN_Chat::PublishRoomRequest, _impl_.name_),
   PROTOBUF_FIELD_OFFSET(::LN_Chat::PublishRoomRequest, _impl_.password_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::LN_Chat::PublishRoomResponse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::LN_Chat::PublishRoomReply, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::LN_Chat::PublishRoomResponse, _impl_.success_),
-  PROTOBUF_FIELD_OFFSET(::LN_Chat::PublishRoomResponse, _impl_.message_),
+  PROTOBUF_FIELD_OFFSET(::LN_Chat::PublishRoomReply, _impl_.success_),
+  PROTOBUF_FIELD_OFFSET(::LN_Chat::PublishRoomReply, _impl_.message_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::LN_Chat::PublishRoomRequest)},
-  { 8, -1, -1, sizeof(::LN_Chat::PublishRoomResponse)},
+  { 8, -1, -1, sizeof(::LN_Chat::PublishRoomReply)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::LN_Chat::_PublishRoomRequest_default_instance_._instance,
-  &::LN_Chat::_PublishRoomResponse_default_instance_._instance,
+  &::LN_Chat::_PublishRoomReply_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_chat_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\nchat.proto\022\007LN_Chat\"4\n\022PublishRoomRequ"
-  "est\022\014\n\004name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"7\n\023P"
-  "ublishRoomResponse\022\017\n\007success\030\001 \001(\010\022\017\n\007m"
-  "essage\030\002 \001(\t2W\n\013ChatService\022H\n\013PublishRo"
-  "om\022\033.LN_Chat.PublishRoomRequest\032\034.LN_Cha"
-  "t.PublishRoomResponseb\006proto3"
+  "est\022\014\n\004name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"4\n\020P"
+  "ublishRoomReply\022\017\n\007success\030\001 \001(\010\022\017\n\007mess"
+  "age\030\002 \001(\t2T\n\013ChatService\022E\n\013PublishRoom\022"
+  "\033.LN_Chat.PublishRoomRequest\032\031.LN_Chat.P"
+  "ublishRoomReplyb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_chat_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_chat_2eproto = {
-    false, false, 229, descriptor_table_protodef_chat_2eproto,
+    false, false, 223, descriptor_table_protodef_chat_2eproto,
     "chat.proto",
     &descriptor_table_chat_2eproto_once, nullptr, 0, 2,
     schemas, file_default_instances, TableStruct_chat_2eproto::offsets,
@@ -362,19 +362,19 @@ void PublishRoomRequest::InternalSwap(PublishRoomRequest* other) {
 
 // ===================================================================
 
-class PublishRoomResponse::_Internal {
+class PublishRoomReply::_Internal {
  public:
 };
 
-PublishRoomResponse::PublishRoomResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+PublishRoomReply::PublishRoomReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:LN_Chat.PublishRoomResponse)
+  // @@protoc_insertion_point(arena_constructor:LN_Chat.PublishRoomReply)
 }
-PublishRoomResponse::PublishRoomResponse(const PublishRoomResponse& from)
+PublishRoomReply::PublishRoomReply(const PublishRoomReply& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  PublishRoomResponse* const _this = this; (void)_this;
+  PublishRoomReply* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.message_){}
     , decltype(_impl_.success_){}
@@ -390,10 +390,10 @@ PublishRoomResponse::PublishRoomResponse(const PublishRoomResponse& from)
       _this->GetArenaForAllocation());
   }
   _this->_impl_.success_ = from._impl_.success_;
-  // @@protoc_insertion_point(copy_constructor:LN_Chat.PublishRoomResponse)
+  // @@protoc_insertion_point(copy_constructor:LN_Chat.PublishRoomReply)
 }
 
-inline void PublishRoomResponse::SharedCtor(
+inline void PublishRoomReply::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
@@ -408,8 +408,8 @@ inline void PublishRoomResponse::SharedCtor(
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-PublishRoomResponse::~PublishRoomResponse() {
-  // @@protoc_insertion_point(destructor:LN_Chat.PublishRoomResponse)
+PublishRoomReply::~PublishRoomReply() {
+  // @@protoc_insertion_point(destructor:LN_Chat.PublishRoomReply)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -417,17 +417,17 @@ PublishRoomResponse::~PublishRoomResponse() {
   SharedDtor();
 }
 
-inline void PublishRoomResponse::SharedDtor() {
+inline void PublishRoomReply::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.message_.Destroy();
 }
 
-void PublishRoomResponse::SetCachedSize(int size) const {
+void PublishRoomReply::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void PublishRoomResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:LN_Chat.PublishRoomResponse)
+void PublishRoomReply::Clear() {
+// @@protoc_insertion_point(message_clear_start:LN_Chat.PublishRoomReply)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -437,7 +437,7 @@ void PublishRoomResponse::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* PublishRoomResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* PublishRoomReply::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -457,7 +457,7 @@ const char* PublishRoomResponse::_InternalParse(const char* ptr, ::_pbi::ParseCo
           auto str = _internal_mutable_message();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "LN_Chat.PublishRoomResponse.message"));
+          CHK_(::_pbi::VerifyUTF8(str, "LN_Chat.PublishRoomReply.message"));
         } else
           goto handle_unusual;
         continue;
@@ -484,9 +484,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* PublishRoomResponse::_InternalSerialize(
+uint8_t* PublishRoomReply::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:LN_Chat.PublishRoomResponse)
+  // @@protoc_insertion_point(serialize_to_array_start:LN_Chat.PublishRoomReply)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -501,7 +501,7 @@ uint8_t* PublishRoomResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_message().data(), static_cast<int>(this->_internal_message().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "LN_Chat.PublishRoomResponse.message");
+      "LN_Chat.PublishRoomReply.message");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_message(), target);
   }
@@ -510,12 +510,12 @@ uint8_t* PublishRoomResponse::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:LN_Chat.PublishRoomResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:LN_Chat.PublishRoomReply)
   return target;
 }
 
-size_t PublishRoomResponse::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:LN_Chat.PublishRoomResponse)
+size_t PublishRoomReply::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:LN_Chat.PublishRoomReply)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -537,17 +537,17 @@ size_t PublishRoomResponse::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PublishRoomResponse::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PublishRoomReply::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    PublishRoomResponse::MergeImpl
+    PublishRoomReply::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PublishRoomResponse::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PublishRoomReply::GetClassData() const { return &_class_data_; }
 
 
-void PublishRoomResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<PublishRoomResponse*>(&to_msg);
-  auto& from = static_cast<const PublishRoomResponse&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:LN_Chat.PublishRoomResponse)
+void PublishRoomReply::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<PublishRoomReply*>(&to_msg);
+  auto& from = static_cast<const PublishRoomReply&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:LN_Chat.PublishRoomReply)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -561,18 +561,18 @@ void PublishRoomResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, co
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void PublishRoomResponse::CopyFrom(const PublishRoomResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:LN_Chat.PublishRoomResponse)
+void PublishRoomReply::CopyFrom(const PublishRoomReply& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:LN_Chat.PublishRoomReply)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool PublishRoomResponse::IsInitialized() const {
+bool PublishRoomReply::IsInitialized() const {
   return true;
 }
 
-void PublishRoomResponse::InternalSwap(PublishRoomResponse* other) {
+void PublishRoomReply::InternalSwap(PublishRoomReply* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -584,7 +584,7 @@ void PublishRoomResponse::InternalSwap(PublishRoomResponse* other) {
   swap(_impl_.success_, other->_impl_.success_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata PublishRoomResponse::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata PublishRoomReply::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
       file_level_metadata_chat_2eproto[1]);
@@ -597,9 +597,9 @@ template<> PROTOBUF_NOINLINE ::LN_Chat::PublishRoomRequest*
 Arena::CreateMaybeMessage< ::LN_Chat::PublishRoomRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::LN_Chat::PublishRoomRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::LN_Chat::PublishRoomResponse*
-Arena::CreateMaybeMessage< ::LN_Chat::PublishRoomResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::LN_Chat::PublishRoomResponse >(arena);
+template<> PROTOBUF_NOINLINE ::LN_Chat::PublishRoomReply*
+Arena::CreateMaybeMessage< ::LN_Chat::PublishRoomReply >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::LN_Chat::PublishRoomReply >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

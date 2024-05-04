@@ -2,7 +2,7 @@ syntax = "proto3";
 package LN_Chat;
 
 service ChatService {
-  rpc PublishRoom(PublishRoomRequest) returns (PublishRoomResponse);
+  rpc PublishRoom(PublishRoomRequest) returns (PublishRoomReply);
 }
 
 message PublishRoomRequest {
@@ -10,7 +10,7 @@ message PublishRoomRequest {
     string password = 2;
 }
 
-message PublishRoomResponse {
+message PublishRoomReply {
     bool success = 1;
     string message = 2;
 }

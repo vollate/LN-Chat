@@ -35,23 +35,23 @@ ChatService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   : channel_(channel), rpcmethod_PublishRoom_(ChatService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status ChatService::Stub::PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::LN_Chat::PublishRoomResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::LN_Chat::PublishRoomRequest, ::LN_Chat::PublishRoomResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PublishRoom_, context, request, response);
+::grpc::Status ChatService::Stub::PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::LN_Chat::PublishRoomReply* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::LN_Chat::PublishRoomRequest, ::LN_Chat::PublishRoomReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PublishRoom_, context, request, response);
 }
 
-void ChatService::Stub::async::PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::LN_Chat::PublishRoomRequest, ::LN_Chat::PublishRoomResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PublishRoom_, context, request, response, std::move(f));
+void ChatService::Stub::async::PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomReply* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::LN_Chat::PublishRoomRequest, ::LN_Chat::PublishRoomReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PublishRoom_, context, request, response, std::move(f));
 }
 
-void ChatService::Stub::async::PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void ChatService::Stub::async::PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomReply* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PublishRoom_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::LN_Chat::PublishRoomResponse>* ChatService::Stub::PrepareAsyncPublishRoomRaw(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::LN_Chat::PublishRoomResponse, ::LN_Chat::PublishRoomRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PublishRoom_, context, request);
+::grpc::ClientAsyncResponseReader< ::LN_Chat::PublishRoomReply>* ChatService::Stub::PrepareAsyncPublishRoomRaw(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::LN_Chat::PublishRoomReply, ::LN_Chat::PublishRoomRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PublishRoom_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::LN_Chat::PublishRoomResponse>* ChatService::Stub::AsyncPublishRoomRaw(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::LN_Chat::PublishRoomReply>* ChatService::Stub::AsyncPublishRoomRaw(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncPublishRoomRaw(context, request, cq);
   result->StartCall();
@@ -62,11 +62,11 @@ ChatService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ChatService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ChatService::Service, ::LN_Chat::PublishRoomRequest, ::LN_Chat::PublishRoomResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ChatService::Service, ::LN_Chat::PublishRoomRequest, ::LN_Chat::PublishRoomReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ChatService::Service* service,
              ::grpc::ServerContext* ctx,
              const ::LN_Chat::PublishRoomRequest* req,
-             ::LN_Chat::PublishRoomResponse* resp) {
+             ::LN_Chat::PublishRoomReply* resp) {
                return service->PublishRoom(ctx, req, resp);
              }, this)));
 }
@@ -74,7 +74,7 @@ ChatService::Service::Service() {
 ChatService::Service::~Service() {
 }
 
-::grpc::Status ChatService::Service::PublishRoom(::grpc::ServerContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomResponse* response) {
+::grpc::Status ChatService::Service::PublishRoom(::grpc::ServerContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomReply* response) {
   (void) context;
   (void) request;
   (void) response;

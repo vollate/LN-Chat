@@ -45,16 +45,16 @@ struct TableStruct_chat_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chat_2eproto;
 namespace LN_Chat {
+class PublishRoomReply;
+struct PublishRoomReplyDefaultTypeInternal;
+extern PublishRoomReplyDefaultTypeInternal _PublishRoomReply_default_instance_;
 class PublishRoomRequest;
 struct PublishRoomRequestDefaultTypeInternal;
 extern PublishRoomRequestDefaultTypeInternal _PublishRoomRequest_default_instance_;
-class PublishRoomResponse;
-struct PublishRoomResponseDefaultTypeInternal;
-extern PublishRoomResponseDefaultTypeInternal _PublishRoomResponse_default_instance_;
 }  // namespace LN_Chat
 PROTOBUF_NAMESPACE_OPEN
+template<> ::LN_Chat::PublishRoomReply* Arena::CreateMaybeMessage<::LN_Chat::PublishRoomReply>(Arena*);
 template<> ::LN_Chat::PublishRoomRequest* Arena::CreateMaybeMessage<::LN_Chat::PublishRoomRequest>(Arena*);
-template<> ::LN_Chat::PublishRoomResponse* Arena::CreateMaybeMessage<::LN_Chat::PublishRoomResponse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace LN_Chat {
 
@@ -229,24 +229,24 @@ class PublishRoomRequest final :
 };
 // -------------------------------------------------------------------
 
-class PublishRoomResponse final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:LN_Chat.PublishRoomResponse) */ {
+class PublishRoomReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:LN_Chat.PublishRoomReply) */ {
  public:
-  inline PublishRoomResponse() : PublishRoomResponse(nullptr) {}
-  ~PublishRoomResponse() override;
-  explicit PROTOBUF_CONSTEXPR PublishRoomResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline PublishRoomReply() : PublishRoomReply(nullptr) {}
+  ~PublishRoomReply() override;
+  explicit PROTOBUF_CONSTEXPR PublishRoomReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  PublishRoomResponse(const PublishRoomResponse& from);
-  PublishRoomResponse(PublishRoomResponse&& from) noexcept
-    : PublishRoomResponse() {
+  PublishRoomReply(const PublishRoomReply& from);
+  PublishRoomReply(PublishRoomReply&& from) noexcept
+    : PublishRoomReply() {
     *this = ::std::move(from);
   }
 
-  inline PublishRoomResponse& operator=(const PublishRoomResponse& from) {
+  inline PublishRoomReply& operator=(const PublishRoomReply& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PublishRoomResponse& operator=(PublishRoomResponse&& from) noexcept {
+  inline PublishRoomReply& operator=(PublishRoomReply&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -269,20 +269,20 @@ class PublishRoomResponse final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PublishRoomResponse& default_instance() {
+  static const PublishRoomReply& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PublishRoomResponse* internal_default_instance() {
-    return reinterpret_cast<const PublishRoomResponse*>(
-               &_PublishRoomResponse_default_instance_);
+  static inline const PublishRoomReply* internal_default_instance() {
+    return reinterpret_cast<const PublishRoomReply*>(
+               &_PublishRoomReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(PublishRoomResponse& a, PublishRoomResponse& b) {
+  friend void swap(PublishRoomReply& a, PublishRoomReply& b) {
     a.Swap(&b);
   }
-  inline void Swap(PublishRoomResponse* other) {
+  inline void Swap(PublishRoomReply* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -295,7 +295,7 @@ class PublishRoomResponse final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PublishRoomResponse* other) {
+  void UnsafeArenaSwap(PublishRoomReply* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -303,14 +303,14 @@ class PublishRoomResponse final :
 
   // implements Message ----------------------------------------------
 
-  PublishRoomResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<PublishRoomResponse>(arena);
+  PublishRoomReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PublishRoomReply>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const PublishRoomResponse& from);
+  void CopyFrom(const PublishRoomReply& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const PublishRoomResponse& from) {
-    PublishRoomResponse::MergeImpl(*this, from);
+  void MergeFrom( const PublishRoomReply& from) {
+    PublishRoomReply::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -328,15 +328,15 @@ class PublishRoomResponse final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(PublishRoomResponse* other);
+  void InternalSwap(PublishRoomReply* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "LN_Chat.PublishRoomResponse";
+    return "LN_Chat.PublishRoomReply";
   }
   protected:
-  explicit PublishRoomResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit PublishRoomReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -376,7 +376,7 @@ class PublishRoomResponse final :
   void _internal_set_success(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:LN_Chat.PublishRoomResponse)
+  // @@protoc_insertion_point(class_scope:LN_Chat.PublishRoomReply)
  private:
   class _Internal;
 
@@ -504,64 +504,64 @@ inline void PublishRoomRequest::set_allocated_password(std::string* password) {
 
 // -------------------------------------------------------------------
 
-// PublishRoomResponse
+// PublishRoomReply
 
 // bool success = 1;
-inline void PublishRoomResponse::clear_success() {
+inline void PublishRoomReply::clear_success() {
   _impl_.success_ = false;
 }
-inline bool PublishRoomResponse::_internal_success() const {
+inline bool PublishRoomReply::_internal_success() const {
   return _impl_.success_;
 }
-inline bool PublishRoomResponse::success() const {
-  // @@protoc_insertion_point(field_get:LN_Chat.PublishRoomResponse.success)
+inline bool PublishRoomReply::success() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.PublishRoomReply.success)
   return _internal_success();
 }
-inline void PublishRoomResponse::_internal_set_success(bool value) {
+inline void PublishRoomReply::_internal_set_success(bool value) {
   
   _impl_.success_ = value;
 }
-inline void PublishRoomResponse::set_success(bool value) {
+inline void PublishRoomReply::set_success(bool value) {
   _internal_set_success(value);
-  // @@protoc_insertion_point(field_set:LN_Chat.PublishRoomResponse.success)
+  // @@protoc_insertion_point(field_set:LN_Chat.PublishRoomReply.success)
 }
 
 // string message = 2;
-inline void PublishRoomResponse::clear_message() {
+inline void PublishRoomReply::clear_message() {
   _impl_.message_.ClearToEmpty();
 }
-inline const std::string& PublishRoomResponse::message() const {
-  // @@protoc_insertion_point(field_get:LN_Chat.PublishRoomResponse.message)
+inline const std::string& PublishRoomReply::message() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.PublishRoomReply.message)
   return _internal_message();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void PublishRoomResponse::set_message(ArgT0&& arg0, ArgT... args) {
+void PublishRoomReply::set_message(ArgT0&& arg0, ArgT... args) {
  
  _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:LN_Chat.PublishRoomResponse.message)
+  // @@protoc_insertion_point(field_set:LN_Chat.PublishRoomReply.message)
 }
-inline std::string* PublishRoomResponse::mutable_message() {
+inline std::string* PublishRoomReply::mutable_message() {
   std::string* _s = _internal_mutable_message();
-  // @@protoc_insertion_point(field_mutable:LN_Chat.PublishRoomResponse.message)
+  // @@protoc_insertion_point(field_mutable:LN_Chat.PublishRoomReply.message)
   return _s;
 }
-inline const std::string& PublishRoomResponse::_internal_message() const {
+inline const std::string& PublishRoomReply::_internal_message() const {
   return _impl_.message_.Get();
 }
-inline void PublishRoomResponse::_internal_set_message(const std::string& value) {
+inline void PublishRoomReply::_internal_set_message(const std::string& value) {
   
   _impl_.message_.Set(value, GetArenaForAllocation());
 }
-inline std::string* PublishRoomResponse::_internal_mutable_message() {
+inline std::string* PublishRoomReply::_internal_mutable_message() {
   
   return _impl_.message_.Mutable(GetArenaForAllocation());
 }
-inline std::string* PublishRoomResponse::release_message() {
-  // @@protoc_insertion_point(field_release:LN_Chat.PublishRoomResponse.message)
+inline std::string* PublishRoomReply::release_message() {
+  // @@protoc_insertion_point(field_release:LN_Chat.PublishRoomReply.message)
   return _impl_.message_.Release();
 }
-inline void PublishRoomResponse::set_allocated_message(std::string* message) {
+inline void PublishRoomReply::set_allocated_message(std::string* message) {
   if (message != nullptr) {
     
   } else {
@@ -573,7 +573,7 @@ inline void PublishRoomResponse::set_allocated_message(std::string* message) {
     _impl_.message_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:LN_Chat.PublishRoomResponse.message)
+  // @@protoc_insertion_point(field_set_allocated:LN_Chat.PublishRoomReply.message)
 }
 
 #ifdef __GNUC__
