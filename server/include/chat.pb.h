@@ -45,6 +45,12 @@ struct TableStruct_chat_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chat_2eproto;
 namespace LN_Chat {
+class GetRoomPeersReply;
+struct GetRoomPeersReplyDefaultTypeInternal;
+extern GetRoomPeersReplyDefaultTypeInternal _GetRoomPeersReply_default_instance_;
+class GetRoomPeersRequest;
+struct GetRoomPeersRequestDefaultTypeInternal;
+extern GetRoomPeersRequestDefaultTypeInternal _GetRoomPeersRequest_default_instance_;
 class PublishRoomReply;
 struct PublishRoomReplyDefaultTypeInternal;
 extern PublishRoomReplyDefaultTypeInternal _PublishRoomReply_default_instance_;
@@ -53,6 +59,8 @@ struct PublishRoomRequestDefaultTypeInternal;
 extern PublishRoomRequestDefaultTypeInternal _PublishRoomRequest_default_instance_;
 }  // namespace LN_Chat
 PROTOBUF_NAMESPACE_OPEN
+template<> ::LN_Chat::GetRoomPeersReply* Arena::CreateMaybeMessage<::LN_Chat::GetRoomPeersReply>(Arena*);
+template<> ::LN_Chat::GetRoomPeersRequest* Arena::CreateMaybeMessage<::LN_Chat::GetRoomPeersRequest>(Arena*);
 template<> ::LN_Chat::PublishRoomReply* Arena::CreateMaybeMessage<::LN_Chat::PublishRoomReply>(Arena*);
 template<> ::LN_Chat::PublishRoomRequest* Arena::CreateMaybeMessage<::LN_Chat::PublishRoomRequest>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -391,6 +399,381 @@ class PublishRoomReply final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_chat_2eproto;
 };
+// -------------------------------------------------------------------
+
+class GetRoomPeersRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:LN_Chat.GetRoomPeersRequest) */ {
+ public:
+  inline GetRoomPeersRequest() : GetRoomPeersRequest(nullptr) {}
+  ~GetRoomPeersRequest() override;
+  explicit PROTOBUF_CONSTEXPR GetRoomPeersRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRoomPeersRequest(const GetRoomPeersRequest& from);
+  GetRoomPeersRequest(GetRoomPeersRequest&& from) noexcept
+    : GetRoomPeersRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRoomPeersRequest& operator=(const GetRoomPeersRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRoomPeersRequest& operator=(GetRoomPeersRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRoomPeersRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRoomPeersRequest* internal_default_instance() {
+    return reinterpret_cast<const GetRoomPeersRequest*>(
+               &_GetRoomPeersRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(GetRoomPeersRequest& a, GetRoomPeersRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRoomPeersRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRoomPeersRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRoomPeersRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRoomPeersRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRoomPeersRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRoomPeersRequest& from) {
+    GetRoomPeersRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRoomPeersRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "LN_Chat.GetRoomPeersRequest";
+  }
+  protected:
+  explicit GetRoomPeersRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNameFieldNumber = 1,
+    kPasswordFieldNumber = 2,
+    kIdFieldNumber = 3,
+  };
+  // string name = 1;
+  void clear_name();
+  const std::string& name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_name();
+  PROTOBUF_NODISCARD std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // string password = 2;
+  void clear_password();
+  const std::string& password() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_password(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_password();
+  PROTOBUF_NODISCARD std::string* release_password();
+  void set_allocated_password(std::string* password);
+  private:
+  const std::string& _internal_password() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_password(const std::string& value);
+  std::string* _internal_mutable_password();
+  public:
+
+  // string id = 3;
+  void clear_id();
+  const std::string& id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_id();
+  PROTOBUF_NODISCARD std::string* release_id();
+  void set_allocated_id(std::string* id);
+  private:
+  const std::string& _internal_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_id(const std::string& value);
+  std::string* _internal_mutable_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:LN_Chat.GetRoomPeersRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr password_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_chat_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRoomPeersReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:LN_Chat.GetRoomPeersReply) */ {
+ public:
+  inline GetRoomPeersReply() : GetRoomPeersReply(nullptr) {}
+  ~GetRoomPeersReply() override;
+  explicit PROTOBUF_CONSTEXPR GetRoomPeersReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRoomPeersReply(const GetRoomPeersReply& from);
+  GetRoomPeersReply(GetRoomPeersReply&& from) noexcept
+    : GetRoomPeersReply() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRoomPeersReply& operator=(const GetRoomPeersReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRoomPeersReply& operator=(GetRoomPeersReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRoomPeersReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRoomPeersReply* internal_default_instance() {
+    return reinterpret_cast<const GetRoomPeersReply*>(
+               &_GetRoomPeersReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(GetRoomPeersReply& a, GetRoomPeersReply& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRoomPeersReply* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRoomPeersReply* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRoomPeersReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRoomPeersReply>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRoomPeersReply& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRoomPeersReply& from) {
+    GetRoomPeersReply::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRoomPeersReply* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "LN_Chat.GetRoomPeersReply";
+  }
+  protected:
+  explicit GetRoomPeersReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPeersFieldNumber = 2,
+    kMessageFieldNumber = 3,
+    kSuccessFieldNumber = 1,
+  };
+  // repeated string peers = 2;
+  int peers_size() const;
+  private:
+  int _internal_peers_size() const;
+  public:
+  void clear_peers();
+  const std::string& peers(int index) const;
+  std::string* mutable_peers(int index);
+  void set_peers(int index, const std::string& value);
+  void set_peers(int index, std::string&& value);
+  void set_peers(int index, const char* value);
+  void set_peers(int index, const char* value, size_t size);
+  std::string* add_peers();
+  void add_peers(const std::string& value);
+  void add_peers(std::string&& value);
+  void add_peers(const char* value);
+  void add_peers(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& peers() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_peers();
+  private:
+  const std::string& _internal_peers(int index) const;
+  std::string* _internal_add_peers();
+  public:
+
+  // string message = 3;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // bool success = 1;
+  void clear_success();
+  bool success() const;
+  void set_success(bool value);
+  private:
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:LN_Chat.GetRoomPeersReply)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> peers_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    bool success_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_chat_2eproto;
+};
 // ===================================================================
 
 
@@ -576,9 +959,316 @@ inline void PublishRoomReply::set_allocated_message(std::string* message) {
   // @@protoc_insertion_point(field_set_allocated:LN_Chat.PublishRoomReply.message)
 }
 
+// -------------------------------------------------------------------
+
+// GetRoomPeersRequest
+
+// string name = 1;
+inline void GetRoomPeersRequest::clear_name() {
+  _impl_.name_.ClearToEmpty();
+}
+inline const std::string& GetRoomPeersRequest::name() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.GetRoomPeersRequest.name)
+  return _internal_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRoomPeersRequest::set_name(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:LN_Chat.GetRoomPeersRequest.name)
+}
+inline std::string* GetRoomPeersRequest::mutable_name() {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:LN_Chat.GetRoomPeersRequest.name)
+  return _s;
+}
+inline const std::string& GetRoomPeersRequest::_internal_name() const {
+  return _impl_.name_.Get();
+}
+inline void GetRoomPeersRequest::_internal_set_name(const std::string& value) {
+  
+  _impl_.name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRoomPeersRequest::_internal_mutable_name() {
+  
+  return _impl_.name_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRoomPeersRequest::release_name() {
+  // @@protoc_insertion_point(field_release:LN_Chat.GetRoomPeersRequest.name)
+  return _impl_.name_.Release();
+}
+inline void GetRoomPeersRequest::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.name_.SetAllocated(name, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.name_.IsDefault()) {
+    _impl_.name_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:LN_Chat.GetRoomPeersRequest.name)
+}
+
+// string password = 2;
+inline void GetRoomPeersRequest::clear_password() {
+  _impl_.password_.ClearToEmpty();
+}
+inline const std::string& GetRoomPeersRequest::password() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.GetRoomPeersRequest.password)
+  return _internal_password();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRoomPeersRequest::set_password(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.password_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:LN_Chat.GetRoomPeersRequest.password)
+}
+inline std::string* GetRoomPeersRequest::mutable_password() {
+  std::string* _s = _internal_mutable_password();
+  // @@protoc_insertion_point(field_mutable:LN_Chat.GetRoomPeersRequest.password)
+  return _s;
+}
+inline const std::string& GetRoomPeersRequest::_internal_password() const {
+  return _impl_.password_.Get();
+}
+inline void GetRoomPeersRequest::_internal_set_password(const std::string& value) {
+  
+  _impl_.password_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRoomPeersRequest::_internal_mutable_password() {
+  
+  return _impl_.password_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRoomPeersRequest::release_password() {
+  // @@protoc_insertion_point(field_release:LN_Chat.GetRoomPeersRequest.password)
+  return _impl_.password_.Release();
+}
+inline void GetRoomPeersRequest::set_allocated_password(std::string* password) {
+  if (password != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.password_.SetAllocated(password, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.password_.IsDefault()) {
+    _impl_.password_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:LN_Chat.GetRoomPeersRequest.password)
+}
+
+// string id = 3;
+inline void GetRoomPeersRequest::clear_id() {
+  _impl_.id_.ClearToEmpty();
+}
+inline const std::string& GetRoomPeersRequest::id() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.GetRoomPeersRequest.id)
+  return _internal_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRoomPeersRequest::set_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:LN_Chat.GetRoomPeersRequest.id)
+}
+inline std::string* GetRoomPeersRequest::mutable_id() {
+  std::string* _s = _internal_mutable_id();
+  // @@protoc_insertion_point(field_mutable:LN_Chat.GetRoomPeersRequest.id)
+  return _s;
+}
+inline const std::string& GetRoomPeersRequest::_internal_id() const {
+  return _impl_.id_.Get();
+}
+inline void GetRoomPeersRequest::_internal_set_id(const std::string& value) {
+  
+  _impl_.id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRoomPeersRequest::_internal_mutable_id() {
+  
+  return _impl_.id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRoomPeersRequest::release_id() {
+  // @@protoc_insertion_point(field_release:LN_Chat.GetRoomPeersRequest.id)
+  return _impl_.id_.Release();
+}
+inline void GetRoomPeersRequest::set_allocated_id(std::string* id) {
+  if (id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.id_.SetAllocated(id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.id_.IsDefault()) {
+    _impl_.id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:LN_Chat.GetRoomPeersRequest.id)
+}
+
+// -------------------------------------------------------------------
+
+// GetRoomPeersReply
+
+// bool success = 1;
+inline void GetRoomPeersReply::clear_success() {
+  _impl_.success_ = false;
+}
+inline bool GetRoomPeersReply::_internal_success() const {
+  return _impl_.success_;
+}
+inline bool GetRoomPeersReply::success() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.GetRoomPeersReply.success)
+  return _internal_success();
+}
+inline void GetRoomPeersReply::_internal_set_success(bool value) {
+  
+  _impl_.success_ = value;
+}
+inline void GetRoomPeersReply::set_success(bool value) {
+  _internal_set_success(value);
+  // @@protoc_insertion_point(field_set:LN_Chat.GetRoomPeersReply.success)
+}
+
+// repeated string peers = 2;
+inline int GetRoomPeersReply::_internal_peers_size() const {
+  return _impl_.peers_.size();
+}
+inline int GetRoomPeersReply::peers_size() const {
+  return _internal_peers_size();
+}
+inline void GetRoomPeersReply::clear_peers() {
+  _impl_.peers_.Clear();
+}
+inline std::string* GetRoomPeersReply::add_peers() {
+  std::string* _s = _internal_add_peers();
+  // @@protoc_insertion_point(field_add_mutable:LN_Chat.GetRoomPeersReply.peers)
+  return _s;
+}
+inline const std::string& GetRoomPeersReply::_internal_peers(int index) const {
+  return _impl_.peers_.Get(index);
+}
+inline const std::string& GetRoomPeersReply::peers(int index) const {
+  // @@protoc_insertion_point(field_get:LN_Chat.GetRoomPeersReply.peers)
+  return _internal_peers(index);
+}
+inline std::string* GetRoomPeersReply::mutable_peers(int index) {
+  // @@protoc_insertion_point(field_mutable:LN_Chat.GetRoomPeersReply.peers)
+  return _impl_.peers_.Mutable(index);
+}
+inline void GetRoomPeersReply::set_peers(int index, const std::string& value) {
+  _impl_.peers_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:LN_Chat.GetRoomPeersReply.peers)
+}
+inline void GetRoomPeersReply::set_peers(int index, std::string&& value) {
+  _impl_.peers_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:LN_Chat.GetRoomPeersReply.peers)
+}
+inline void GetRoomPeersReply::set_peers(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.peers_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:LN_Chat.GetRoomPeersReply.peers)
+}
+inline void GetRoomPeersReply::set_peers(int index, const char* value, size_t size) {
+  _impl_.peers_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:LN_Chat.GetRoomPeersReply.peers)
+}
+inline std::string* GetRoomPeersReply::_internal_add_peers() {
+  return _impl_.peers_.Add();
+}
+inline void GetRoomPeersReply::add_peers(const std::string& value) {
+  _impl_.peers_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:LN_Chat.GetRoomPeersReply.peers)
+}
+inline void GetRoomPeersReply::add_peers(std::string&& value) {
+  _impl_.peers_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:LN_Chat.GetRoomPeersReply.peers)
+}
+inline void GetRoomPeersReply::add_peers(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.peers_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:LN_Chat.GetRoomPeersReply.peers)
+}
+inline void GetRoomPeersReply::add_peers(const char* value, size_t size) {
+  _impl_.peers_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:LN_Chat.GetRoomPeersReply.peers)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+GetRoomPeersReply::peers() const {
+  // @@protoc_insertion_point(field_list:LN_Chat.GetRoomPeersReply.peers)
+  return _impl_.peers_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+GetRoomPeersReply::mutable_peers() {
+  // @@protoc_insertion_point(field_mutable_list:LN_Chat.GetRoomPeersReply.peers)
+  return &_impl_.peers_;
+}
+
+// string message = 3;
+inline void GetRoomPeersReply::clear_message() {
+  _impl_.message_.ClearToEmpty();
+}
+inline const std::string& GetRoomPeersReply::message() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.GetRoomPeersReply.message)
+  return _internal_message();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRoomPeersReply::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:LN_Chat.GetRoomPeersReply.message)
+}
+inline std::string* GetRoomPeersReply::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:LN_Chat.GetRoomPeersReply.message)
+  return _s;
+}
+inline const std::string& GetRoomPeersReply::_internal_message() const {
+  return _impl_.message_.Get();
+}
+inline void GetRoomPeersReply::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRoomPeersReply::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRoomPeersReply::release_message() {
+  // @@protoc_insertion_point(field_release:LN_Chat.GetRoomPeersReply.message)
+  return _impl_.message_.Release();
+}
+inline void GetRoomPeersReply::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:LN_Chat.GetRoomPeersReply.message)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

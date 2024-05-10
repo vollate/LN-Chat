@@ -23,6 +23,7 @@ namespace LN_Chat {
 
 static const char* ChatService_method_names[] = {
   "/LN_Chat.ChatService/PublishRoom",
+  "/LN_Chat.ChatService/GetRoomPeers",
 };
 
 std::unique_ptr< ChatService::Stub> ChatService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -33,6 +34,7 @@ std::unique_ptr< ChatService::Stub> ChatService::NewStub(const std::shared_ptr< 
 
 ChatService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_PublishRoom_(ChatService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetRoomPeers_(ChatService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ChatService::Stub::PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::LN_Chat::PublishRoomReply* response) {
@@ -58,6 +60,29 @@ void ChatService::Stub::async::PublishRoom(::grpc::ClientContext* context, const
   return result;
 }
 
+::grpc::Status ChatService::Stub::GetRoomPeers(::grpc::ClientContext* context, const ::LN_Chat::GetRoomPeersRequest& request, ::LN_Chat::GetRoomPeersReply* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::LN_Chat::GetRoomPeersRequest, ::LN_Chat::GetRoomPeersReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetRoomPeers_, context, request, response);
+}
+
+void ChatService::Stub::async::GetRoomPeers(::grpc::ClientContext* context, const ::LN_Chat::GetRoomPeersRequest* request, ::LN_Chat::GetRoomPeersReply* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::LN_Chat::GetRoomPeersRequest, ::LN_Chat::GetRoomPeersReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRoomPeers_, context, request, response, std::move(f));
+}
+
+void ChatService::Stub::async::GetRoomPeers(::grpc::ClientContext* context, const ::LN_Chat::GetRoomPeersRequest* request, ::LN_Chat::GetRoomPeersReply* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRoomPeers_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::LN_Chat::GetRoomPeersReply>* ChatService::Stub::PrepareAsyncGetRoomPeersRaw(::grpc::ClientContext* context, const ::LN_Chat::GetRoomPeersRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::LN_Chat::GetRoomPeersReply, ::LN_Chat::GetRoomPeersRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetRoomPeers_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::LN_Chat::GetRoomPeersReply>* ChatService::Stub::AsyncGetRoomPeersRaw(::grpc::ClientContext* context, const ::LN_Chat::GetRoomPeersRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetRoomPeersRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ChatService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ChatService_method_names[0],
@@ -69,12 +94,29 @@ ChatService::Service::Service() {
              ::LN_Chat::PublishRoomReply* resp) {
                return service->PublishRoom(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ChatService_method_names[1],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ChatService::Service, ::LN_Chat::GetRoomPeersRequest, ::LN_Chat::GetRoomPeersReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ChatService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::LN_Chat::GetRoomPeersRequest* req,
+             ::LN_Chat::GetRoomPeersReply* resp) {
+               return service->GetRoomPeers(ctx, req, resp);
+             }, this)));
 }
 
 ChatService::Service::~Service() {
 }
 
 ::grpc::Status ChatService::Service::PublishRoom(::grpc::ServerContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomReply* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ChatService::Service::GetRoomPeers(::grpc::ServerContext* context, const ::LN_Chat::GetRoomPeersRequest* request, ::LN_Chat::GetRoomPeersReply* response) {
   (void) context;
   (void) request;
   (void) response;

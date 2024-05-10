@@ -3,6 +3,7 @@ package LN_Chat;
 
 service ChatService {
   rpc PublishRoom(PublishRoomRequest) returns (PublishRoomReply);
+  rpc GetRoomPeers(GetRoomPeersRequest) returns (GetRoomPeersReply);
 }
 
 message PublishRoomRequest {
@@ -15,3 +16,14 @@ message PublishRoomReply {
     string message = 2;
 }
 
+message GetRoomPeersRequest{
+    string name = 1;
+    string password = 2;
+    string id   = 3;
+}
+
+message GetRoomPeersReply{
+    bool success = 1;
+    repeated string peers = 2;
+    string message = 3;
+}
