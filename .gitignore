@@ -73,5 +73,8 @@ CMakeLists.txt.user*
 *.exe
 
 build*/
-compile_commands.json
+cmake-build*/
 .cache/
+.idea/
+
+compile_commands.json
