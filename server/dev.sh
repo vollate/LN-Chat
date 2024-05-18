@@ -16,6 +16,7 @@ then
     BUILD_CMD="${BUILD_CMD}Release -B build-$1"
 elif [ $1 == "clean" ]
 then
+    shopt -s globstar
     rm -rf build-* **/*.cc **/*.h
     exit 0
 else

@@ -7,26 +7,28 @@
 #include <thread>
 #include <vector>
 
-#include "chat.grpc.pb.h"
-#include "chat.pb.h"
+#include "rpc/chat.grpc.pb.h"
+#include "rpc/chat.pb.h"
+
 
 class ChatServer final {
 public:
-    explicit ChatServer(uint16_t port);
+    explicit ChatServer(uint16_t port, uint32_t num_threads);
 
     ~ChatServer();
 
 private:
-    void handleRpc();
+    void handleRpc(uint32_t num_threads);
 
     void handleRpcInThreadPool();
 
     std::unique_ptr<grpc::Server> m_server;
     LN_Chat::ChatService::AsyncService m_service;
     std::unique_ptr<grpc::ServerCompletionQueue> m_completion_queue;
-    std::vector<std::thread> m_workders;
+    std::vector<std::thread> m_workers;
     bool m_shutdown;
 };
+
 
 class CallData final {
 public:
@@ -40,6 +42,14 @@ public:
     void proceed();
 
 private:
+    struct Controller final {
+        Controller() = delete;
+
+        static void handlePublishRoom(CallData *call_data);
+
+        static void handleGetRoomPeers(CallData *call_data);
+    };
+
     LN_Chat::ChatService::AsyncService *m_service;
     grpc::ServerCompletionQueue *m_completion_queue;
     grpc::ServerContext m_context;
