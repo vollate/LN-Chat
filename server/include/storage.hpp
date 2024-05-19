@@ -12,6 +12,8 @@
 #include <unordered_map>
 
 struct Client {
+    Client(uint64_t user_id, std::string username, std::string ip);
+
     uint64_t user_id;
     std::string username;
     std::string ip;
@@ -35,7 +37,7 @@ public:
 
     void startFlush(const std::chrono::milliseconds& flush_interval);
     void stopFlush();
-    bool checkOrAddClient(uint64_t user_id, const std::string& username, const std::string& ip);
+    std::optional<uint64_t> registerClient(const std::string& username, const std::string& ip);
     bool addRoom(const std::string& room_name, const std::string& password);
     std::optional<std::shared_ptr<ChatRoom>> getRoom(const std::string& room_name);
 

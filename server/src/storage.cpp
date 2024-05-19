@@ -1,10 +1,17 @@
+#include <cstdint>
 #include <memory>
 #include <mutex>
 #include <optional>
+#include <random>
 #include <shared_mutex>
+#include <sys/types.h>
 #include <utility>
 
 #include "storage.hpp"
+#include "utils.hpp"
+
+Client::Client(uint64_t user_id, std::string username, std::string ip)
+    : user_id(user_id), username(std::move(username)), ip(std::move(ip)), alive(true) {}
 
 ChatRoom::ChatRoom(std::string name, std::string password) : room_name(std::move(name)), password(std::move(password)) {}
 
@@ -39,6 +46,7 @@ void Storage::cleanup() {
     std::unique_lock client_lock{ m_mutex };
     std::lock_guard list_lock{ m_to_delete.first };
     for(auto& client : m_to_delete.second) {
+        dPrint("remote dead client: " << client->user_id << ", name: " << client->username);
         m_clients.erase(client->user_id);
     }
     client_lock.unlock();
@@ -64,11 +72,21 @@ std::optional<std::shared_ptr<ChatRoom>> Storage::getRoom(const std::string& roo
     return it->second;
 }
 
-bool Storage::checkOrAddClient(uint64_t user_id, const std::string& username, const std::string& ip) {
+Storage::~Storage() {
+    stopFlush();
+}
+std::optional<uint64_t> Storage::registerClient(const std::string& username, const std::string& ip) {
     std::lock_guard lock{ m_mutex };
-    if(m_clients.find(user_id) != m_clients.end()) {
-        return false;
+    std::random_device r;
+    std::default_random_engine e1(r());
+    std::uniform_int_distribution<uint64_t> uniform_dist(0, UINT64_MAX);
+    uint64_t user_id;
+    for(int i = 0; i < 200; ++i) {
+        user_id = uniform_dist(e1);
+        if(m_clients.find(user_id) == m_clients.end()) {
+            m_clients.insert({ user_id, std::make_shared<Client>(user_id, username, ip) });
+            return user_id;
+        }
     }
-    m_clients.insert({ user_id, std::make_shared<Client>(Client{ user_id, username, ip, {}, true }) });
-    return true;
+    return std::nullopt;
 }

@@ -63,6 +63,12 @@ extern PublishRoomReplyDefaultTypeInternal _PublishRoomReply_default_instance_;
 class PublishRoomRequest;
 struct PublishRoomRequestDefaultTypeInternal;
 extern PublishRoomRequestDefaultTypeInternal _PublishRoomRequest_default_instance_;
+class RegisterClientReply;
+struct RegisterClientReplyDefaultTypeInternal;
+extern RegisterClientReplyDefaultTypeInternal _RegisterClientReply_default_instance_;
+class RegisterClientRequest;
+struct RegisterClientRequestDefaultTypeInternal;
+extern RegisterClientRequestDefaultTypeInternal _RegisterClientRequest_default_instance_;
 }  // namespace LN_Chat
 PROTOBUF_NAMESPACE_OPEN
 template<> ::LN_Chat::GetRoomPeersReply* Arena::CreateMaybeMessage<::LN_Chat::GetRoomPeersReply>(Arena*);
@@ -71,10 +77,340 @@ template<> ::LN_Chat::HeartBeatReply* Arena::CreateMaybeMessage<::LN_Chat::Heart
 template<> ::LN_Chat::HeartBeatRequest* Arena::CreateMaybeMessage<::LN_Chat::HeartBeatRequest>(Arena*);
 template<> ::LN_Chat::PublishRoomReply* Arena::CreateMaybeMessage<::LN_Chat::PublishRoomReply>(Arena*);
 template<> ::LN_Chat::PublishRoomRequest* Arena::CreateMaybeMessage<::LN_Chat::PublishRoomRequest>(Arena*);
+template<> ::LN_Chat::RegisterClientReply* Arena::CreateMaybeMessage<::LN_Chat::RegisterClientReply>(Arena*);
+template<> ::LN_Chat::RegisterClientRequest* Arena::CreateMaybeMessage<::LN_Chat::RegisterClientRequest>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace LN_Chat {
 
 // ===================================================================
+
+class RegisterClientRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:LN_Chat.RegisterClientRequest) */ {
+ public:
+  inline RegisterClientRequest() : RegisterClientRequest(nullptr) {}
+  ~RegisterClientRequest() override;
+  explicit PROTOBUF_CONSTEXPR RegisterClientRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  RegisterClientRequest(const RegisterClientRequest& from);
+  RegisterClientRequest(RegisterClientRequest&& from) noexcept
+    : RegisterClientRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline RegisterClientRequest& operator=(const RegisterClientRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RegisterClientRequest& operator=(RegisterClientRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RegisterClientRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RegisterClientRequest* internal_default_instance() {
+    return reinterpret_cast<const RegisterClientRequest*>(
+               &_RegisterClientRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  friend void swap(RegisterClientRequest& a, RegisterClientRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RegisterClientRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RegisterClientRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RegisterClientRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RegisterClientRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RegisterClientRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RegisterClientRequest& from) {
+    RegisterClientRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RegisterClientRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "LN_Chat.RegisterClientRequest";
+  }
+  protected:
+  explicit RegisterClientRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNameFieldNumber = 1,
+  };
+  // string name = 1;
+  void clear_name();
+  const std::string& name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_name();
+  PROTOBUF_NODISCARD std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // @@protoc_insertion_point(class_scope:LN_Chat.RegisterClientRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_chat_2eproto;
+};
+// -------------------------------------------------------------------
+
+class RegisterClientReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:LN_Chat.RegisterClientReply) */ {
+ public:
+  inline RegisterClientReply() : RegisterClientReply(nullptr) {}
+  ~RegisterClientReply() override;
+  explicit PROTOBUF_CONSTEXPR RegisterClientReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  RegisterClientReply(const RegisterClientReply& from);
+  RegisterClientReply(RegisterClientReply&& from) noexcept
+    : RegisterClientReply() {
+    *this = ::std::move(from);
+  }
+
+  inline RegisterClientReply& operator=(const RegisterClientReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RegisterClientReply& operator=(RegisterClientReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RegisterClientReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RegisterClientReply* internal_default_instance() {
+    return reinterpret_cast<const RegisterClientReply*>(
+               &_RegisterClientReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(RegisterClientReply& a, RegisterClientReply& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RegisterClientReply* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RegisterClientReply* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RegisterClientReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RegisterClientReply>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RegisterClientReply& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RegisterClientReply& from) {
+    RegisterClientReply::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RegisterClientReply* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "LN_Chat.RegisterClientReply";
+  }
+  protected:
+  explicit RegisterClientReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMessageFieldNumber = 2,
+    kClientIdFieldNumber = 3,
+    kSuccessFieldNumber = 1,
+  };
+  // string message = 2;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // uint64 clientId = 3;
+  void clear_clientid();
+  uint64_t clientid() const;
+  void set_clientid(uint64_t value);
+  private:
+  uint64_t _internal_clientid() const;
+  void _internal_set_clientid(uint64_t value);
+  public:
+
+  // bool success = 1;
+  void clear_success();
+  bool success() const;
+  void set_success(bool value);
+  private:
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:LN_Chat.RegisterClientReply)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    uint64_t clientid_;
+    bool success_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_chat_2eproto;
+};
+// -------------------------------------------------------------------
 
 class PublishRoomRequest final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:LN_Chat.PublishRoomRequest) */ {
@@ -124,7 +460,7 @@ class PublishRoomRequest final :
                &_PublishRoomRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    2;
 
   friend void swap(PublishRoomRequest& a, PublishRoomRequest& b) {
     a.Swap(&b);
@@ -293,7 +629,7 @@ class PublishRoomReply final :
                &_PublishRoomReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    3;
 
   friend void swap(PublishRoomReply& a, PublishRoomReply& b) {
     a.Swap(&b);
@@ -457,7 +793,7 @@ class GetRoomPeersRequest final :
                &_GetRoomPeersRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    4;
 
   friend void swap(GetRoomPeersRequest& a, GetRoomPeersRequest& b) {
     a.Swap(&b);
@@ -637,7 +973,7 @@ class GetRoomPeersReply final :
                &_GetRoomPeersReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    5;
 
   friend void swap(GetRoomPeersReply& a, GetRoomPeersReply& b) {
     a.Swap(&b);
@@ -827,7 +1163,7 @@ class HeartBeatRequest final :
                &_HeartBeatRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    6;
 
   friend void swap(HeartBeatRequest& a, HeartBeatRequest& b) {
     a.Swap(&b);
@@ -975,7 +1311,7 @@ class HeartBeatReply final :
                &_HeartBeatReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    7;
 
   friend void swap(HeartBeatReply& a, HeartBeatReply& b) {
     a.Swap(&b);
@@ -1082,6 +1418,154 @@ class HeartBeatReply final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// RegisterClientRequest
+
+// string name = 1;
+inline void RegisterClientRequest::clear_name() {
+  _impl_.name_.ClearToEmpty();
+}
+inline const std::string& RegisterClientRequest::name() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.RegisterClientRequest.name)
+  return _internal_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void RegisterClientRequest::set_name(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:LN_Chat.RegisterClientRequest.name)
+}
+inline std::string* RegisterClientRequest::mutable_name() {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:LN_Chat.RegisterClientRequest.name)
+  return _s;
+}
+inline const std::string& RegisterClientRequest::_internal_name() const {
+  return _impl_.name_.Get();
+}
+inline void RegisterClientRequest::_internal_set_name(const std::string& value) {
+  
+  _impl_.name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RegisterClientRequest::_internal_mutable_name() {
+  
+  return _impl_.name_.Mutable(GetArenaForAllocation());
+}
+inline std::string* RegisterClientRequest::release_name() {
+  // @@protoc_insertion_point(field_release:LN_Chat.RegisterClientRequest.name)
+  return _impl_.name_.Release();
+}
+inline void RegisterClientRequest::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.name_.SetAllocated(name, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.name_.IsDefault()) {
+    _impl_.name_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:LN_Chat.RegisterClientRequest.name)
+}
+
+// -------------------------------------------------------------------
+
+// RegisterClientReply
+
+// bool success = 1;
+inline void RegisterClientReply::clear_success() {
+  _impl_.success_ = false;
+}
+inline bool RegisterClientReply::_internal_success() const {
+  return _impl_.success_;
+}
+inline bool RegisterClientReply::success() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.RegisterClientReply.success)
+  return _internal_success();
+}
+inline void RegisterClientReply::_internal_set_success(bool value) {
+  
+  _impl_.success_ = value;
+}
+inline void RegisterClientReply::set_success(bool value) {
+  _internal_set_success(value);
+  // @@protoc_insertion_point(field_set:LN_Chat.RegisterClientReply.success)
+}
+
+// string message = 2;
+inline void RegisterClientReply::clear_message() {
+  _impl_.message_.ClearToEmpty();
+}
+inline const std::string& RegisterClientReply::message() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.RegisterClientReply.message)
+  return _internal_message();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void RegisterClientReply::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:LN_Chat.RegisterClientReply.message)
+}
+inline std::string* RegisterClientReply::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:LN_Chat.RegisterClientReply.message)
+  return _s;
+}
+inline const std::string& RegisterClientReply::_internal_message() const {
+  return _impl_.message_.Get();
+}
+inline void RegisterClientReply::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RegisterClientReply::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
+}
+inline std::string* RegisterClientReply::release_message() {
+  // @@protoc_insertion_point(field_release:LN_Chat.RegisterClientReply.message)
+  return _impl_.message_.Release();
+}
+inline void RegisterClientReply::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:LN_Chat.RegisterClientReply.message)
+}
+
+// uint64 clientId = 3;
+inline void RegisterClientReply::clear_clientid() {
+  _impl_.clientid_ = uint64_t{0u};
+}
+inline uint64_t RegisterClientReply::_internal_clientid() const {
+  return _impl_.clientid_;
+}
+inline uint64_t RegisterClientReply::clientid() const {
+  // @@protoc_insertion_point(field_get:LN_Chat.RegisterClientReply.clientId)
+  return _internal_clientid();
+}
+inline void RegisterClientReply::_internal_set_clientid(uint64_t value) {
+  
+  _impl_.clientid_ = value;
+}
+inline void RegisterClientReply::set_clientid(uint64_t value) {
+  _internal_set_clientid(value);
+  // @@protoc_insertion_point(field_set:LN_Chat.RegisterClientReply.clientId)
+}
+
+// -------------------------------------------------------------------
+
 // PublishRoomRequest
 
 // string name = 1;
@@ -1582,6 +2066,10 @@ inline void HeartBeatReply::set_success(bool value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

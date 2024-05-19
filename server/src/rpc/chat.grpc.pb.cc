@@ -22,8 +22,10 @@
 namespace LN_Chat {
 
 static const char* ChatService_method_names[] = {
+  "/LN_Chat.ChatService/HeartBeat",
   "/LN_Chat.ChatService/PublishRoom",
   "/LN_Chat.ChatService/GetRoomPeers",
+  "/LN_Chat.ChatService/RegisterClient",
 };
 
 std::unique_ptr< ChatService::Stub> ChatService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -33,9 +35,34 @@ std::unique_ptr< ChatService::Stub> ChatService::NewStub(const std::shared_ptr< 
 }
 
 ChatService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_PublishRoom_(ChatService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetRoomPeers_(ChatService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  : channel_(channel), rpcmethod_HeartBeat_(ChatService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_PublishRoom_(ChatService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetRoomPeers_(ChatService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RegisterClient_(ChatService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
+
+::grpc::Status ChatService::Stub::HeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::LN_Chat::HeartBeatReply* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::LN_Chat::HeartBeatRequest, ::LN_Chat::HeartBeatReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_HeartBeat_, context, request, response);
+}
+
+void ChatService::Stub::async::HeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest* request, ::LN_Chat::HeartBeatReply* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::LN_Chat::HeartBeatRequest, ::LN_Chat::HeartBeatReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_HeartBeat_, context, request, response, std::move(f));
+}
+
+void ChatService::Stub::async::HeartBeat(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest* request, ::LN_Chat::HeartBeatReply* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_HeartBeat_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::LN_Chat::HeartBeatReply>* ChatService::Stub::PrepareAsyncHeartBeatRaw(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::LN_Chat::HeartBeatReply, ::LN_Chat::HeartBeatRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_HeartBeat_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::LN_Chat::HeartBeatReply>* ChatService::Stub::AsyncHeartBeatRaw(::grpc::ClientContext* context, const ::LN_Chat::HeartBeatRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncHeartBeatRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
 
 ::grpc::Status ChatService::Stub::PublishRoom(::grpc::ClientContext* context, const ::LN_Chat::PublishRoomRequest& request, ::LN_Chat::PublishRoomReply* response) {
   return ::grpc::internal::BlockingUnaryCall< ::LN_Chat::PublishRoomRequest, ::LN_Chat::PublishRoomReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PublishRoom_, context, request, response);
@@ -83,9 +110,42 @@ void ChatService::Stub::async::GetRoomPeers(::grpc::ClientContext* context, cons
   return result;
 }
 
+::grpc::Status ChatService::Stub::RegisterClient(::grpc::ClientContext* context, const ::LN_Chat::RegisterClientRequest& request, ::LN_Chat::RegisterClientReply* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::LN_Chat::RegisterClientRequest, ::LN_Chat::RegisterClientReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RegisterClient_, context, request, response);
+}
+
+void ChatService::Stub::async::RegisterClient(::grpc::ClientContext* context, const ::LN_Chat::RegisterClientRequest* request, ::LN_Chat::RegisterClientReply* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::LN_Chat::RegisterClientRequest, ::LN_Chat::RegisterClientReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RegisterClient_, context, request, response, std::move(f));
+}
+
+void ChatService::Stub::async::RegisterClient(::grpc::ClientContext* context, const ::LN_Chat::RegisterClientRequest* request, ::LN_Chat::RegisterClientReply* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RegisterClient_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::LN_Chat::RegisterClientReply>* ChatService::Stub::PrepareAsyncRegisterClientRaw(::grpc::ClientContext* context, const ::LN_Chat::RegisterClientRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::LN_Chat::RegisterClientReply, ::LN_Chat::RegisterClientRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RegisterClient_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::LN_Chat::RegisterClientReply>* ChatService::Stub::AsyncRegisterClientRaw(::grpc::ClientContext* context, const ::LN_Chat::RegisterClientRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncRegisterClientRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ChatService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ChatService_method_names[0],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ChatService::Service, ::LN_Chat::HeartBeatRequest, ::LN_Chat::HeartBeatReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ChatService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::LN_Chat::HeartBeatRequest* req,
+             ::LN_Chat::HeartBeatReply* resp) {
+               return service->HeartBeat(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ChatService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ChatService::Service, ::LN_Chat::PublishRoomRequest, ::LN_Chat::PublishRoomReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ChatService::Service* service,
@@ -95,7 +155,7 @@ ChatService::Service::Service() {
                return service->PublishRoom(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      ChatService_method_names[1],
+      ChatService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ChatService::Service, ::LN_Chat::GetRoomPeersRequest, ::LN_Chat::GetRoomPeersReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ChatService::Service* service,
@@ -104,9 +164,26 @@ ChatService::Service::Service() {
              ::LN_Chat::GetRoomPeersReply* resp) {
                return service->GetRoomPeers(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ChatService_method_names[3],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ChatService::Service, ::LN_Chat::RegisterClientRequest, ::LN_Chat::RegisterClientReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ChatService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::LN_Chat::RegisterClientRequest* req,
+             ::LN_Chat::RegisterClientReply* resp) {
+               return service->RegisterClient(ctx, req, resp);
+             }, this)));
 }
 
 ChatService::Service::~Service() {
+}
+
+::grpc::Status ChatService::Service::HeartBeat(::grpc::ServerContext* context, const ::LN_Chat::HeartBeatRequest* request, ::LN_Chat::HeartBeatReply* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
 ::grpc::Status ChatService::Service::PublishRoom(::grpc::ServerContext* context, const ::LN_Chat::PublishRoomRequest* request, ::LN_Chat::PublishRoomReply* response) {
@@ -117,6 +194,13 @@ ChatService::Service::~Service() {
 }
 
 ::grpc::Status ChatService::Service::GetRoomPeers(::grpc::ServerContext* context, const ::LN_Chat::GetRoomPeersRequest* request, ::LN_Chat::GetRoomPeersReply* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ChatService::Service::RegisterClient(::grpc::ServerContext* context, const ::LN_Chat::RegisterClientRequest* request, ::LN_Chat::RegisterClientReply* response) {
   (void) context;
   (void) request;
   (void) response;

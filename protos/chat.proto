@@ -2,8 +2,19 @@ syntax = "proto3";
 package LN_Chat;
 
 service ChatService {
-  rpc PublishRoom(PublishRoomRequest) returns (PublishRoomReply);
-  rpc GetRoomPeers(GetRoomPeersRequest) returns (GetRoomPeersReply);
+    rpc HeartBeat(HeartBeatRequest) returns (HeartBeatReply);
+    rpc PublishRoom(PublishRoomRequest) returns (PublishRoomReply);
+    rpc GetRoomPeers(GetRoomPeersRequest) returns (GetRoomPeersReply);
+    rpc RegisterClient(RegisterClientRequest) returns (RegisterClientReply);
+}
+message RegisterClientRequest {
+    string name = 1;
+}
+
+message RegisterClientReply {
+    bool success = 1;
+    string message = 2;
+    uint64 clientId = 3;
 }
 
 message PublishRoomRequest {

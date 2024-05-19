@@ -33,7 +33,7 @@ private:
 
 class CallData final {
 public:
-    enum RequestType { PUBLISH_ROOM, GET_ROOM_PEERS };
+    enum RequestType { REGISTER_CLIENT, PUBLISH_ROOM, GET_ROOM_PEERS, HEAR_BEAT };
 
     CallData(LN_Chat::ChatService::AsyncService* service, grpc::ServerCompletionQueue* completion_queue, RequestType type,
              std::shared_ptr<Storage> storage);
@@ -46,6 +46,14 @@ private:
     LN_Chat::ChatService::AsyncService* m_service;
     grpc::ServerCompletionQueue* m_completion_queue;
     grpc::ServerContext m_context;
+
+    LN_Chat::RegisterClientRequest m_register_client_request;
+    LN_Chat::RegisterClientReply m_register_client_reply;
+    grpc::ServerAsyncResponseWriter<LN_Chat::RegisterClientReply> m_register_client_responder;
+
+    LN_Chat::HeartBeatRequest m_heart_beat_request;
+    LN_Chat::HeartBeatReply m_heart_beat_reply;
+    grpc::ServerAsyncResponseWriter<LN_Chat::HeartBeatReply> m_heart_beat_responder;
 
     LN_Chat::PublishRoomRequest m_publish_room_request;
     LN_Chat::PublishRoomReply m_publish_room_reply;

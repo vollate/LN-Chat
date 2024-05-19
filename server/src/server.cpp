@@ -18,7 +18,8 @@ using LN_Chat::PublishRoomReply;
 using LN_Chat::PublishRoomRequest;
 using std::chrono_literals::operator""s;
 
-ChatServer::ChatServer(const std::string& ip, uint16_t port, uint32_t num_threads) : m_shutdown(false) {
+ChatServer::ChatServer(const std::string& ip, uint16_t port, uint32_t num_threads)
+    : m_shutdown(false), m_storage{ std::make_shared<Storage>() } {
     std::string server_address = ip + ":" + std::to_string(port);
     grpc::ServerBuilder builder;
     builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
@@ -47,7 +48,10 @@ void ChatServer::handleRpc(uint32_t num_threads) {
     }
 }
 
+// Shit register way
 void ChatServer::handleRpcInThreadPool() {
+    new CallData(&m_service, m_completion_queue.get(), CallData::REGISTER_CLIENT, m_storage);
+    new CallData(&m_service, m_completion_queue.get(), CallData::HEAR_BEAT, m_storage);
     new CallData(&m_service, m_completion_queue.get(), CallData::PUBLISH_ROOM, m_storage);
     new CallData(&m_service, m_completion_queue.get(), CallData::GET_ROOM_PEERS, m_storage);
     void* tag;
@@ -61,8 +65,9 @@ void ChatServer::handleRpcInThreadPool() {
 
 CallData::CallData(ChatService::AsyncService* service, grpc::ServerCompletionQueue* cq, RequestType type,
                    std::shared_ptr<Storage> storage)
-    : m_service{ service }, m_completion_queue{ cq }, m_publish_room_responder(&m_context),
-      m_get_room_peers_responder(&m_context), m_status{ CREATE }, m_type{ type }, m_storage{ std::move(storage) } {
+    : m_service{ service }, m_completion_queue{ cq }, m_register_client_responder(&m_context), m_heart_beat_responder(&m_context),
+      m_publish_room_responder(&m_context), m_get_room_peers_responder(&m_context), m_status{ CREATE }, m_type{ type },
+      m_storage{ std::move(storage) } {
     proceed();
 }
 
@@ -83,6 +88,14 @@ void CallData::proceed() {
 void CallData::handleCreate() {
     m_status = PROCESS;
     switch(m_type) {
+        case REGISTER_CLIENT:
+            m_service->RequestRegisterClient(&m_context, &m_register_client_request, &m_register_client_responder,
+                                             m_completion_queue, m_completion_queue, this);
+            break;
+        case HEAR_BEAT:
+            m_service->RequestHeartBeat(&m_context, &m_heart_beat_request, &m_heart_beat_responder, m_completion_queue,
+                                        m_completion_queue, this);
+            break;
         case PUBLISH_ROOM:
             m_service->RequestPublishRoom(&m_context, &m_publish_room_request, &m_publish_room_responder, m_completion_queue,
                                           m_completion_queue, this);
@@ -98,6 +111,14 @@ void CallData::handleProcess() {
     new CallData(m_service, m_completion_queue, m_type, m_storage);
 
     switch(m_type) {
+        case REGISTER_CLIENT: {
+            Controller::handleRegisterClient(this);
+            break;
+        }
+        case HEAR_BEAT: {
+            Controller::handleHeartBeat(this);
+            break;
+        }
         case PUBLISH_ROOM: {
             Controller::handlePublishRoom(this);
             break;
