@@ -1,4 +1,4 @@
-set(SOURCE_FILES "main.cpp")
+set(SOURCE_FILES "main.cpp" "storage.cpp" "control.cpp")
 
 set(chat_proto_path "${CMAKE_SOURCE_DIR}/../protos/chat.proto")
 cmake_path(GET chat_proto_path PARENT_PATH proto_dir)
@@ -23,7 +23,8 @@ add_custom_command(
 
 add_executable(ln_server ${SOURCE_FILES})
 add_library(chat_proto ${chat_proto_srcs} ${chat_grpc_srcs} "server.cpp")
-target_include_directories(chat_proto PUBLIC "${CMAKE_SOURCE_DIR}/include/rpc" "${CMAKE_SOURCE_DIR}/include")
+target_include_directories(chat_proto PUBLIC "${CMAKE_SOURCE_DIR}/include/rpc"
+                                             "${CMAKE_SOURCE_DIR}/include")
 
 find_package(gRPC CONFIG REQUIRED)
 find_package(absl CONFIG REQUIRED)

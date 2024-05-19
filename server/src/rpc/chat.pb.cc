@@ -53,7 +53,7 @@ PROTOBUF_CONSTEXPR GetRoomPeersRequest::GetRoomPeersRequest(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.password_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.clientid_)*/uint64_t{0u}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct GetRoomPeersRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR GetRoomPeersRequestDefaultTypeInternal()
@@ -79,8 +79,34 @@ struct GetRoomPeersReplyDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetRoomPeersReplyDefaultTypeInternal _GetRoomPeersReply_default_instance_;
+PROTOBUF_CONSTEXPR HeartBeatRequest::HeartBeatRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.clientid_)*/uint64_t{0u}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct HeartBeatRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR HeartBeatRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~HeartBeatRequestDefaultTypeInternal() {}
+  union {
+    HeartBeatRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 HeartBeatRequestDefaultTypeInternal _HeartBeatRequest_default_instance_;
+PROTOBUF_CONSTEXPR HeartBeatReply::HeartBeatReply(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.success_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct HeartBeatReplyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR HeartBeatReplyDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~HeartBeatReplyDefaultTypeInternal() {}
+  union {
+    HeartBeatReply _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 HeartBeatReplyDefaultTypeInternal _HeartBeatReply_default_instance_;
 }  // namespace LN_Chat
-static ::_pb::Metadata file_level_metadata_chat_2eproto[4];
+static ::_pb::Metadata file_level_metadata_chat_2eproto[6];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_chat_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_chat_2eproto = nullptr;
 
@@ -109,7 +135,7 @@ const uint32_t TableStruct_chat_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(pro
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::LN_Chat::GetRoomPeersRequest, _impl_.name_),
   PROTOBUF_FIELD_OFFSET(::LN_Chat::GetRoomPeersRequest, _impl_.password_),
-  PROTOBUF_FIELD_OFFSET(::LN_Chat::GetRoomPeersRequest, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::LN_Chat::GetRoomPeersRequest, _impl_.clientid_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::LN_Chat::GetRoomPeersReply, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -119,12 +145,28 @@ const uint32_t TableStruct_chat_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(pro
   PROTOBUF_FIELD_OFFSET(::LN_Chat::GetRoomPeersReply, _impl_.success_),
   PROTOBUF_FIELD_OFFSET(::LN_Chat::GetRoomPeersReply, _impl_.peers_),
   PROTOBUF_FIELD_OFFSET(::LN_Chat::GetRoomPeersReply, _impl_.message_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::LN_Chat::HeartBeatRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::LN_Chat::HeartBeatRequest, _impl_.clientid_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::LN_Chat::HeartBeatReply, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::LN_Chat::HeartBeatReply, _impl_.success_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::LN_Chat::PublishRoomRequest)},
   { 8, -1, -1, sizeof(::LN_Chat::PublishRoomReply)},
   { 16, -1, -1, sizeof(::LN_Chat::GetRoomPeersRequest)},
   { 25, -1, -1, sizeof(::LN_Chat::GetRoomPeersReply)},
+  { 34, -1, -1, sizeof(::LN_Chat::HeartBeatRequest)},
+  { 41, -1, -1, sizeof(::LN_Chat::HeartBeatReply)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -132,26 +174,30 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::LN_Chat::_PublishRoomReply_default_instance_._instance,
   &::LN_Chat::_GetRoomPeersRequest_default_instance_._instance,
   &::LN_Chat::_GetRoomPeersReply_default_instance_._instance,
+  &::LN_Chat::_HeartBeatRequest_default_instance_._instance,
+  &::LN_Chat::_HeartBeatReply_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_chat_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\nchat.proto\022\007LN_Chat\"4\n\022PublishRoomRequ"
   "est\022\014\n\004name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"4\n\020P"
   "ublishRoomReply\022\017\n\007success\030\001 \001(\010\022\017\n\007mess"
-  "age\030\002 \001(\t\"A\n\023GetRoomPeersRequest\022\014\n\004name"
-  "\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\n\n\002id\030\003 \001(\t\"D\n\021"
-  "GetRoomPeersReply\022\017\n\007success\030\001 \001(\010\022\r\n\005pe"
-  "ers\030\002 \003(\t\022\017\n\007message\030\003 \001(\t2\236\001\n\013ChatServi"
-  "ce\022E\n\013PublishRoom\022\033.LN_Chat.PublishRoomR"
-  "equest\032\031.LN_Chat.PublishRoomReply\022H\n\014Get"
-  "RoomPeers\022\034.LN_Chat.GetRoomPeersRequest\032"
-  "\032.LN_Chat.GetRoomPeersReplyb\006proto3"
+  "age\030\002 \001(\t\"G\n\023GetRoomPeersRequest\022\014\n\004name"
+  "\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\020\n\010clientId\030\003 \001"
+  "(\004\"D\n\021GetRoomPeersReply\022\017\n\007success\030\001 \001(\010"
+  "\022\r\n\005peers\030\002 \003(\t\022\017\n\007message\030\003 \001(\t\"$\n\020Hear"
+  "tBeatRequest\022\020\n\010clientId\030\001 \001(\004\"!\n\016HeartB"
+  "eatReply\022\017\n\007success\030\001 \001(\0102\236\001\n\013ChatServic"
+  "e\022E\n\013PublishRoom\022\033.LN_Chat.PublishRoomRe"
+  "quest\032\031.LN_Chat.PublishRoomReply\022H\n\014GetR"
+  "oomPeers\022\034.LN_Chat.GetRoomPeersRequest\032\032"
+  ".LN_Chat.GetRoomPeersReplyb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_chat_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_chat_2eproto = {
-    false, false, 435, descriptor_table_protodef_chat_2eproto,
+    false, false, 514, descriptor_table_protodef_chat_2eproto,
     "chat.proto",
-    &descriptor_table_chat_2eproto_once, nullptr, 0, 4,
+    &descriptor_table_chat_2eproto_once, nullptr, 0, 6,
     schemas, file_default_instances, TableStruct_chat_2eproto::offsets,
     file_level_metadata_chat_2eproto, file_level_enum_descriptors_chat_2eproto,
     file_level_service_descriptors_chat_2eproto,
@@ -665,7 +711,7 @@ GetRoomPeersRequest::GetRoomPeersRequest(const GetRoomPeersRequest& from)
   new (&_impl_) Impl_{
       decltype(_impl_.name_){}
     , decltype(_impl_.password_){}
-    , decltype(_impl_.id_){}
+    , decltype(_impl_.clientid_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -685,14 +731,7 @@ GetRoomPeersRequest::GetRoomPeersRequest(const GetRoomPeersRequest& from)
     _this->_impl_.password_.Set(from._internal_password(), 
       _this->GetArenaForAllocation());
   }
-  _impl_.id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_id().empty()) {
-    _this->_impl_.id_.Set(from._internal_id(), 
-      _this->GetArenaForAllocation());
-  }
+  _this->_impl_.clientid_ = from._impl_.clientid_;
   // @@protoc_insertion_point(copy_constructor:LN_Chat.GetRoomPeersRequest)
 }
 
@@ -703,7 +742,7 @@ inline void GetRoomPeersRequest::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.name_){}
     , decltype(_impl_.password_){}
-    , decltype(_impl_.id_){}
+    , decltype(_impl_.clientid_){uint64_t{0u}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.name_.InitDefault();
@@ -713,10 +752,6 @@ inline void GetRoomPeersRequest::SharedCtor(
   _impl_.password_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.password_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
@@ -733,7 +768,6 @@ inline void GetRoomPeersRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.name_.Destroy();
   _impl_.password_.Destroy();
-  _impl_.id_.Destroy();
 }
 
 void GetRoomPeersRequest::SetCachedSize(int size) const {
@@ -748,7 +782,7 @@ void GetRoomPeersRequest::Clear() {
 
   _impl_.name_.ClearToEmpty();
   _impl_.password_.ClearToEmpty();
-  _impl_.id_.ClearToEmpty();
+  _impl_.clientid_ = uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -778,13 +812,11 @@ const char* GetRoomPeersRequest::_InternalParse(const char* ptr, ::_pbi::ParseCo
         } else
           goto handle_unusual;
         continue;
-      // string id = 3;
+      // uint64 clientId = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.clientid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "LN_Chat.GetRoomPeersRequest.id"));
         } else
           goto handle_unusual;
         continue;
@@ -837,14 +869,10 @@ uint8_t* GetRoomPeersRequest::_InternalSerialize(
         2, this->_internal_password(), target);
   }
 
-  // string id = 3;
-  if (!this->_internal_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_id().data(), static_cast<int>(this->_internal_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "LN_Chat.GetRoomPeersRequest.id");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_id(), target);
+  // uint64 clientId = 3;
+  if (this->_internal_clientid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(3, this->_internal_clientid(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -877,11 +905,9 @@ size_t GetRoomPeersRequest::ByteSizeLong() const {
         this->_internal_password());
   }
 
-  // string id = 3;
-  if (!this->_internal_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_id());
+  // uint64 clientId = 3;
+  if (this->_internal_clientid() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_clientid());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -908,8 +934,8 @@ void GetRoomPeersRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, co
   if (!from._internal_password().empty()) {
     _this->_internal_set_password(from._internal_password());
   }
-  if (!from._internal_id().empty()) {
-    _this->_internal_set_id(from._internal_id());
+  if (from._internal_clientid() != 0) {
+    _this->_internal_set_clientid(from._internal_clientid());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -938,10 +964,7 @@ void GetRoomPeersRequest::InternalSwap(GetRoomPeersRequest* other) {
       &_impl_.password_, lhs_arena,
       &other->_impl_.password_, rhs_arena
   );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.id_, lhs_arena,
-      &other->_impl_.id_, rhs_arena
-  );
+  swap(_impl_.clientid_, other->_impl_.clientid_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata GetRoomPeersRequest::GetMetadata() const {
@@ -1219,6 +1242,362 @@ void GetRoomPeersReply::InternalSwap(GetRoomPeersReply* other) {
       file_level_metadata_chat_2eproto[3]);
 }
 
+// ===================================================================
+
+class HeartBeatRequest::_Internal {
+ public:
+};
+
+HeartBeatRequest::HeartBeatRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:LN_Chat.HeartBeatRequest)
+}
+HeartBeatRequest::HeartBeatRequest(const HeartBeatRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  HeartBeatRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.clientid_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.clientid_ = from._impl_.clientid_;
+  // @@protoc_insertion_point(copy_constructor:LN_Chat.HeartBeatRequest)
+}
+
+inline void HeartBeatRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.clientid_){uint64_t{0u}}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+HeartBeatRequest::~HeartBeatRequest() {
+  // @@protoc_insertion_point(destructor:LN_Chat.HeartBeatRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void HeartBeatRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void HeartBeatRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void HeartBeatRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:LN_Chat.HeartBeatRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.clientid_ = uint64_t{0u};
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* HeartBeatRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint64 clientId = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.clientid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* HeartBeatRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:LN_Chat.HeartBeatRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 clientId = 1;
+  if (this->_internal_clientid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_clientid(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:LN_Chat.HeartBeatRequest)
+  return target;
+}
+
+size_t HeartBeatRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:LN_Chat.HeartBeatRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // uint64 clientId = 1;
+  if (this->_internal_clientid() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_clientid());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData HeartBeatRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    HeartBeatRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*HeartBeatRequest::GetClassData() const { return &_class_data_; }
+
+
+void HeartBeatRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<HeartBeatRequest*>(&to_msg);
+  auto& from = static_cast<const HeartBeatRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:LN_Chat.HeartBeatRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_clientid() != 0) {
+    _this->_internal_set_clientid(from._internal_clientid());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void HeartBeatRequest::CopyFrom(const HeartBeatRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:LN_Chat.HeartBeatRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool HeartBeatRequest::IsInitialized() const {
+  return true;
+}
+
+void HeartBeatRequest::InternalSwap(HeartBeatRequest* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.clientid_, other->_impl_.clientid_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata HeartBeatRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
+      file_level_metadata_chat_2eproto[4]);
+}
+
+// ===================================================================
+
+class HeartBeatReply::_Internal {
+ public:
+};
+
+HeartBeatReply::HeartBeatReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:LN_Chat.HeartBeatReply)
+}
+HeartBeatReply::HeartBeatReply(const HeartBeatReply& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  HeartBeatReply* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.success_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.success_ = from._impl_.success_;
+  // @@protoc_insertion_point(copy_constructor:LN_Chat.HeartBeatReply)
+}
+
+inline void HeartBeatReply::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.success_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+HeartBeatReply::~HeartBeatReply() {
+  // @@protoc_insertion_point(destructor:LN_Chat.HeartBeatReply)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void HeartBeatReply::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void HeartBeatReply::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void HeartBeatReply::Clear() {
+// @@protoc_insertion_point(message_clear_start:LN_Chat.HeartBeatReply)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.success_ = false;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* HeartBeatReply::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // bool success = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.success_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* HeartBeatReply::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:LN_Chat.HeartBeatReply)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool success = 1;
+  if (this->_internal_success() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_success(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:LN_Chat.HeartBeatReply)
+  return target;
+}
+
+size_t HeartBeatReply::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:LN_Chat.HeartBeatReply)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bool success = 1;
+  if (this->_internal_success() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData HeartBeatReply::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    HeartBeatReply::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*HeartBeatReply::GetClassData() const { return &_class_data_; }
+
+
+void HeartBeatReply::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<HeartBeatReply*>(&to_msg);
+  auto& from = static_cast<const HeartBeatReply&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:LN_Chat.HeartBeatReply)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_success() != 0) {
+    _this->_internal_set_success(from._internal_success());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void HeartBeatReply::CopyFrom(const HeartBeatReply& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:LN_Chat.HeartBeatReply)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool HeartBeatReply::IsInitialized() const {
+  return true;
+}
+
+void HeartBeatReply::InternalSwap(HeartBeatReply* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.success_, other->_impl_.success_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata HeartBeatReply::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
+      file_level_metadata_chat_2eproto[5]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace LN_Chat
 PROTOBUF_NAMESPACE_OPEN
@@ -1237,6 +1616,14 @@ Arena::CreateMaybeMessage< ::LN_Chat::GetRoomPeersRequest >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::LN_Chat::GetRoomPeersReply*
 Arena::CreateMaybeMessage< ::LN_Chat::GetRoomPeersReply >(Arena* arena) {
   return Arena::CreateMessageInternal< ::LN_Chat::GetRoomPeersReply >(arena);
+}
+template<> PROTOBUF_NOINLINE ::LN_Chat::HeartBeatRequest*
+Arena::CreateMaybeMessage< ::LN_Chat::HeartBeatRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::LN_Chat::HeartBeatRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::LN_Chat::HeartBeatReply*
+Arena::CreateMaybeMessage< ::LN_Chat::HeartBeatReply >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::LN_Chat::HeartBeatReply >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

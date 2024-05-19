@@ -19,11 +19,18 @@ message PublishRoomReply {
 message GetRoomPeersRequest{
     string name = 1;
     string password = 2;
-    string id   = 3;
+    uint64 clientId   = 3;
 }
 
 message GetRoomPeersReply{
     bool success = 1;
     repeated string peers = 2;
     string message = 3;
+}
+
+message HeartBeatRequest{
+    uint64 clientId = 1;
+}
+message HeartBeatReply{
+    bool success = 1;
 }

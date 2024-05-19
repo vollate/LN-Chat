@@ -7,13 +7,14 @@
 #include <thread>
 #include <vector>
 
+#include "control.hpp"
 #include "rpc/chat.grpc.pb.h"
 #include "rpc/chat.pb.h"
-
+#include "storage.hpp"
 
 class ChatServer final {
 public:
-    explicit ChatServer(uint16_t port, uint32_t num_threads);
+    ChatServer(const std::string& ip, uint16_t port, uint32_t num_threads);
 
     ~ChatServer();
 
@@ -22,6 +23,7 @@ private:
 
     void handleRpcInThreadPool();
 
+    std::shared_ptr<Storage> m_storage;
     std::unique_ptr<grpc::Server> m_server;
     LN_Chat::ChatService::AsyncService m_service;
     std::unique_ptr<grpc::ServerCompletionQueue> m_completion_queue;
@@ -29,44 +31,32 @@ private:
     bool m_shutdown;
 };
 
-
 class CallData final {
 public:
-    enum RequestType {
-        PUBLISH_ROOM, GET_ROOM_PEERS
-    };
+    enum RequestType { PUBLISH_ROOM, GET_ROOM_PEERS };
 
-    CallData(LN_Chat::ChatService::AsyncService *service,
-             grpc::ServerCompletionQueue *completion_queue, RequestType type);
+    CallData(LN_Chat::ChatService::AsyncService* service, grpc::ServerCompletionQueue* completion_queue, RequestType type,
+             std::shared_ptr<Storage> storage);
 
     void proceed();
 
 private:
-    struct Controller final {
-        Controller() = delete;
+    friend Controller;
 
-        static void handlePublishRoom(CallData *call_data);
-
-        static void handleGetRoomPeers(CallData *call_data);
-    };
-
-    LN_Chat::ChatService::AsyncService *m_service;
-    grpc::ServerCompletionQueue *m_completion_queue;
+    LN_Chat::ChatService::AsyncService* m_service;
+    grpc::ServerCompletionQueue* m_completion_queue;
     grpc::ServerContext m_context;
 
     LN_Chat::PublishRoomRequest m_publish_room_request;
     LN_Chat::PublishRoomReply m_publish_room_reply;
-    grpc::ServerAsyncResponseWriter<LN_Chat::PublishRoomReply>
-            m_publish_room_responder;
+    grpc::ServerAsyncResponseWriter<LN_Chat::PublishRoomReply> m_publish_room_responder;
 
     LN_Chat::GetRoomPeersRequest m_get_room_peers_request;
     LN_Chat::GetRoomPeersReply m_get_room_peers_reply;
-    grpc::ServerAsyncResponseWriter<LN_Chat::GetRoomPeersReply>
-            m_get_room_peers_responder;
+    grpc::ServerAsyncResponseWriter<LN_Chat::GetRoomPeersReply> m_get_room_peers_responder;
 
-    enum CallStatus {
-        CREATE, PROCESS, FINISH
-    };
+    std::shared_ptr<Storage> m_storage;
+    enum CallStatus { CREATE, PROCESS, FINISH };
     CallStatus m_status;
     RequestType m_type;
 
@@ -75,5 +65,4 @@ private:
     void handleProcess();
 
     void handleFinish();
-
 };
