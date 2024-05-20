@@ -18,8 +18,9 @@ message RegisterClientReply {
 }
 
 message PublishRoomRequest {
-    string name = 1;
-    string password = 2;
+    uint64 clientId = 1;
+    string name = 2;
+    string password = 3;
 }
 
 message PublishRoomReply {
@@ -35,7 +36,7 @@ message GetRoomPeersRequest{
 
 message GetRoomPeersReply{
     bool success = 1;
-    repeated string peers = 2;
+    repeated string peersIp = 2;
     string message = 3;
 }
 

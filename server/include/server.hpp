@@ -7,15 +7,18 @@
 #include <thread>
 #include <vector>
 
-#include "control.hpp"
 #include "chat.grpc.pb.h"
 #include "chat.pb.h"
+#include "control.hpp"
 #include "storage.hpp"
 
 class ChatServer final {
 public:
-    ChatServer(const std::string& ip, uint16_t port, uint32_t num_threads);
-
+    ChatServer(const std::string& ipv4, uint16_t port, uint32_t num_threads);
+    ChatServer(const ChatServer&) = delete;
+    auto operator=(const ChatServer&) -> ChatServer& = delete;
+    ChatServer(ChatServer&&) = default;
+    auto operator=(ChatServer&&) -> ChatServer& = default;
     ~ChatServer();
 
 private:
@@ -64,7 +67,9 @@ private:
     grpc::ServerAsyncResponseWriter<LN_Chat::GetRoomPeersReply> m_get_room_peers_responder;
 
     std::shared_ptr<Storage> m_storage;
+
     enum CallStatus { CREATE, PROCESS, FINISH };
+
     CallStatus m_status;
     RequestType m_type;
 

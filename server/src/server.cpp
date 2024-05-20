@@ -18,9 +18,9 @@ using LN_Chat::PublishRoomReply;
 using LN_Chat::PublishRoomRequest;
 using std::chrono_literals::operator""s;
 
-ChatServer::ChatServer(const std::string& ip, uint16_t port, uint32_t num_threads)
-    : m_shutdown(false), m_storage{ std::make_shared<Storage>() } {
-    std::string server_address = ip + ":" + std::to_string(port);
+ChatServer::ChatServer(const std::string& ipv4, uint16_t port, uint32_t num_threads)
+    : m_storage{ std::make_shared<Storage>() }, m_shutdown{ false } {
+    std::string server_address = ipv4 + ":" + std::to_string(port);
     grpc::ServerBuilder builder;
     builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
     builder.RegisterService(&m_service);
@@ -54,8 +54,8 @@ void ChatServer::handleRpcInThreadPool() {
     new CallData(&m_service, m_completion_queue.get(), CallData::HEAR_BEAT, m_storage);
     new CallData(&m_service, m_completion_queue.get(), CallData::PUBLISH_ROOM, m_storage);
     new CallData(&m_service, m_completion_queue.get(), CallData::GET_ROOM_PEERS, m_storage);
-    void* tag;
-    bool ok;
+    void* tag = nullptr;
+    bool ok = false;
     while(!m_shutdown) {
         GPR_ASSERT(m_completion_queue->Next(&tag, &ok));
         GPR_ASSERT(ok);
@@ -63,11 +63,11 @@ void ChatServer::handleRpcInThreadPool() {
     }
 }
 
-CallData::CallData(ChatService::AsyncService* service, grpc::ServerCompletionQueue* cq, RequestType type,
+CallData::CallData(ChatService::AsyncService* service, grpc::ServerCompletionQueue* server_cq, RequestType type,
                    std::shared_ptr<Storage> storage)
-    : m_service{ service }, m_completion_queue{ cq }, m_register_client_responder(&m_context), m_heart_beat_responder(&m_context),
-      m_publish_room_responder(&m_context), m_get_room_peers_responder(&m_context), m_status{ CREATE }, m_type{ type },
-      m_storage{ std::move(storage) } {
+    : m_service{ service }, m_completion_queue{ server_cq }, m_register_client_responder(&m_context),
+      m_heart_beat_responder(&m_context), m_publish_room_responder(&m_context), m_get_room_peers_responder(&m_context),
+      m_storage{ std::move(storage) }, m_status{ CREATE }, m_type{ type } {
     proceed();
 }
 
