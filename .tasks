@@ -2,7 +2,7 @@
 # see: https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config
 
 [project-init]
-command=cmake -B build -GNinja
+command=./dev.sh clean
 cwd=<root>/server
 
 [project-build]

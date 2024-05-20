@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "control.hpp"
-#include "rpc/chat.grpc.pb.h"
-#include "rpc/chat.pb.h"
+#include "chat.grpc.pb.h"
+#include "chat.pb.h"
 #include "storage.hpp"
 
 class ChatServer final {
