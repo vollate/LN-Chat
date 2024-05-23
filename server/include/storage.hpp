@@ -47,13 +47,13 @@ public:
     auto registerClient(const std::string& username, const std::string& socket_addr) -> std::optional<uint64_t>;
     auto addRoom(const std::string& room_name, const std::string& password) -> bool;
     auto getClient(uint64_t user_id) -> std::optional<std::shared_ptr<Client>>;
-    auto getChatRoom(const std::string& room_name)
-        -> std::optional<std::pair<std::unique_lock<std::shared_mutex>, std::shared_ptr<ChatRoom>>>;
+    auto getChatRoom(const std::string& room_name) -> std::optional<std::shared_ptr<ChatRoom>>;
     auto activateClient(uint64_t user_id) -> bool;
+    auto getLock(bool defer = false) -> std::unique_lock<std::shared_mutex>;
+    auto getSharedLock(bool defer = false) -> std::shared_lock<std::shared_mutex>;
 
     // Provide concurrent access and get for member container
     template <typename C, typename T> auto get(C& container, const T& key) -> std::optional<T> {
-        std::shared_lock lock(m_mutex);
         if(auto iter = std::find(container.begin(), container.end(), key); iter != container.end()) {
             return *iter;
         }
@@ -63,7 +63,6 @@ public:
     // Provide concurrent access and add for member container.
     // @return true if the key was added, false if it already exists
     template <typename C, typename T> auto insertOnNotExist(C& container, const T& key) -> bool {
-        std::shared_lock lock(m_mutex);
         if(auto iter = std::find(container.begin(), container.end(), key); iter != container.end()) {
             return false;
         }
@@ -79,5 +78,5 @@ private:
     std::shared_mutex m_mutex;
     std::unordered_map<uint64_t, std::shared_ptr<Client>> m_clients;
     std::unordered_map<std::string, std::shared_ptr<ChatRoom>> m_chatrooms;
-    std::pair<std::mutex, std::list<std::shared_ptr<Client>>> m_to_delete;
+    std::list<std::shared_ptr<Client>> m_to_delete;
 };

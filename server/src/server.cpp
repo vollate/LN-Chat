@@ -12,11 +12,6 @@
 #include "utils.hpp"
 
 using LN_Chat::ChatService;
-using LN_Chat::GetRoomPeersReply;
-using LN_Chat::GetRoomPeersRequest;
-using LN_Chat::PublishRoomReply;
-using LN_Chat::PublishRoomRequest;
-using std::chrono_literals::operator""s;
 
 ChatServer::ChatServer(const std::string& ipv4, uint16_t port, uint32_t num_threads)
     : m_storage{ std::make_shared<Storage>() }, m_shutdown{ false } {
@@ -42,7 +37,8 @@ ChatServer::~ChatServer() {
 }
 
 void ChatServer::handleRpc(uint32_t num_threads) {
-    m_storage->startFlush(5s);
+    using std::chrono_literals::operator""s;
+    m_storage->startFlush(30s);
     for(uint32_t i = 0; i < num_threads; ++i) {
         m_workers.emplace_back(&ChatServer::handleRpcInThreadPool, this);
     }
@@ -55,10 +51,10 @@ void ChatServer::handleRpcInThreadPool() {
     new CallData(&m_service, m_completion_queue.get(), CallData::PUBLISH_ROOM, m_storage);
     new CallData(&m_service, m_completion_queue.get(), CallData::GET_ROOM_PEERS, m_storage);
     void* tag = nullptr;
-    bool ok = false;
+    bool success = false;
     while(!m_shutdown) {
-        GPR_ASSERT(m_completion_queue->Next(&tag, &ok));
-        GPR_ASSERT(ok);
+        GPR_ASSERT(m_completion_queue->Next(&tag, &success));
+        GPR_ASSERT(success);
         static_cast<CallData*>(tag)->proceed();
     }
 }
