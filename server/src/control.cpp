@@ -11,13 +11,14 @@ void Controller::handlePublishRoom(CallData* call_data) {
         call_data->m_publish_room_reply.set_message("Client not registered");
     } else if(call_data->m_storage->addRoom(call_data->m_publish_room_request.name(),
                                             call_data->m_publish_room_request.password())) {
+        call_data->m_storage->activateClient(client_opt.value()->user_id);
         auto room = call_data->m_storage->getChatRoom(call_data->m_publish_room_request.name()).value();
         room->users.push_back(client_opt.value());
         call_data->m_publish_room_reply.set_success(true);
         call_data->m_publish_room_reply.set_message("Room published successfully");
     } else {
         call_data->m_publish_room_reply.set_success(false);
-        call_data->m_publish_room_reply.set_message("Room already exists");
+        call_data->m_publish_room_reply.set_message("Room with the same name already exists");
     }
     call_data->m_status = CallData::FINISH;
     call_data->m_publish_room_responder.Finish(call_data->m_publish_room_reply, grpc::Status::OK, call_data);
@@ -31,6 +32,7 @@ void Controller::handleGetRoomPeers(CallData* call_data) {
         call_data->m_get_room_peers_reply.set_success(false);
         call_data->m_get_room_peers_reply.set_message("Client not registered");
     } else if(auto room_opt = call_data->m_storage->getChatRoom(call_data->m_get_room_peers_request.name())) {
+        call_data->m_storage->activateClient(client_opt.value()->user_id);
         auto room = room_opt.value();
         if(auto block_op = call_data->m_storage->get(room->blacklist, client_opt.value())) {
             call_data->m_get_room_peers_reply.set_success(false);

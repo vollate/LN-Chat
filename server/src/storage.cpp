@@ -13,9 +13,9 @@
 constexpr static int MaxTry = 200;
 
 Client::Client(uint64_t user_id, std::string username, std::string socket_addr)
-    : user_id(user_id), username(std::move(username)), socket_addr(std::move(socket_addr)), alive(true) {}
+    : user_id{ user_id }, username{ std::move(username) }, socket_addr{ std::move(socket_addr) }, alive{ true } {}
 
-ChatRoom::ChatRoom(std::string name, std::string password) : room_name(std::move(name)), password(std::move(password)) {}
+ChatRoom::ChatRoom(std::string name, std::string password) : room_name{ std::move(name) }, password{ std::move(password) } {}
 
 void Storage::startFlush(const std::chrono::milliseconds& flush_interval) {
     m_flush_running = true;
