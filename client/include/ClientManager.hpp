@@ -21,13 +21,13 @@ public:
 
     ~ClientManager() override;
 
-    void createRoom(QString name, QString passWord, ServerManager &serverManager);
+    void createRoom(QString name, QString password, ServerManager &serverManager);
 
     void joinRoom(QString name, QString password, QString username, ServerManager &serverManager);
 
     void leaveRoom();
 
-    void sendMessage(const QByteArray &message);
+    void sendMessage(const Message &message);
 
     void exportMessage();
 
@@ -40,6 +40,7 @@ private:
     void handleNewConnection();
 
     QString ip;
+    std::mutex mutex;
 
     std::unique_ptr<QTcpServer> tcp_server;
     std::shared_ptr<Room> currentRoom;

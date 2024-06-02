@@ -1,8 +1,10 @@
 #include <memory>
+#include <QJsonDocument>
 
 #include "ClientManager.hpp"
 #include "Room.hpp"
 #include "ServerManager.hpp"
+#include "utils.hpp"
 
 ClientManager::ClientManager(quint16 port, QObject *parent)
         : QObject{parent}, tcp_server{std::make_unique<QTcpServer>(this)},
@@ -16,8 +18,8 @@ ClientManager::ClientManager(quint16 port, QObject *parent)
     }
 }
 
-void ClientManager::createRoom(QString name, QString passWord, ServerManager &serverManager) {
-    serverManager.registerRoom(name.toStdString(), passWord.toStdString());
+void ClientManager::createRoom(QString name, QString password, ServerManager &serverManager) {
+    serverManager.registerRoom(name.toStdString(), password.toStdString());
 }
 
 void ClientManager::joinRoom(QString name, QString password, QString username, ServerManager &serverManager) {
@@ -27,6 +29,7 @@ void ClientManager::joinRoom(QString name, QString password, QString username, S
         for (auto peer: peers) {
             room->addPeer(std::move(peer));
         }
+        std::lock_guard guard{mutex};
         roomList->insert(name, *room);
         currentRoom = room;
         selfPeer = std::make_shared<Peer>(username, ip);
@@ -40,12 +43,15 @@ ClientManager::~ClientManager() {
     tcp_server->close();
 }
 
-void ClientManager::sendMessage(const QByteArray &message) {
+void ClientManager::sendMessage(const Message &message) {
     if (currentRoom && selfPeer) {
+        auto msg_json = json_helper::message2Json(message, currentRoom->getName());
+        QJsonDocument doc(msg_json);
+        auto bytes = doc.toJson();
         for (const auto &peer: currentRoom->getPeers()) {
             auto socket = peer.getSocket();
             if (socket != nullptr && socket->isOpen()) {
-                socket->write(message);
+                socket->write(bytes);
                 socket->flush();
             }
         }
@@ -58,7 +64,12 @@ void ClientManager::handleNewConnection() {
         connect(clientSocket, &QTcpSocket::readyRead, this, [this, clientSocket]() {
             QByteArray data = clientSocket->readAll();
             qDebug() << "Received data:" << data;
-            // Process data
+            auto msg = json_helper::json2Message(QJsonDocument::fromJson(data).object());
+            std::lock_guard guard{mutex};
+            auto &target_room = roomList->find(msg.second).value();
+            target_room.addMessage(msg.first);
+
+            //TODO:@facooco emit signal to GUI
         });
 
     }

@@ -11,6 +11,8 @@ class Room {
 public:
     Room(QString name, QString passWord);
 
+    Room(const Room& room)=default;
+
     void addPeer(Peer&& peer);
 
     void removePeer(Peer peer);
