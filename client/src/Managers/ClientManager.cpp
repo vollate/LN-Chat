@@ -55,7 +55,7 @@ bool ClientManager::sendMessage(const Message &message) {
         QJsonDocument doc(msg_json);
         auto bytes = doc.toJson();
         for (const auto &peer: currentRoom->getPeers()) {
-            std::cerr<<peer.ip.toStdString()<<" name "<<peer.name.toStdString()<<std::endl;
+            std::cerr << "ip: " << peer.ip.toStdString() << " name " << peer.name.toStdString() << std::endl;
             auto socket = peer.getSocket();
             if (socket != nullptr && socket->isOpen()) {
                 socket->write(bytes);
@@ -77,15 +77,13 @@ void ClientManager::handleNewConnection() {
             std::lock_guard guard{mutex};
             auto &target_room = roomList->find(msg.second).value();
             target_room.addMessage(std::move(msg.first));
-
-            //TODO:@facooco emit signal to GUI
         });
 
     }
 }
 
 void ClientManager::leaveRoom() {
-    if(currentRoom) {
+    if (currentRoom) {
         currentRoom->removePeer(userName);
         currentRoom = nullptr;
     } else {

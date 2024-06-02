@@ -4,6 +4,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <random>
 
 
 #include "ClientController.hpp"
@@ -27,7 +28,10 @@ int main(int argc, char *argv[]) {
     ServerManager serverManager;
     serverManager.setIp("0.0.0.0");
     serverManager.setPort("11451");
-    serverManager.setName("test_user");
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    int rand = gen();
+    serverManager.setName(QString::fromStdString("Client" + std::to_string(rand)));
     serverManager.startRpcClient();
     engine.rootContext()->setContextProperty("serverManager", &serverManager);
 
