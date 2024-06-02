@@ -3,6 +3,11 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+
+
+#include "ClientController.hpp"
+
 
 // #include "add_environment.h"
 // #include "import_qml_components_plugins.h"
@@ -13,6 +18,16 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
+    ClientController clientController;
+    engine.rootContext()->setContextProperty("clientController", &clientController);
+
+    ClientManager clientManager;
+    engine.rootContext()->setContextProperty("clientManager", &clientManager);
+
+    ServerManager serverManager;
+    engine.rootContext()->setContextProperty("serverManager", &serverManager);
+
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(
         &engine,

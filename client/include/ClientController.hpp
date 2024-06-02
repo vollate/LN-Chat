@@ -2,12 +2,13 @@
 
 #include "ClientManager.hpp"
 #include "ServerManager.hpp"
-class ClientController{
+class ClientController : public QObject{
+    Q_OBJECT
 public:
-    ClientController();
-    void createRoom(ClientManager clientManager, ServerManager serverManager);
-    void joinRoom(ClientManager clientManager, ServerManager serverManager);include/add_environment.h
-    void leaveRoom(ClientManager clientManager);
-    void sendMessage(ClientManager clientManager);
-    void exportMessage(ClientManager clientManager);
+    explicit ClientController(QObject *parent = nullptr);
+    Q_INVOKABLE void createRoom(ClientManager clientManager, ServerManager serverManager, QString roomName, QString password);
+    Q_INVOKABLE void joinRoom(ClientManager clientManager, ServerManager serverManager, QString roomName, QString password);
+    Q_INVOKABLE void leaveRoom(ClientManager clientManager);
+    Q_INVOKABLE void sendMessage(ClientManager clientManager);
+    Q_INVOKABLE void exportMessage(ClientManager clientManager);
 };

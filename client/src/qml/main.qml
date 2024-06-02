@@ -9,6 +9,7 @@ ApplicationWindow {
     minimumWidth: 640
     minimumHeight: 480
     title: qsTr("Chat Room")
+
     //top menu bar
     Rectangle {
             width: parent.width // 宽度和窗口宽度相同
@@ -213,7 +214,6 @@ ApplicationWindow {
             visible: false
             radius: 10
 
-            signal createRoom(string roomName, string password, string nick)
             Column {
                 anchors.centerIn: parent
                 spacing: 10
@@ -244,10 +244,12 @@ ApplicationWindow {
                         text: "Create Room"
                         onClicked: {
                             // 在此处处理创建房间的逻辑
+                            console.log("Room Name:", roomNameField.text)
+                            console.log("Password:", passwordField.text)
+                            console.log("Nickname:", nicknameField.text)
+                            clientManager.setName(nicknameField.text)
+                            clientController.createRoom(clientManager, serverManager, roomNameField.text, passwordField.text)
                             popup.createRoom(roomNameField.text, passwordField.text, nicknameField.text)
-                            // console.log("Room Name:", roomNameField.text)
-                            // console.log("Password:", passwordField.text)
-                            // console.log("Nickname:", nicknameField.text)
                             popup.visible = false
                         }
                     }

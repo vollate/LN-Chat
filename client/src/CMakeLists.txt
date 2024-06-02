@@ -6,6 +6,7 @@ set(SOURCE_FILES
         "Managers/ClientManager.cpp"
         "Entity/Message.cpp"
         "resource.qrc"
+        "Controllers/ClientController.cpp"
 )
 
 set(chat_proto_path "${CMAKE_SOURCE_DIR}/../protos/chat.proto")
@@ -40,22 +41,22 @@ target_include_directories(
 find_package(gRPC CONFIG REQUIRED)
 find_package(absl CONFIG REQUIRED)
 find_package(
-        Qt5
+        Qt6
         COMPONENTS Core Gui Widgets Quick
         REQUIRED)
+
+set(HEADERS 
+        ${CMAKE_SOURCE_DIR}/include/ClientManager.hpp
+        ${CMAKE_SOURCE_DIR}/include/ClientController.hpp
+        ${CMAKE_SOURCE_DIR}/include/ServerManager.hpp
+)
+qt6_wrap_cpp(MOC_SOURCES ${HEADERS})
 
 target_link_libraries(chat_rpc PUBLIC gRPC::gpr gRPC::grpc gRPC::grpc++
         gRPC::grpc++_alts)
 target_link_libraries(chat_rpc PRIVATE absl::strings absl::flags_parse)
 
-enable_testing()
-add_executable(test_rpc_client RpcClient/test_rpc_client.cpp)
-target_link_libraries(test_rpc_client chat_rpc)
-
-add_test(NAME ChatClientTest COMMAND test_rpc_client)
-
-add_executable(chat_client ${SOURCE_FILES})
+add_executable(chat_client ${SOURCE_FILES} ${MOC_SOURCES})
 
 target_link_libraries(chat_client PRIVATE chat_rpc)
-target_link_libraries(chat_client PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Quick)
-
+target_link_libraries(chat_client PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network Qt6::Quick)

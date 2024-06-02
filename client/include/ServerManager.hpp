@@ -6,10 +6,11 @@
 #include <qmap.h>
 #include "Room.hpp"
 
-class ServerManager {
+class ServerManager : public QObject{
+    Q_OBJECT
 public:
-    ServerManager();
-    void registerRoom(QString name, QString passWord);
+    explicit ServerManager(QObject *parent = nullptr);
+    Q_INVOKABLE void registerRoom(QString name, QString passWord);
 
     std::unique_ptr<QMap<QString, std::shared_ptr<Room>>> serverRoomList;
 };

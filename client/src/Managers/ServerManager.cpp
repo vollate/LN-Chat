@@ -2,7 +2,7 @@
 #include <memory>
 #include <qmap.h>
 
-ServerManager::ServerManager(){
+ServerManager::ServerManager(QObject *parent) : QObject(parent) {
     serverRoomList = std::make_unique<QMap<QString, std::shared_ptr<Room>>>();
 }
 

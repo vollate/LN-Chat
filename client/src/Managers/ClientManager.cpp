@@ -6,12 +6,16 @@
 #include <memory>
 #include <utility>
 
-ClientManager::ClientManager(QString userName) : userName(std::move(userName)){
+ClientManager::ClientManager(QObject *parent) : QObject(parent){
     roomList = std::make_shared<QMap<QString, Room>>();
     ip = "127.0.0.1";
 }
 
 ClientManager::~ClientManager() = default;
+
+void ClientManager::setUserName(QString name) {
+    this->userName = name;
+}
 
 void ClientManager::createRoom(QString name, QString passWord, ServerManager& serverManager) {
     serverManager.registerRoom(name, passWord);
