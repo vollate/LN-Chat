@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import com.sustech.messaging 1.0
+// import com.sustech.messaging 1.0
 
 ApplicationWindow {
     id: root

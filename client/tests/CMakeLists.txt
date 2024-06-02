@@ -2,12 +2,12 @@ add_executable(test_rpc_client test_rpc_client.cpp)
 target_link_libraries(test_rpc_client chat_rpc)
 
 find_package(
-        Qt6
+        Qt5
         COMPONENTS Core Gui Widgets Network
         REQUIRED)
 set(HEADERS ${CMAKE_SOURCE_DIR}/include/ClientManager.hpp)
-qt6_wrap_cpp(MOC_SOURCES ${HEADERS})
-target_link_libraries(chat_rpc PUBLIC Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network)
+qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
+target_link_libraries(chat_rpc PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network)
 
 set(client_sources
         "${MOC_SOURCES}"
@@ -22,7 +22,7 @@ add_executable(test_p2p_server test_p2p_server.cpp ${client_sources})
 target_link_libraries(test_p2p_server chat_rpc )
 
 add_executable(test_ip_parse test_peers_ip_parse.cpp ${client_sources})
-target_link_libraries(test_ip_parse Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network)
+target_link_libraries(test_ip_parse Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network)
 target_link_libraries(test_ip_parse chat_rpc )
 
 

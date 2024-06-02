@@ -30,6 +30,10 @@ public:
      */
     RpcClient(const std::string &ip, const std::string &port);
 
+    RpcClient(RpcClient &&) = default;
+
+    RpcClient &operator=(RpcClient &&) = default;
+
     /**
      * @brief Destructor for ChatClient.
      *

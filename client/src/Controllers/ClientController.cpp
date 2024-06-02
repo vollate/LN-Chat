@@ -19,7 +19,11 @@ void ClientController::joinRoom(ClientManager* clientManager, ServerManager* ser
 }
 
 void ClientController::sendMessage(ClientManager* clientManager, QString messageText) {
-    if (clientManager->sendMessage(messageText)){
+    QDateTime now = QDateTime::currentDateTime();
+    qint64 timestamp = now.toSecsSinceEpoch();
+    QString timestampStr = QString::number(timestamp);
+    Message message(clientManager->userName, timestampStr, messageText);
+    if (clientManager->sendMessage(message)){
         qDebug () << "Message sent " << messageText;
         emit messageSent(messageText);
     }else{

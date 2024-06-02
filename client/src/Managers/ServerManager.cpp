@@ -8,10 +8,10 @@ namespace {
 
 }  // namespace
 
-ServerManager::ServerManager(const std::string &ip, const std::string &port, std::string name)
-        : client_name{std::move(name)}, rpc_client(ip, port) {
-    while (!registerClient()) {}
-    startHeartBeat();
+ServerManager::ServerManager(
+        QObject *parent)
+        : client_name{}, rpc_client{}, QObject(parent) {
+
 }
 
 ServerManager::~ServerManager() {
@@ -19,12 +19,12 @@ ServerManager::~ServerManager() {
 }
 
 bool ServerManager::registerClient() {
-    return rpc_client.RegisterClient(client_name, client_id);
+    return rpc_client.value().RegisterClient(client_name, client_id);
 }
 
 std::optional<std::list<Peer>> ServerManager::getPeers(const std::string &room_name, const std::string &room_password) {
     std::vector<PeerInfo> peers;
-    if (!rpc_client.GetRoomPeers(client_id, room_name, room_password, peers)) {
+    if (!rpc_client.value().GetRoomPeers(client_id, room_name, room_password, peers)) {
         return std::nullopt;
     }
     std::list<Peer> peer_list;
@@ -35,8 +35,8 @@ std::optional<std::list<Peer>> ServerManager::getPeers(const std::string &room_n
     return peer_list;
 }
 
-bool ServerManager::registerRoom(const std::string &room_name, const std::string &room_password) {
-    return rpc_client.PublishRoom(client_id, room_name, room_password);
+bool ServerManager::registerRoom(QString room_name, QString room_password) {
+    return rpc_client.value().PublishRoom(client_id, room_name.toStdString(), room_password.toStdString());
 }
 
 void ServerManager::startHeartBeat() {
@@ -47,7 +47,7 @@ void ServerManager::startHeartBeat() {
     flag = true;
     thread = std::thread([this] {
         while (heartbeat_daemon.first) {
-            rpc_client.HeartBeat(client_id);
+            rpc_client.value().HeartBeat(client_id);
             std::this_thread::sleep_for(std::chrono::seconds(HeartBeat_Interval));
         }
     });
@@ -62,4 +62,22 @@ void ServerManager::stopHeartBeat() {
     if (heartbeat_daemon.second.joinable()) {
         heartbeat_daemon.second.join();
     }
+}
+
+void ServerManager::setIp(const QString &ip) {
+    this->ip = ip;
+}
+
+void ServerManager::setPort(const QString &port) {
+    this->port = port;
+}
+
+void ServerManager::setName(const QString &name) {
+    client_name = name.toStdString();
+}
+
+void ServerManager::startRpcClient() {
+    rpc_client= std::move(RpcClient(ip.toStdString(), port.toStdString()));
+    while (!registerClient()) {}
+    startHeartBeat();
 }

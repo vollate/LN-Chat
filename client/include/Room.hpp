@@ -16,33 +16,16 @@ public:
 
     Room(QString name, QString passWord);
 
-    Room(const Room& room)=default;
+    Room(const Room &room) = default;
 
-    void addPeer(Peer&& peer);
+    void addPeer(Peer &&peer);
 
     void removePeer(QString name);
 
-    void addMessage(Message&& message);
+    void addMessage(Message &&message);
 
     QList<Peer> getPeers();
 
-    QList<Message> getMessages();
+    QString getName() const ;
 
-    QString getName();
-
-    QString getPassWord();
-
-    void setName(QString name);
-
-    void setPassWord(QString passWord);
-
-    void setPeers(QList<Peer> peers);
-
-    void setMessages(QList<Message> messages);
-
-private:
-    QString name;
-    QString passWord;
-    QList<Peer> peers;
-    QList<Message> messages;
 };

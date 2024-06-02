@@ -15,24 +15,27 @@
 
 #include <QDebug>
 #include <qobject.h>
+#include <mutex>
 
 
 class ClientManager final : public QObject {
 
-    Q_OBJECT
+Q_OBJECT
 
 public:
     ClientManager(quint16 port = Client_Server_Port, QObject *parent = nullptr);
 
     ~ClientManager() override;
 
-    void createRoom(const QString &name, const QString &password, ServerManager &serverManager);
+    void createRoom(const QString &name, const QString &password, ServerManager *serverManager);
 
-    void joinRoom(const QString &name, const QString &password, const QString &username, ServerManager &serverManager);
+    bool joinRoom(const QString &name, const QString &password, ServerManager *serverManager);
 
     void leaveRoom();
 
-    void sendMessage(const Message &message);
+    bool sendMessage(const Message &message);
+
+    Q_INVOKABLE void setUserName(const QString &name);
 
     void exportMessage();
 
@@ -40,12 +43,12 @@ public:
 
     void getRoomList();
 
-private:
-
     void handleNewConnection();
 
     QString ip;
     std::mutex mutex;
+
+    QString userName;
 
     std::unique_ptr<QTcpServer> tcp_server;
     std::shared_ptr<Room> currentRoom;

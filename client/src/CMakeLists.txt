@@ -8,7 +8,6 @@ set(SOURCE_FILES
         "resource.qrc"
         "Controllers/ClientController.cpp"
         "utils.cpp"
-        "Entity/Message.cpp"
 )
 
 set(chat_proto_path "${CMAKE_SOURCE_DIR}/../protos/chat.proto")

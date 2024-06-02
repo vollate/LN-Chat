@@ -13,8 +13,7 @@
 // #include "import_qml_components_plugins.h"
 // #include "import_qml_plugins.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
@@ -26,20 +25,23 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("clientManager", &clientManager);
 
     ServerManager serverManager;
+    serverManager.setIp("0.0.0.0");
+    serverManager.setPort("11451");
+    serverManager.setName("test_user");
+    serverManager.startRpcClient();
     engine.rootContext()->setContextProperty("serverManager", &serverManager);
 
-    qmlRegisterType<Message>("com.sustech.messaging", 1, 0, "Message");
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(
-        &engine,
-        &QQmlApplicationEngine::objectCreated,
-        &app,
-        [url](QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl)
-                QCoreApplication::exit(-1);
-        },
-        Qt::QueuedConnection);
+            &engine,
+            &QQmlApplicationEngine::objectCreated,
+            &app,
+            [url](QObject *obj, const QUrl &objUrl) {
+                if (!obj && url == objUrl)
+                    QCoreApplication::exit(-1);
+            },
+            Qt::QueuedConnection);
 
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");
