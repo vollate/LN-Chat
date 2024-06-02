@@ -1,22 +1,15 @@
 #pragma once
 
 #include <QString>
-#include "Peer.hpp"
+#include <memory>
+#include <qlist.h>
+#include <qmap.h>
 #include "Room.hpp"
-#include "RpcClient.hpp"
 
 class ServerManager {
 public:
-    ServerManager(const std::string &ip, const std::string &port, std::string name);
+    ServerManager();
+    void registerRoom(QString name, QString passWord);
 
-    bool registerClient();
-
-    std::optional<std::list<Peer>> getPeers(const std::string &room_name, const std::string &room_password);
-
-private:
-    uint64_t client_id{};
-    std::string client_name;
-    RpcClient rpc_client;
-    QList<Room> room;
-
+    std::unique_ptr<QMap<QString, Room>> serverRoomList;
 };

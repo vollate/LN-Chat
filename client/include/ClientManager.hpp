@@ -1,24 +1,33 @@
 #pragma once
 #include "Room.hpp"
 #include "Peer.hpp"
+#include "ServerManager.hpp"
 
 #include <QMap>
+#include <memory>
 #include <qmap.h>
 
 #include <QDebug>
+#include <qobject.h>
 
 
-class ClientManager{
+class ClientManager : QObject{
+
+    Q_OBJECT
 
 public:
     ClientManager();
     ~ClientManager();
-    bool registerRoom(QString name, QString passWord);
-    bool joinRoom(QString name, QString passWord);
+    void createRoom(QString name, QString passWord, ServerManager& serverManager);
+    void joinRoom(QString name, QString passWord, QString userName, ServerManager& serverManager);
+    void leaveRoom();
+    void sendMessage();
+    void exportMessage();
+    void loadMessage();
     void getRoomList();
 
 private:
-    Room* currentRoom;
-    Peer* self;
-    QMap<QString, Room>* roomList;
+    std::shared_ptr<Room> currentRoom;
+    std::shared_ptr<Peer> selfPeer;
+    std::shared_ptr<QMap<QString, Room>> roomList;
 };
