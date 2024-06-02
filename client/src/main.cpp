@@ -1,39 +1,39 @@
-#include "ClientManager.hpp"
-#include "Message.hpp"
-#include "ServerManager.hpp"
+// Copyright (C) 2021 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-int main() {
-    ClientManager clientManager("a");
-    ServerManager serverManager;
-    clientManager.createRoom("room1", "1234", serverManager);
-    clientManager.joinRoom("room1", "1234", serverManager);
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 
-    ClientManager clientManager2("b");
-    clientManager2.joinRoom("room1", "123", serverManager);
+#include "app_environment.h"
+#include "import_qml_components_plugins.h"
+#include "import_qml_plugins.h"
 
-    ClientManager clientManager3("c");
-    clientManager3.joinRoom("room1", "1234", serverManager);
+int main(int argc, char *argv[])
+{
+    set_qt_environment();
 
-    qDebug() << "Peers in room1:";
-    for (auto peer : clientManager.currentRoom->peers) {
-        qDebug() << peer.name;
+    QGuiApplication app(argc, argv);
+
+    QQmlApplicationEngine engine;
+    const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
+    QObject::connect(
+        &engine,
+        &QQmlApplicationEngine::objectCreated,
+        &app,
+        [url](QObject *obj, const QUrl &objUrl) {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        },
+        Qt::QueuedConnection);
+
+    engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
+    engine.addImportPath(":/");
+
+    engine.load(url);
+
+    if (engine.rootObjects().isEmpty()) {
+        return -1;
     }
 
-    clientManager.sendMessage("Hello");
-    clientManager2.sendMessage("Hi");
-    clientManager3.sendMessage("Hey");
-
-    qDebug() << "Messages in room1:";
-    for (auto& message : clientManager.currentRoom->messages) {
-        qDebug() << message.sender << message.time << message.text;
-    }
-
-    clientManager3.leaveRoom();
-
-    qDebug() << "Peers in room1: " << clientManager.currentRoom->peers.size();
-    for (auto peer : clientManager.currentRoom->peers) {
-        qDebug() << peer.name;
-    }
-
-    return 0;
+    return app.exec();
 }
