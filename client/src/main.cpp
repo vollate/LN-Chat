@@ -28,6 +28,8 @@ int main(int argc, char *argv[])
     ServerManager serverManager;
     engine.rootContext()->setContextProperty("serverManager", &serverManager);
 
+    qmlRegisterType<Message>("com.sustech.messaging", 1, 0, "Message");
+
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(
         &engine,

@@ -17,11 +17,11 @@ void ClientManager::setUserName(QString name) {
     this->userName = name;
 }
 
-void ClientManager::createRoom(QString name, QString passWord, ServerManager* serverManager) {
+bool ClientManager::createRoom(QString name, QString passWord, ServerManager* serverManager) {
     serverManager->registerRoom(name, passWord);
 }
 
-void ClientManager::joinRoom(QString name, QString passWord, ServerManager* serverManager) {
+bool ClientManager::joinRoom(QString name, QString passWord, ServerManager* serverManager) {
     if(serverManager->serverRoomList->contains(name)) {  // Check if the room exists in server
         auto room = (*serverManager->serverRoomList)[name];
 
@@ -31,15 +31,16 @@ void ClientManager::joinRoom(QString name, QString passWord, ServerManager* serv
             room->addPeer(std::move(peer));
         } else {
             qDebug() << "Wrong password";
-            return;
+            return false;
         }
     } else {
         qDebug() << "Room not found";
-        return;
+        return false;
     }
+    return true;
 }
 
-void ClientManager::sendMessage(QString messageText) {
+bool ClientManager::sendMessage(QString messageText) {
     auto room = this->currentRoom;
     if(room) {
         QDateTime now = QDateTime::currentDateTime();
@@ -49,7 +50,9 @@ void ClientManager::sendMessage(QString messageText) {
         room->addMessage(std::move(message));
     }else{
         qDebug() << "You are not in a room";
+        return false;
     }
+    return true;
 }
 
 void ClientManager::leaveRoom() {
