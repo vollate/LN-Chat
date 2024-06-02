@@ -40,7 +40,7 @@ public:
     void setMessages(QList<Message> messages);
 };
 
-class Peer {
+struct Peer {
 
 public:
     Peer(QString name, QString ip);

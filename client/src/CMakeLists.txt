@@ -5,7 +5,7 @@ set(SOURCE_FILES
         "Controllers/RoomController.cpp"
         "Controllers/VoteController.cpp"
         "Managers/RoomManager.cpp"
-        "Managers/ChatManager.cpp"
+        "Managers/ServerManager.cpp"
 )
 
 set(chat_proto_path "${CMAKE_SOURCE_DIR}/../protos/chat.proto")
@@ -28,7 +28,7 @@ add_custom_command(
         DEPENDS "${chat_proto_path}")
 
 add_library(chat_rpc ${chat_proto_srcs} ${chat_grpc_srcs}
-        "Client/RpcClient.cpp")
+        "RpcClient/RpcClient.cpp")
 
 target_include_directories(
         chat_rpc
@@ -48,7 +48,7 @@ target_link_libraries(chat_rpc PUBLIC gRPC::gpr gRPC::grpc gRPC::grpc++
 target_link_libraries(chat_rpc PRIVATE absl::strings absl::flags_parse)
 
 enable_testing()
-add_executable(test_rpc_client Client/test_rpc_client.cpp)
+add_executable(test_rpc_client RpcClient/test_rpc_client.cpp)
 target_link_libraries(test_rpc_client chat_rpc)
 
 add_test(NAME ChatClientTest COMMAND test_rpc_client)

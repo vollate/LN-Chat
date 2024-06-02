@@ -5,13 +5,13 @@
 #include "Room.hpp"
 #include "RpcClient.hpp"
 
-class ChatManager {
+class ServerManager {
 public:
-    ChatManager(const std::string &ip, const std::string &port, std::string name);
+    ServerManager(const std::string &ip, const std::string &port, std::string name);
 
     bool registerClient();
 
-    std::optional<QList<Peer>> getPeers(const std::string &room_name, const std::string &room_password);
+    std::optional<std::list<Peer>> getPeers(const std::string &room_name, const std::string &room_password);
 
 private:
     uint64_t client_id{};

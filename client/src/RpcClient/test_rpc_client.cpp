@@ -3,7 +3,7 @@
 #include <cassert>
 
 int main(int argc, char **argv) {
-    ChatClient client("localhost", "11451");
+    RpcClient client("localhost", "11451");
 
     uint64_t clientId;
     assert(client.RegisterClient("test_user", clientId));
@@ -12,11 +12,11 @@ int main(int argc, char **argv) {
     assert(client.PublishRoom(clientId, "test_room", "password123"));
     std::cout << "Room published successfully" << std::endl;
 
-    std::vector<std::string> peersIp;
-    assert(client.GetRoomPeers(clientId, "test_room", "password123", peersIp));
+    std::vector<PeerInfo> peers;
+    assert(client.GetRoomPeers(clientId, "test_room", "password123", peers));
     std::cout << "Peers in room:" << std::endl;
-    for (const auto &ip: peersIp) {
-        std::cout << ip << std::endl;
+    for (const auto &peer: peers) {
+        std::cout << "IP: " << peer.ip << ", Name: " << peer.name << std::endl;
     }
 
     assert(client.HeartBeat(clientId));
