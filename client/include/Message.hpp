@@ -3,7 +3,7 @@
 #include <qobject.h>
 #include <qtmetamacros.h>
 
-class Message : public QObject {
+class Message{
 public:
     Message(QString sender, QString time, QString text);
     // TODO: design message
