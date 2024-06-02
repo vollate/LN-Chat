@@ -5,6 +5,6 @@ Room::Room(QString name, QString passWord){
     this->passWord = passWord;
 }
 
-void Room::addPeer(std::shared_ptr<Peer> peer){
+void Room::addPeer(Peer&& peer){
     peers.append(peer);
 }

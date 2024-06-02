@@ -15,7 +15,7 @@ public:
 
     bool registerClient();
 
-    bool createRoom(const std::string& room_name, const std::string& room_password);
+    bool registerRoom(const std::string& room_name, const std::string& room_password);
 
     void startHeartBeat();
 

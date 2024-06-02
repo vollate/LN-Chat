@@ -3,30 +3,27 @@
 #include "ServerManager.hpp"
 #include <memory>
 
-ClientManager::ClientManager(){
+ClientManager::ClientManager() {
     roomList = std::make_shared<QMap<QString, Room>>();
     ip = "127.0.0.1";
 }
 
-void ClientManager::createRoom(QString name, QString passWord, ServerManager& serverManager){
-    serverManager.registerRoom(name, passWord);
+void ClientManager::createRoom(QString name, QString passWord, ServerManager &serverManager) {
+    serverManager.registerRoom(name.toStdString(), passWord.toStdString());
 }
 
-void ClientManager::joinRoom(QString name, QString passWord, QString userName, ServerManager& serverManager){
-    if(serverManager.serverRoomList->contains(name)){ // Check if the room exists in server
-        auto room = (*serverManager.serverRoomList)[name];
-
-        if (room->getPassWord() == passWord){
-            selfPeer = std::make_shared<Peer>(userName, ip);
-            this->currentRoom = room;
-            room->addPeer(selfPeer);
+void ClientManager::joinRoom(QString name, QString password, QString username, ServerManager &serverManager) {
+    if (auto peers_opt = serverManager.getPeers(name.toStdString(), password.toStdString())) {
+        auto peers = peers_opt.value();
+        auto room = std::make_shared<Room>(name, password);
+        for (auto peer: peers) {
+            room->addPeer(std::move(peer));
         }
-        else {
-            qDebug() << "Wrong password";
-            return;
-        }
-    }else{
-        qDebug() << "Room not found";
+        roomList->insert(name, *room);
+        currentRoom = room;
+        selfPeer = std::make_shared<Peer>(username, ip);
+    } else {
+        qDebug() << "Room not found or wrong password";
         return;
     }
 }

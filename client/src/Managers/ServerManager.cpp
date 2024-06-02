@@ -63,7 +63,7 @@ std::optional<std::list<Peer>> ServerManager::getPeers(const std::string &room_n
     return peer_list;
 }
 
-bool ServerManager::createRoom(const std::string &room_name, const std::string &room_password) {
+bool ServerManager::registerRoom(const std::string &room_name, const std::string &room_password) {
     return rpc_client.PublishRoom(client_id, room_name, room_password);
 }
 
@@ -81,7 +81,3 @@ void ServerManager::startHeartBeat() {
     });
 }
 
-void ServerManager::registerRoom(QString name, QString passWord){
-    Room room(name, passWord);
-    serverRoomList->insert(name, room);
-}
