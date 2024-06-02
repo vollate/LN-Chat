@@ -1,11 +1,13 @@
 set(SOURCE_FILES
         "main.cpp"
-        "Room.cpp"
+        "Entity/Room.cpp"
+        "Entity/Peer.cpp"
         "Controllers/ChatController.cpp"
         "Controllers/RoomController.cpp"
         "Controllers/VoteController.cpp"
         "Managers/RoomManager.cpp"
         "Managers/ServerManager.cpp"
+        "Managers/ClientManager.cpp"
 )
 
 set(chat_proto_path "${CMAKE_SOURCE_DIR}/../protos/chat.proto")
