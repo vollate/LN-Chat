@@ -16,7 +16,7 @@ public:
 
     void addPeer(Peer &&peer);
 
-    void removePeer(Peer peer);
+    void removePeer(QString name);
 
     void addMessage(Message&& message);
 

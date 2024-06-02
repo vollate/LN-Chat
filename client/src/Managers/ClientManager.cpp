@@ -47,3 +47,12 @@ void ClientManager::sendMessage(QString messageText) {
         qDebug() << "You are not in a room";
     }
 }
+
+void ClientManager::leaveRoom() {
+    if(currentRoom) {
+        currentRoom->removePeer(userName);
+        currentRoom = nullptr;
+    } else {
+        qDebug() << "You are not in a room";
+    }
+}

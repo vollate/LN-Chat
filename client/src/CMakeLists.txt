@@ -17,6 +17,7 @@ set(vcpkg_tools "$ENV{VCPKG_ROOT}/installed/x64-linux/tools")
 set(protoc_path "${vcpkg_tools}/protobuf/protoc")
 set(grpc_plugin_path "${vcpkg_tools}/grpc/grpc_cpp_plugin")
 
+
 add_custom_command(
         OUTPUT "${chat_proto_srcs}" "${chat_proto_hdrs}" "${chat_grpc_srcs}"
         "${chat_grpc_hdrs}"
@@ -38,8 +39,8 @@ target_include_directories(
 find_package(gRPC CONFIG REQUIRED)
 find_package(absl CONFIG REQUIRED)
 find_package(
-        Qt6
-        COMPONENTS Core Gui Widgets
+        Qt5
+        COMPONENTS Core Gui Widgets Quick
         REQUIRED)
 
 target_link_libraries(chat_rpc PUBLIC gRPC::gpr gRPC::grpc gRPC::grpc++
@@ -55,5 +56,5 @@ add_test(NAME ChatClientTest COMMAND test_rpc_client)
 add_executable(chat_client ${SOURCE_FILES})
 
 target_link_libraries(chat_client PRIVATE chat_rpc)
-target_link_libraries(chat_client PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
+target_link_libraries(chat_client PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Quick)
 

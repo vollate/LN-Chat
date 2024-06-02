@@ -1,7 +1,6 @@
 #pragma once
 #include <QString>
 #include <qobject.h>
-#include <qtmetamacros.h>
 
 class Message{
 public:
