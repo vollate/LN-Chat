@@ -4,6 +4,9 @@ set(SOURCE_FILES
         "Entity/Peer.cpp"
         "Managers/ServerManager.cpp"
         "Managers/ClientManager.cpp"
+        "Entity/Message.cpp"
+        "resource.qrc"
+        "Controllers/ClientController.cpp"
         "utils.cpp"
         "Entity/Message.cpp"
 )
@@ -17,6 +20,7 @@ set(chat_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/chat.grpc.pb.h")
 set(vcpkg_tools "$ENV{VCPKG_ROOT}/installed/x64-linux/tools")
 set(protoc_path "${vcpkg_tools}/protobuf/protoc")
 set(grpc_plugin_path "${vcpkg_tools}/grpc/grpc_cpp_plugin")
+
 
 add_custom_command(
         OUTPUT "${chat_proto_srcs}" "${chat_proto_hdrs}" "${chat_grpc_srcs}"
@@ -36,13 +40,17 @@ target_include_directories(
 find_package(gRPC CONFIG REQUIRED)
 find_package(absl CONFIG REQUIRED)
 find_package(
-        Qt6
-        COMPONENTS Core Gui Widgets Network
+        Qt5
+        COMPONENTS Core Gui Widgets Network Quick
         REQUIRED)
 
-set(HEADERS ${CMAKE_SOURCE_DIR}/include/ClientManager.hpp)
-
-qt6_wrap_cpp(MOC_SOURCES ${HEADERS})
+set(HEADERS 
+        ${CMAKE_SOURCE_DIR}/include/ClientManager.hpp
+        ${CMAKE_SOURCE_DIR}/include/ClientController.hpp
+        ${CMAKE_SOURCE_DIR}/include/ServerManager.hpp
+        ${CMAKE_SOURCE_DIR}/include/Message.hpp
+)
+Qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 
 target_link_libraries(chat_rpc PUBLIC gRPC::gpr gRPC::grpc gRPC::grpc++
         gRPC::grpc++_alts)
@@ -51,6 +59,4 @@ target_link_libraries(chat_rpc PRIVATE absl::strings absl::flags_parse)
 add_executable(chat_client ${SOURCE_FILES} ${MOC_SOURCES})
 
 target_link_libraries(chat_client PRIVATE chat_rpc)
-target_link_libraries(chat_client PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network)
-
-
+target_link_libraries(chat_client PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::Quick)

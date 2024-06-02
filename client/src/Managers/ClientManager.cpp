@@ -2,6 +2,8 @@
 #include <QJsonDocument>
 
 #include "ClientManager.hpp"
+#include "Message.hpp"
+#include "Peer.hpp"
 #include "Room.hpp"
 #include "ServerManager.hpp"
 #include "utils.hpp"
@@ -22,7 +24,7 @@ void ClientManager::createRoom(const QString &name, const QString &password, Ser
     serverManager.registerRoom(name.toStdString(), password.toStdString());
 }
 
-void ClientManager::joinRoom(const QString &name, const QString &password, const QString &username, ServerManager &serverManager) {
+void ClientManager::joinRoom(QString name, QString password, QString username, ServerManager &serverManager) {
     if (auto peers_opt = serverManager.getPeers(name.toStdString(), password.toStdString())) {
         auto peers = peers_opt.value();
         auto room = std::make_shared<Room>(name, password);

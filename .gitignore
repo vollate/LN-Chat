@@ -76,5 +76,6 @@ build*/
 cmake-build*/
 .cache/
 .idea/
+.vscode/
 
 compile_commands.json

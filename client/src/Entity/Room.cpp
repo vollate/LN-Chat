@@ -1,19 +1,34 @@
 #include "Room.hpp"
 
-Room::Room(QString name, QString passWord) : name{name}, passWord{passWord} {}
+Room::Room(QString name, QString passWord){
+    this->name = name;
+    this->passWord = passWord;
+    messages.clear();
+    peers.clear();
+}
 
 void Room::addPeer(Peer &&peer) {
     peers.append(peer);
 }
 
-QList<Peer> Room::getPeers() {
+QString Room::getPassWord(){
+    return passWord;
+}
+
+QList<Peer> Room::getPeers(){
     return peers;
 }
 
-QString Room::getName() {
-    return name;
+void Room::addMessage(Message&& message){
+    messages.append(message);
 }
 
-void Room::addMessage(Message message) {
-    messages.append(std::move(message));
+void Room::removePeer(QString name){
+    for (int i = 0; i < peers.size(); i++) {
+        if (peers[i].name == name) {
+            peers.removeAt(i);
+            return;
+        }
+    }
 }
+

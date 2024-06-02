@@ -4,6 +4,8 @@ set(CMAKE_INSTALL_PREFIX "~/.local/lib" CACHE PATH "Install path prefix, prepend
 set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
 set(CMAKE_PREFIX_PATH $ENV{VCPKG_ROOT}/installed/x64-linux)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 project(client VERSION 1.1)
 
