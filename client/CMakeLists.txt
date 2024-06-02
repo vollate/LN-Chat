@@ -18,6 +18,7 @@ elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif ()
 
 include_directories(include)
-
+enable_testing()
 
 add_subdirectory(src)
+add_subdirectory(tests)

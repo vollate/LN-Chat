@@ -53,8 +53,4 @@ add_executable(chat_client ${SOURCE_FILES} ${MOC_SOURCES})
 target_link_libraries(chat_client PRIVATE chat_rpc)
 target_link_libraries(chat_client PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network)
 
-enable_testing()
-add_executable(test_rpc_client RpcClient/test_rpc_client.cpp)
-target_link_libraries(test_rpc_client chat_rpc)
 
-add_test(NAME ChatClientTest COMMAND test_rpc_client)

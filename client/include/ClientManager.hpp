@@ -11,16 +11,15 @@
 #include <QTcpSocket>
 #include <memory>
 
-constexpr inline quint16 Client_Port = 19198;
 
 class ClientManager final : public QObject {
 
 Q_OBJECT
 
 public:
-    ClientManager();
+    ClientManager(quint16 port = Client_Server_Port, QObject *parent = nullptr);
 
-    ~ClientManager();
+    ~ClientManager() override;
 
     void createRoom(QString name, QString passWord, ServerManager &serverManager);
 

@@ -4,14 +4,14 @@
 #include "Room.hpp"
 #include "ServerManager.hpp"
 
-ClientManager::ClientManager()
-        : QObject{parent()}, tcp_server{std::make_unique<QTcpServer>(this)},
+ClientManager::ClientManager(quint16 port, QObject *parent)
+        : QObject{parent}, tcp_server{std::make_unique<QTcpServer>(this)},
           roomList{std::make_shared<QMap<QString, Room>>()},
           ip{"127.0.0.1"} {
-    if (!tcp_server->listen(QHostAddress::Any, 12345)) {
+    if (!tcp_server->listen(QHostAddress::Any, port)) {
         qCritical() << "Server could not start:" << tcp_server->errorString();
     } else {
-        qDebug() << "Server started on port 12345";
+        qDebug() << "Server started on port " << port << '\n';
         connect(tcp_server.get(), &QTcpServer::newConnection, this, &ClientManager::handleNewConnection);
     }
 }
@@ -61,10 +61,5 @@ void ClientManager::handleNewConnection() {
             // Process data
         });
 
-        // TODO
-        //  Optionally add the new client to the current room or manage it as needed
-        //  if(currentRoom) {
-        //  currentRoom->addPeer(std::make_shared<Peer>(clientSocket));
-        // }
     }
 }
