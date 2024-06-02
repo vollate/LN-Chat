@@ -1,4 +1,10 @@
-set(SOURCE_FILES "client.cpp")
+set(SOURCE_FILES "Room.cpp"
+        "Controllers/ChatController.cpp"
+        "Controllers/RoomController.cpp"
+        "Controllers/VoteController.cpp"
+        "Managers/RoomManager.cpp"
+        "Managers/ChatManager.cpp"
+)
 
 set(chat_proto_path "${CMAKE_SOURCE_DIR}/../protos/chat.proto")
 cmake_path(GET chat_proto_path PARENT_PATH proto_dir)
@@ -16,9 +22,9 @@ add_custom_command(
         DEPENDS "${chat_proto_path}"
 )
 
-add_library(chat_client ${chat_proto_srcs} ${chat_grpc_srcs} ${SOURCE_FILES})
+add_library(chat_client_lib ${chat_proto_srcs} ${chat_grpc_srcs} "Client/Client.cpp")
 
-target_include_directories(chat_client PUBLIC
+target_include_directories(chat_client_lib PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
         $<INSTALL_INTERFACE:include>
@@ -26,13 +32,18 @@ target_include_directories(chat_client PUBLIC
 
 find_package(gRPC CONFIG REQUIRED)
 find_package(absl CONFIG REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
 
-target_link_libraries(chat_client PUBLIC gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts)
-target_link_libraries(chat_client PRIVATE absl::strings absl::flags_parse)
+target_link_libraries(chat_client_lib PUBLIC gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts)
+target_link_libraries(chat_client_lib PRIVATE absl::strings absl::flags_parse)
 
 enable_testing()
-add_executable(test_client test_client.cpp)
-target_link_libraries(test_client chat_client)
+add_executable(test_client Client/test_client.cpp)
+target_link_libraries(test_client chat_client_lib)
 
 add_test(NAME ChatClientTest COMMAND test_client)
 
+add_executable(chat_client ${SOURCE_FILES})
+
+target_link_libraries(chat_client PRIVATE chat_client_lib)
+target_link_libraries(chat_client PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)

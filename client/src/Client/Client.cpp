@@ -1,4 +1,4 @@
-#include "client.hpp"
+#include "Client.hpp"
 #include <iostream>
 
 ChatClient::ChatClient(const std::string &ip, const std::string &port)
@@ -6,7 +6,6 @@ ChatClient::ChatClient(const std::string &ip, const std::string &port)
         grpc::CreateChannel(construct_address(ip, port), grpc::InsecureChannelCredentials()))) {}
 
 ChatClient::~ChatClient() {
-    // RAII: Destructor to handle cleanup if needed
 }
 
 std::string ChatClient::construct_address(const std::string &ip, const std::string &port) {
