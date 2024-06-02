@@ -11,12 +11,15 @@
 #include <QTcpSocket>
 #include <memory>
 
-class ClientManager : public QObject {
+constexpr inline quint16 Client_Port = 19198;
+
+class ClientManager final : public QObject {
 
 Q_OBJECT
 
 public:
-    ClientManager(QObject* parent = nullptr);
+    ClientManager();
+
     ~ClientManager();
 
     void createRoom(QString name, QString passWord, ServerManager &serverManager);
@@ -25,7 +28,7 @@ public:
 
     void leaveRoom();
 
-    void sendMessage();
+    void sendMessage(const QByteArray &message);
 
     void exportMessage();
 

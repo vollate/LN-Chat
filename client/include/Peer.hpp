@@ -1,12 +1,12 @@
 #pragma once
 
 #include <QString>
+#include <QTcpSocket>
 
-class Peer {
-public:
+struct Peer {
     Peer(QString name, QString ip);
 
-    void sendMessage();
+    [[nodiscard]] std::unique_ptr<QTcpSocket> getSocket()const;
 
     QString name;
     QString ip;
