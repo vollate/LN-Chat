@@ -1,7 +1,7 @@
 #include "ServerManager.hpp"
 
-#include <utility>
 #include <regex>
+#include <utility>
 
 namespace {
     std::string urlDecode(const std::string &encoded) {
@@ -11,7 +11,9 @@ namespace {
 
         for (size_t i = 0; i < encoded.length(); ++i) {
             if (encoded[i] == '%' && i + 2 < encoded.length()) {
-                sscanf(encoded.substr(i + 1, 2).c_str(), "%x", &hex);
+                std::stringstream ss;
+                ss << std::hex << encoded.substr(i + 1, 2);
+                ss >> hex;
                 tempChar = static_cast<char>(hex);
                 decoded += tempChar;
                 i += 2;
@@ -33,12 +35,16 @@ namespace {
         }
         return "";
     }
+}  // namespace
+
+ServerManager::ServerManager(const std::string &ip, const std::string &port, std::string name)
+        : client_name{std::move(name)}, rpc_client(ip, port) {
+    while (!registerClient()) {}
+    startHeartBeat();
 }
 
-ServerManager::ServerManager(const std::string &ip, const std::string &port, std::string name) : client_name{
-        std::move(name)},
-                                                                                                 rpc_client(ip,
-                                                                                                        port) {
+ServerManager::~ServerManager() {
+    stopHeartBeat();
 }
 
 bool ServerManager::registerClient() {
@@ -47,10 +53,41 @@ bool ServerManager::registerClient() {
 
 std::optional<std::list<Peer>> ServerManager::getPeers(const std::string &room_name, const std::string &room_password) {
     std::vector<PeerInfo> peers;
-    rpc_client.GetRoomPeers(client_id, room_name, room_password, peers);
+    if (!rpc_client.GetRoomPeers(client_id, room_name, room_password, peers)) {
+        return std::nullopt;
+    }
     std::list<Peer> peer_list;
     for (const auto &peer: peers) {
         peer_list.emplace_back(QString::fromStdString(peer.name), QString::fromStdString(extractIPAddress(peer.ip)));
     }
-    return std::nullopt;
+    return peer_list;
+}
+
+bool ServerManager::createRoom(const std::string &room_name, const std::string &room_password) {
+    return rpc_client.PublishRoom(client_id, room_name, room_password);
+}
+
+void ServerManager::startHeartBeat() {
+    auto &[flag, thread] = heartbeat_daemon;
+    if (flag) {
+        return;
+    }
+    flag = true;
+    thread = std::thread([this] {
+        while (heartbeat_daemon.first) {
+            rpc_client.HeartBeat(client_id);
+            std::this_thread::sleep_for(std::chrono::seconds(HeartBeat_Interval));
+        }
+    });
+}
+
+void ServerManager::stopHeartBeat() {
+    auto &[flag, thread] = heartbeat_daemon;
+    if (!flag) {
+        return;
+    }
+    flag = false;
+    if (thread.joinable()) {
+        thread.join();
+    }
 }

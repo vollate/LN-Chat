@@ -1,10 +1,6 @@
 set(SOURCE_FILES
         "main.cpp"
         "Room.cpp"
-        "Controllers/ChatController.cpp"
-        "Controllers/RoomController.cpp"
-        "Controllers/VoteController.cpp"
-        "Managers/RoomManager.cpp"
         "Managers/ServerManager.cpp"
 )
 
