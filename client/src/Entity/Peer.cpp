@@ -4,8 +4,9 @@
 Peer::Peer(QString name, QString ip) : name{std::move(name)}, ip{std::move(ip)} {}
 
 std::unique_ptr<QTcpSocket> Peer::getSocket(quint16 port) const {
-    auto ret = std::make_unique<QTcpSocket>();
+    auto socket = std::make_unique<QTcpSocket>();
     QHostAddress address{ip};
-    ret->connectToHost(address, port);
-    return ret;
+    socket->connectToHost(address, port);
+    socket->waitForConnected(3000);
+    return socket;
 }

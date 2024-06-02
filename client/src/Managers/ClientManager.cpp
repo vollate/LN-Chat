@@ -59,7 +59,12 @@ bool ClientManager::sendMessage(const Message &message) {
             auto socket = peer.getSocket();
             if (socket != nullptr && socket->isOpen()) {
                 socket->write(bytes);
-                socket->flush();
+//                socket->flush();
+                if (socket->waitForBytesWritten(3000)) {
+                    std::cout << "Message sent: " << std::endl;
+                } else {
+                    std::cout << "Failed to send message: ";
+                }
             }
         }
         return true;
@@ -79,7 +84,7 @@ void ClientManager::handleNewConnection() {
             emit messageSent(msg.first.text);
             target_room.addMessage(std::move(msg.first));
         });
-        
+
     }
 }
 
