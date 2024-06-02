@@ -11,13 +11,13 @@ class Room {
 private:
     QString name;
     QString passWord;
-    QList<std::shared_ptr<Peer>> peers;
+    QList<Peer> peers;
     QList<Message> messages;
 
 public:
     Room(QString name, QString passWord);
 
-    void addPeer(std::shared_ptr<Peer> peer);
+    void addPeer(Peer &&peer);
 
     void removePeer(Peer peer);
 

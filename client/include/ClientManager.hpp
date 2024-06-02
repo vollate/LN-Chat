@@ -17,7 +17,7 @@ public:
     ClientManager();
     ~ClientManager();
     void createRoom(QString name, QString passWord, ServerManager& serverManager);
-    void joinRoom(QString name, QString passWord, QString userName, ServerManager& serverManager);
+    void joinRoom(QString name, QString password, QString username, ServerManager& serverManager);
     void leaveRoom();
     void sendMessage();
     void exportMessage();
