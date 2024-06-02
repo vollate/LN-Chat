@@ -3,10 +3,8 @@
 #include <QString>
 #include <QList>
 
-#include "Peer.hpp"
 #include "Message.hpp"
-
-class Peer;
+#include "Peer.hpp"
 
 class Room {
 private:
@@ -14,6 +12,7 @@ private:
     QString passWord;
     QList<Peer> peers;
     QList<Message> messages;
+
 public:
     Room(QString name, QString passWord);
 
@@ -40,15 +39,3 @@ public:
     void setMessages(QList<Message> messages);
 };
 
-struct Peer {
-
-public:
-    Peer(QString name, QString ip);
-
-    bool addToRoom(const Room &room);
-
-    void sendMessage(QString message);
-
-    QString name;
-    QString ip;
-};

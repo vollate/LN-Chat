@@ -1,5 +1,14 @@
 #pragma once
 
 #include <QString>
-#include "Room.hpp"
 
+class Peer {
+
+public:
+    Peer(QString name, QString ip);
+
+    void sendMessage();
+
+    QString name;
+    QString ip;
+};

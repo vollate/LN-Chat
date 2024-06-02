@@ -8,11 +8,11 @@
 #include <QDebug>
 
 
-class RoomManager{
+class ClientManager{
 
 public:
-    RoomManager();
-    ~RoomManager();
+    ClientManager();
+    ~ClientManager();
     bool registerRoom(QString name, QString passWord);
     bool joinRoom(QString name, QString passWord);
     void getRoomList();
