@@ -5,6 +5,7 @@ set(SOURCE_FILES
         "Managers/ServerManager.cpp"
         "Managers/ClientManager.cpp"
         "Entity/Message.cpp"
+        "resource.qrc"
 )
 
 set(chat_proto_path "${CMAKE_SOURCE_DIR}/../protos/chat.proto")

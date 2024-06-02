@@ -93,7 +93,7 @@ ApplicationWindow {
                             onClicked: {
                                 console.log(model.text + " button clicked")
                                 clearAllData()
-                                updateDataFromLists(testMessages1)
+                                // updateDataFromLists(testMessages1)
                             }
                         }
                     }
@@ -379,8 +379,8 @@ ApplicationWindow {
                 //});
             }
 
-            var testMessages1 = [
-                {userName: "Alice", timestamp: "2024-06-01 08:30:00", text: "Good morning!"},
-                {userName: "Bob", timestamp: "2024-06-01 08:35:00", text: "Hello Alice, how are you today?"}
-            ];
+            // var testMessages1 = [
+            //     {userName: "Alice", timestamp: "2024-06-01 08:30:00", text: "Good morning!"},
+            //     {userName: "Bob", timestamp: "2024-06-01 08:35:00", text: "Hello Alice, how are you today?"}
+            // ];
 }
