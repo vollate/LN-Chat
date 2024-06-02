@@ -55,6 +55,7 @@ bool ClientManager::sendMessage(const Message &message) {
         QJsonDocument doc(msg_json);
         auto bytes = doc.toJson();
         for (const auto &peer: currentRoom->getPeers()) {
+            std::cerr<<peer.ip.toStdString()<<" name "<<peer.name.toStdString()<<std::endl;
             auto socket = peer.getSocket();
             if (socket != nullptr && socket->isOpen()) {
                 socket->write(bytes);

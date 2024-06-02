@@ -38,12 +38,12 @@ void Controller::handleGetRoomPeers(CallData* call_data) {
             call_data->m_get_room_peers_reply.set_success(false);
             call_data->m_get_room_peers_reply.set_message("Client is blocked");
         } else {
+            call_data->m_storage->insertOnNotExist(room->users, client_opt.value());
             for(auto& user : room->users) {
                 auto* tmp = call_data->m_get_room_peers_reply.add_peers();
                 tmp->set_ip(user->socket_addr);
                 tmp->set_name(user->username);
             }
-            call_data->m_storage->insertOnNotExist(room->users, client_opt.value());
             call_data->m_get_room_peers_reply.set_success(true);
             call_data->m_get_room_peers_reply.set_message("Peers retrieved successfully");
         }
