@@ -81,3 +81,14 @@ void ServerManager::startHeartBeat() {
     });
 }
 
+void ServerManager::stopHeartBeat() {
+    auto &[flag, thread] = heartbeat_daemon;
+    if (!flag) {
+        return;
+    }
+    flag = false;
+    if (heartbeat_daemon.second.joinable()) {
+        heartbeat_daemon.second.join();
+    }
+}
+

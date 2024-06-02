@@ -38,21 +38,23 @@ find_package(gRPC CONFIG REQUIRED)
 find_package(absl CONFIG REQUIRED)
 find_package(
         Qt6
-        COMPONENTS Core Gui Widgets
+        COMPONENTS Core Gui Widgets Network
         REQUIRED)
+
+set(HEADERS ${CMAKE_SOURCE_DIR}/include/ClientManager.hpp)
+qt6_wrap_cpp(MOC_SOURCES ${HEADERS})
 
 target_link_libraries(chat_rpc PUBLIC gRPC::gpr gRPC::grpc gRPC::grpc++
         gRPC::grpc++_alts)
 target_link_libraries(chat_rpc PRIVATE absl::strings absl::flags_parse)
+
+add_executable(chat_client ${SOURCE_FILES} ${MOC_SOURCES})
+
+target_link_libraries(chat_client PRIVATE chat_rpc)
+target_link_libraries(chat_client PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network)
 
 enable_testing()
 add_executable(test_rpc_client RpcClient/test_rpc_client.cpp)
 target_link_libraries(test_rpc_client chat_rpc)
 
 add_test(NAME ChatClientTest COMMAND test_rpc_client)
-
-add_executable(chat_client ${SOURCE_FILES})
-
-target_link_libraries(chat_client PRIVATE chat_rpc)
-target_link_libraries(chat_client PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
-
