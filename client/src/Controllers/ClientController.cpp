@@ -25,7 +25,6 @@ void ClientController::sendMessage(ClientManager* clientManager, QString message
     Message message(clientManager->userName, timestampStr, messageText);
     if (clientManager->sendMessage(message)){
         qDebug () << "Message sent " << messageText;
-        emit messageSent(messageText);
     }else{
         qDebug() << "Failed to send message";
     }

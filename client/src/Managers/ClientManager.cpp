@@ -76,9 +76,10 @@ void ClientManager::handleNewConnection() {
             auto msg = json_helper::json2Message(QJsonDocument::fromJson(data).object());
             std::lock_guard guard{mutex};
             auto &target_room = roomList->find(msg.second).value();
+            emit messageSent(msg.first.text);
             target_room.addMessage(std::move(msg.first));
         });
-
+        
     }
 }
 

@@ -345,7 +345,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         // 连接 ClientController 的 messageSent 信号到 QML 中的处理函数
-        clientController.messageSent.connect(onNewMessageReceived)
+        clientManager.messageSent.connect(onNewMessageReceived)
     }
 
 function onNewMessageReceived(message)

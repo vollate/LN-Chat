@@ -15,5 +15,4 @@ public:
 
 signals:
     void roomJoined(QString roomName);  // 定义信号
-    void messageSent(const QString &messageText);
 };

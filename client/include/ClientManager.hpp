@@ -16,6 +16,7 @@
 #include <QDebug>
 #include <qobject.h>
 #include <mutex>
+#include <qobjectdefs.h>
 
 
 class ClientManager final : public QObject {
@@ -43,7 +44,7 @@ public:
 
     void getRoomList();
 
-    void handleNewConnection();
+    Q_INVOKABLE void handleNewConnection();
 
     QString ip;
     std::mutex mutex;
@@ -53,4 +54,8 @@ public:
     std::unique_ptr<QTcpServer> tcp_server;
     std::shared_ptr<Room> currentRoom;
     std::shared_ptr<QMap<QString, Room>> roomList;
+
+
+signals:
+    void messageSent(const QString &messageText);
 };
