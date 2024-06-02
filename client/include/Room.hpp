@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QList>
+#include <memory>
 
 #include "Message.hpp"
 #include "Peer.hpp"
@@ -10,13 +11,13 @@ class Room {
 private:
     QString name;
     QString passWord;
-    QList<Peer> peers;
+    QList<std::shared_ptr<Peer>> peers;
     QList<Message> messages;
 
 public:
     Room(QString name, QString passWord);
 
-    void addPeer(Peer peer);
+    void addPeer(std::shared_ptr<Peer> peer);
 
     void removePeer(Peer peer);
 

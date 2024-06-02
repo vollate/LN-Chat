@@ -81,13 +81,7 @@ void ServerManager::startHeartBeat() {
     });
 }
 
-void ServerManager::stopHeartBeat() {
-    auto &[flag, thread] = heartbeat_daemon;
-    if (!flag) {
-        return;
-    }
-    flag = false;
-    if (thread.joinable()) {
-        thread.join();
-    }
+void ServerManager::registerRoom(QString name, QString passWord){
+    Room room(name, passWord);
+    serverRoomList->insert(name, room);
 }
