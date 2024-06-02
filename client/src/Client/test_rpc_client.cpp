@@ -1,4 +1,4 @@
-#include "Client.hpp"
+#include "RpcClient.hpp"
 #include <iostream>
 #include <cassert>
 

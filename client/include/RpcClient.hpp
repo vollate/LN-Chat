@@ -6,6 +6,11 @@
 #include <string>
 #include <vector>
 
+struct PeerInfo {
+    std::string ip;
+    std::string name;
+};
+
 /**
  * @class ChatClient
  * @brief A client class to interact with the LN_Chat gRPC service.
@@ -13,7 +18,7 @@
  * This class provides methods to register clients, publish rooms, get room peers, and send heartbeat messages.
  * It manages the gRPC channel and stub creation internally.
  */
-class ChatClient {
+class RpcClient {
 public:
     /**
      * @brief Constructs a new ChatClient object.
@@ -23,14 +28,14 @@ public:
      *
      * This constructor initializes the gRPC channel and stub for communication with the server.
      */
-    ChatClient(const std::string &ip, const std::string &port);
+    RpcClient(const std::string &ip, const std::string &port);
 
     /**
      * @brief Destructor for ChatClient.
      *
      * Cleans up resources used by the ChatClient.
      */
-    ~ChatClient();
+    ~RpcClient();
 
     /**
      * @brief Registers a new client with the server.
@@ -61,7 +66,7 @@ public:
      * @return true if the room peers were retrieved successfully, false otherwise.
      */
     bool GetRoomPeers(uint64_t clientId, const std::string &name, const std::string &password,
-                      std::vector<std::string> &peersIp);
+                      std::vector<PeerInfo> &peersIp);
 
     /**
      * @brief Sends a heartbeat message to the server to keep the client connection alive.
@@ -83,3 +88,4 @@ private:
      */
     std::string construct_address(const std::string &ip, const std::string &port);
 };
+

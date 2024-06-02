@@ -36,8 +36,13 @@ message GetRoomPeersRequest{
 
 message GetRoomPeersReply{
     bool success = 1;
-    repeated string peersIp = 2;
+    repeated Peer peers = 2;
     string message = 3;
+}
+
+message Peer{
+    string ip = 1;
+    string name = 2;
 }
 
 message HeartBeatRequest{
