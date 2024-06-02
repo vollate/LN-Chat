@@ -17,13 +17,13 @@ void ClientManager::setUserName(QString name) {
     this->userName = name;
 }
 
-void ClientManager::createRoom(QString name, QString passWord, ServerManager& serverManager) {
-    serverManager.registerRoom(name, passWord);
+void ClientManager::createRoom(QString name, QString passWord, ServerManager* serverManager) {
+    serverManager->registerRoom(name, passWord);
 }
 
-void ClientManager::joinRoom(QString name, QString passWord, ServerManager& serverManager) {
-    if(serverManager.serverRoomList->contains(name)) {  // Check if the room exists in server
-        auto room = (*serverManager.serverRoomList)[name];
+void ClientManager::joinRoom(QString name, QString passWord, ServerManager* serverManager) {
+    if(serverManager->serverRoomList->contains(name)) {  // Check if the room exists in server
+        auto room = (*serverManager->serverRoomList)[name];
 
         if(room->getPassWord() == passWord) {
             auto peer = Peer(userName, ip);

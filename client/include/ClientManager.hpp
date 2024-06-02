@@ -20,8 +20,8 @@ class ClientManager : public QObject{
 public:
     explicit ClientManager(QObject *parent = nullptr);
     ~ClientManager();
-    Q_INVOKABLE void createRoom(QString name, QString passWord, ServerManager& serverManager);
-    Q_INVOKABLE void joinRoom(QString name, QString password, ServerManager& serverManager);
+    Q_INVOKABLE void createRoom(QString name, QString passWord, ServerManager* serverManager);
+    Q_INVOKABLE void joinRoom(QString name, QString password, ServerManager* serverManager);
     Q_INVOKABLE void leaveRoom();
     Q_INVOKABLE void sendMessage(QString messageText);
     Q_INVOKABLE void setUserName(QString name);

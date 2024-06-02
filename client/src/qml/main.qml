@@ -75,10 +75,10 @@ ApplicationWindow {
                 height: parent.height
                 model: ListModel {
                     id: chatRoomList
-                    ListElement { text: "Room 1" }
-                    ListElement { text: "Room 2" }
-                    ListElement { text: "Room 3" }
-                    ListElement { text: "Room 4" }
+                    // ListElement { text: "Room 1" }
+                    // ListElement { text: "Room 2" }
+                    // ListElement { text: "Room 3" }
+                    // ListElement { text: "Room 4" }
                 }
 
                 delegate: Item {
@@ -247,9 +247,10 @@ ApplicationWindow {
                             console.log("Room Name:", roomNameField.text)
                             console.log("Password:", passwordField.text)
                             console.log("Nickname:", nicknameField.text)
-                            clientManager.setName(nicknameField.text)
+                            clientManager.setUserName(nicknameField.text)
                             clientController.createRoom(clientManager, serverManager, roomNameField.text, passwordField.text)
-                            popup.createRoom(roomNameField.text, passwordField.text, nicknameField.text)
+                            clientController.joinRoom(clientManager, serverManager, roomNameField.text, passwordField.text)
+                            // popup.createRoom(roomNameField.text, passwordField.text, nicknameField.text)
                             popup.visible = false
                         }
                     }
@@ -302,7 +303,10 @@ ApplicationWindow {
                         text: "Join Room"
                         onClicked: {
                             // 在此处处理创建房间的逻辑
-                            popup1.joinRoom(roomNameField1.text, passwordField1.text, nicknameField1.text)
+
+                            clientManager.setUserName(nicknameField1.text)
+                            clientController.joinRoom(clientManager, serverManager, roomNameField1.text, passwordField1.text)
+                            // popup1.joinRoom(roomNameField1.text, passwordField1.text, nicknameField1.text)
                             //console.log("Room Name:", roomNameField1.text)
                             //console.log("Password:", passwordField1.text)
                             //console.log("Nickname:", nicknameField1.text)
@@ -332,12 +336,12 @@ ApplicationWindow {
             // 可以继续添加更多用户
         }
         Connections {
-            target: Server
+            target: clientController
             //server应该有一个signal为chatRoomListChanged（string roomName）,传入参数为新房间的名字
             //当chatroom列表发生变化时，会向qml发送chatRoomListChanged信号，当qml收到信号时，会做出如下的变化（在sidebar的list append新的list element）
-            //OnChatRoomListChanged: {
-              //chatRoomList.append(roomName);
-            //}
+            onRoomJoined: {
+                chatRoomList.append({ text: roomName });
+            }
         }
         function onNewMessageReceived(message) {
             messageModel.append({
