@@ -1,27 +1,24 @@
 #pragma once
 
-#include <QString>
-#include <QList>
-#include <memory>
 
 #include "Message.hpp"
 #include "Peer.hpp"
+#include <QList>
 
 class Room {
-private:
+public:
     QString name;
     QString passWord;
     QList<Peer> peers;
     QList<Message> messages;
 
-public:
     Room(QString name, QString passWord);
 
     void addPeer(Peer &&peer);
 
     void removePeer(Peer peer);
 
-    void addMessage(Message message);
+    void addMessage(Message&& message);
 
     QList<Peer> getPeers();
 

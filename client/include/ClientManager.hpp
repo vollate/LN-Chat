@@ -1,7 +1,7 @@
 #pragma once
-#include "Room.hpp"
-#include "Peer.hpp"
+#include "Message.hpp"
 #include "ServerManager.hpp"
+#include "Room.hpp"
 
 #include <QMap>
 #include <memory>
@@ -9,24 +9,26 @@
 
 #include <QDebug>
 #include <qobject.h>
+#include <QString>
+#include <QDateTime>
+
 
 
 class ClientManager {
 
 public:
-    ClientManager();
+    ClientManager(QString userName);
     ~ClientManager();
     void createRoom(QString name, QString passWord, ServerManager& serverManager);
-    void joinRoom(QString name, QString password, QString username, ServerManager& serverManager);
+    void joinRoom(QString name, QString password, ServerManager& serverManager);
     void leaveRoom();
-    void sendMessage();
+    void sendMessage(QString messageText);
     void exportMessage();
     void loadMessage();
     void getRoomList();
 
-private:
     QString ip;
+    QString userName;
     std::shared_ptr<Room> currentRoom;
-    std::shared_ptr<Peer> selfPeer;
     std::shared_ptr<QMap<QString, Room>> roomList;
 };
