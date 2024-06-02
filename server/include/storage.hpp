@@ -12,7 +12,6 @@
 #include <string>
 #include <thread>
 #include <unordered_map>
-#include <utility>
 
 struct Client {
     Client(uint64_t user_id, std::string username, std::string socket_addr);
