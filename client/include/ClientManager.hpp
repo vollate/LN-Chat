@@ -11,9 +11,7 @@
 #include <qobject.h>
 
 
-class ClientManager : QObject{
-
-    Q_OBJECT
+class ClientManager {
 
 public:
     ClientManager();

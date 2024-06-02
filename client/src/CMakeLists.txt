@@ -2,10 +2,6 @@ set(SOURCE_FILES
         "main.cpp"
         "Entity/Room.cpp"
         "Entity/Peer.cpp"
-        "Controllers/ChatController.cpp"
-        "Controllers/RoomController.cpp"
-        "Controllers/VoteController.cpp"
-        "Managers/RoomManager.cpp"
         "Managers/ServerManager.cpp"
         "Managers/ClientManager.cpp"
 )
