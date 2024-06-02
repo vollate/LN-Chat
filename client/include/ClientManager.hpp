@@ -21,9 +21,9 @@ public:
 
     ~ClientManager() override;
 
-    void createRoom(QString name, QString password, ServerManager &serverManager);
+    void createRoom(const QString &name, const QString &password, ServerManager &serverManager);
 
-    void joinRoom(QString name, QString password, QString username, ServerManager &serverManager);
+    void joinRoom(const QString &name, const QString &password, const QString &username, ServerManager &serverManager);
 
     void leaveRoom();
 

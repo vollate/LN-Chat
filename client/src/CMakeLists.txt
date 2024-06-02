@@ -4,8 +4,8 @@ set(SOURCE_FILES
         "Entity/Peer.cpp"
         "Managers/ServerManager.cpp"
         "Managers/ClientManager.cpp"
-        utils.cpp
-        Message.cpp
+        "utils.cpp"
+        "Entity/Message.cpp"
 )
 
 set(chat_proto_path "${CMAKE_SOURCE_DIR}/../protos/chat.proto")
@@ -27,14 +27,11 @@ add_custom_command(
         --plugin=protoc-gen-grpc=${grpc_plugin_path} "${chat_proto_path}"
         DEPENDS "${chat_proto_path}")
 
-add_library(chat_rpc ${chat_proto_srcs} ${chat_grpc_srcs}
-        "RpcClient/RpcClient.cpp")
+add_library(chat_rpc ${chat_proto_srcs} ${chat_grpc_srcs} "RpcClient/RpcClient.cpp")
 
 target_include_directories(
         chat_rpc
-        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-        $<INSTALL_INTERFACE:include>)
+        PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
 find_package(gRPC CONFIG REQUIRED)
 find_package(absl CONFIG REQUIRED)
@@ -44,6 +41,7 @@ find_package(
         REQUIRED)
 
 set(HEADERS ${CMAKE_SOURCE_DIR}/include/ClientManager.hpp)
+
 qt6_wrap_cpp(MOC_SOURCES ${HEADERS})
 
 target_link_libraries(chat_rpc PUBLIC gRPC::gpr gRPC::grpc gRPC::grpc++

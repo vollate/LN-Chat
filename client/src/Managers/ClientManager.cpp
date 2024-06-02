@@ -18,11 +18,11 @@ ClientManager::ClientManager(quint16 port, QObject *parent)
     }
 }
 
-void ClientManager::createRoom(QString name, QString password, ServerManager &serverManager) {
+void ClientManager::createRoom(const QString &name, const QString &password, ServerManager &serverManager) {
     serverManager.registerRoom(name.toStdString(), password.toStdString());
 }
 
-void ClientManager::joinRoom(QString name, QString password, QString username, ServerManager &serverManager) {
+void ClientManager::joinRoom(const QString &name, const QString &password, const QString &username, ServerManager &serverManager) {
     if (auto peers_opt = serverManager.getPeers(name.toStdString(), password.toStdString())) {
         auto peers = peers_opt.value();
         auto room = std::make_shared<Room>(name, password);
