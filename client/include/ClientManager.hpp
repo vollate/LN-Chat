@@ -27,6 +27,7 @@ public:
     void getRoomList();
 
 private:
+    QString ip;
     std::shared_ptr<Room> currentRoom;
     std::shared_ptr<Peer> selfPeer;
     std::shared_ptr<QMap<QString, Room>> roomList;

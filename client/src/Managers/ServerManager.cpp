@@ -1,11 +1,11 @@
 #include "ServerManager.hpp"
+#include <memory>
 #include <qmap.h>
 
 ServerManager::ServerManager(){
-    serverRoomList = std::make_unique<QMap<QString, Room>>();
+    serverRoomList = std::make_unique<QMap<QString, std::shared_ptr<Room>>>();
 }
 
 void ServerManager::registerRoom(QString name, QString passWord){
-    Room room(name, passWord);
-    serverRoomList->insert(name, room);
+    serverRoomList->insert(name, std::make_shared<Room>(name, passWord));
 }

@@ -11,5 +11,5 @@ public:
     ServerManager();
     void registerRoom(QString name, QString passWord);
 
-    std::unique_ptr<QMap<QString, Room>> serverRoomList;
+    std::unique_ptr<QMap<QString, std::shared_ptr<Room>>> serverRoomList;
 };
