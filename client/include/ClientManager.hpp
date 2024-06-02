@@ -25,9 +25,9 @@ public:
     Q_INVOKABLE void leaveRoom();
     Q_INVOKABLE void sendMessage(QString messageText);
     Q_INVOKABLE void setUserName(QString name);
-    Q_INVOKABLE void exportMessage();
-    Q_INVOKABLE void loadMessage();
-    Q_INVOKABLE void getRoomList();
+//    Q_INVOKABLE void exportMessage();
+//    Q_INVOKABLE void loadMessage();
+//    Q_INVOKABLE void getRoomList();
 
     QString ip;
     QString userName;
