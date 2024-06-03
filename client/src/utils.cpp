@@ -14,7 +14,7 @@ QJsonObject json_helper::message2Json(const Message &msg, const QString &room_na
 QPair<Message, QString> json_helper::json2Message(const QJsonObject &text) {
     Message message;
     message.time = text["timestamp"].toString();
-    message.text = text["text"].toString();
+    message.text = text["content"].toString();
     message.sender = text["sender"].toString();
     return QPair<Message, QString>(message, text["roomName"].toString());
 
