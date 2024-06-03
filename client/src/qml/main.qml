@@ -352,7 +352,7 @@ function onNewMessageReceived(message)
 {
     var now = new Date();
     messageModel.append({
-            userName: clientManager.userName,
+            userName: clientManager.getUserName(),
             timestamp: Qt.formatTime(now, "hh:mm:ss"),
             text: message
         }

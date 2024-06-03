@@ -37,6 +37,7 @@ public:
     bool sendMessage(const Message &message);
 
     Q_INVOKABLE void setUserName(const QString &name);
+    Q_INVOKABLE QString getUserName();
 
     void exportMessage();
 

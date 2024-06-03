@@ -20,6 +20,10 @@ ClientManager::ClientManager(quint16 port, QObject *parent)
     }
 }
 
+QString ClientManager::getUserName() {
+    return userName;
+}
+
 void ClientManager::createRoom(const QString &name, const QString &password, ServerManager *serverManager) {
     serverManager->registerRoom(name, password);
 }
