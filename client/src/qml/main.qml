@@ -350,11 +350,12 @@ ApplicationWindow {
 
 function onNewMessageReceived(message)
 {
+    var parts = message.split("\n");
     var now = new Date();
     messageModel.append({
-            userName: clientManager.getUserName(),
+            userName: parts[0],
             timestamp: Qt.formatTime(now, "hh:mm:ss"),
-            text: message
+            text: parts[1]
         }
     );
     console.log("New message received: " + message);
