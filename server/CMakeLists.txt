@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
-set(CMAKE_PREFIX_PATH $ENV{VCPKG_ROOT}/installed/x64-linux)
+set(CMAKE_PREFIX_PATH $ENV{VCPKG_ROOT}/installed/arm64-osx)
 project(LN-Chat-Server)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

@@ -3,6 +3,8 @@
 #include "Message.hpp"
 #include <QJsonObject>
 #include <QString>
+#include <sstream>
+
 
 namespace json_helper {
     QJsonObject message2Json(const Message& msg, const QString& room_name);

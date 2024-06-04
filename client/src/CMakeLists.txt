@@ -16,7 +16,7 @@ set(chat_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/chat.pb.cc")
 set(chat_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/chat.grpc.pb.cc")
 set(chat_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/chat.pb.h")
 set(chat_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/chat.grpc.pb.h")
-set(vcpkg_tools "$ENV{VCPKG_ROOT}/installed/x64-linux/tools")
+set(vcpkg_tools "$ENV{VCPKG_ROOT}/installed/arm64-osx/tools")
 set(protoc_path "${vcpkg_tools}/protobuf/protoc")
 set(grpc_plugin_path "${vcpkg_tools}/grpc/grpc_cpp_plugin")
 

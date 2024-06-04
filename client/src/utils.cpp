@@ -1,4 +1,5 @@
 #include "utils.hpp"
+#include <ios>
 #include <regex>
 #include <string>
 
@@ -27,7 +28,7 @@ std::string ip_helper::urlDecode(const std::string& encoded) {
     for(size_t i = 0; i < encoded.length(); ++i) {
         if(encoded[i] == '%' && i + 2 < encoded.length()) {
             std::stringstream ss;
-            ss << std::hex << encoded.substr(i + 1, 2);
+            ss << std::ios_base::hex << encoded.substr(i + 1, 2);
             ss >> hex;
             tempChar = static_cast<char>(hex);
             decoded += tempChar;
