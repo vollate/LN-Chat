@@ -23,9 +23,9 @@ void ClientController::sendMessage(ClientManager* clientManager, QString message
     qint64 timestamp = now.toSecsSinceEpoch();
     QString timestampStr = QString::number(timestamp);
     Message message(clientManager->userName, timestampStr, messageText);
-    if (clientManager->sendMessage(message)){
-        qDebug () << "Message sent " << messageText;
-    }else{
+    if(clientManager->sendMessage(message)) {
+        qDebug() << "Message sent " << messageText;
+    } else {
         qDebug() << "Failed to send message";
     }
 }

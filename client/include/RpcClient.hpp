@@ -1,7 +1,7 @@
 #pragma once
 
-#include <grpcpp/grpcpp.h>
 #include "chat.grpc.pb.h"
+#include <grpcpp/grpcpp.h>
 #include <memory>
 #include <string>
 #include <vector>
@@ -28,11 +28,11 @@ public:
      *
      * This constructor initializes the gRPC channel and stub for communication with the server.
      */
-    RpcClient(const std::string &ip, const std::string &port);
+    RpcClient(const std::string& ip, const std::string& port);
 
-    RpcClient(RpcClient &&) = default;
+    RpcClient(RpcClient&&) = default;
 
-    RpcClient &operator=(RpcClient &&) = default;
+    RpcClient& operator=(RpcClient&&) = default;
 
     /**
      * @brief Destructor for ChatClient.
@@ -48,7 +48,7 @@ public:
      * @param clientId Reference to a uint64_t variable where the client ID will be stored if registration is successful.
      * @return true if the client registration was successful, false otherwise.
      */
-    bool RegisterClient(const std::string &name, uint64_t &clientId);
+    bool RegisterClient(const std::string& name, uint64_t& clientId);
 
     /**
      * @brief Publishes a new room to the server.
@@ -58,7 +58,7 @@ public:
      * @param password The password for the room.
      * @return true if the room was published successfully, false otherwise.
      */
-    bool PublishRoom(uint64_t clientId, const std::string &name, const std::string &password);
+    bool PublishRoom(uint64_t clientId, const std::string& name, const std::string& password);
 
     /**
      * @brief Retrieves the list of peers in a room from the server.
@@ -69,8 +69,7 @@ public:
      * @param peersIp Reference to a vector of strings where the IP addresses of the peers will be stored.
      * @return true if the room peers were retrieved successfully, false otherwise.
      */
-    bool GetRoomPeers(uint64_t clientId, const std::string &name, const std::string &password,
-                      std::vector<PeerInfo> &peersIp);
+    bool GetRoomPeers(uint64_t clientId, const std::string& name, const std::string& password, std::vector<PeerInfo>& peersIp);
 
     /**
      * @brief Sends a heartbeat message to the server to keep the client connection alive.
@@ -81,7 +80,7 @@ public:
     bool HeartBeat(uint64_t clientId);
 
 private:
-    std::unique_ptr<LN_Chat::ChatService::Stub> stub_; ///< gRPC stub for interacting with the LN_Chat service.
+    std::unique_ptr<LN_Chat::ChatService::Stub> stub_;  ///< gRPC stub for interacting with the LN_Chat service.
 
     /**
      * @brief Constructs the address string from IP and port.
@@ -90,6 +89,5 @@ private:
      * @param port The port number.
      * @return A string in the format "ip:port".
      */
-    std::string construct_address(const std::string &ip, const std::string &port);
+    std::string construct_address(const std::string& ip, const std::string& port);
 };
-

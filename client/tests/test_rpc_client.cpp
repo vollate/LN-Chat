@@ -1,8 +1,8 @@
 #include "RpcClient.hpp"
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     RpcClient client("localhost", "11451");
 
     uint64_t clientId;
@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     std::vector<PeerInfo> peers;
     assert(client.GetRoomPeers(clientId, "test_room", "password123", peers));
     std::cout << "Peers in room:" << std::endl;
-    for (const auto &peer: peers) {
+    for(const auto& peer : peers) {
         std::cout << "IP: " << peer.ip << ", Name: " << peer.name << std::endl;
     }
 

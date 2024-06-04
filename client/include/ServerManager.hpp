@@ -1,22 +1,22 @@
 #pragma once
 
-#include <QString>
-#include <memory>
-#include <qlist.h>
-#include <qmap.h>
-#include <optional>
-#include <thread>
 #include "Room.hpp"
 #include "RpcClient.hpp"
+#include <QString>
+#include <memory>
+#include <optional>
+#include <qlist.h>
+#include <qmap.h>
+#include <thread>
 
-class ServerManager : public QObject{
+class ServerManager : public QObject {
     Q_OBJECT
 public:
-    ServerManager(QObject *parent = nullptr);
+    ServerManager(QObject* parent = nullptr);
 
-    void setIp(const QString &ip);
-    void setPort(const QString &port);
-    void setName(const QString &name);
+    void setIp(const QString& ip);
+    void setPort(const QString& port);
+    void setName(const QString& name);
     void startRpcClient();
 
     ~ServerManager();
@@ -30,7 +30,7 @@ public:
     void stopHeartBeat();
 
     std::optional<std::list<Peer>> getPeers(const std::string& room_name, const std::string& room_password);
-//    Q_INVOKABLE bool registerRoom(QString name, QString passWord);
+    //    Q_INVOKABLE bool registerRoom(QString name, QString passWord);
 
     std::unique_ptr<QMap<QString, std::shared_ptr<Room>>> serverRoomList;
     constexpr static uint64_t HeartBeat_Interval = 20;

@@ -3,7 +3,6 @@
 #include "Peer.hpp"
 #include "Room.hpp"
 #include "ServerManager.hpp"
-#include "Room.hpp"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -14,29 +13,28 @@
 #include <qmap.h>
 
 #include <QDebug>
-#include <qobject.h>
 #include <mutex>
+#include <qobject.h>
 #include <qobjectdefs.h>
-
 
 class ClientManager final : public QObject {
 
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    ClientManager(quint16 port = Client_Server_Port, QObject *parent = nullptr);
+    ClientManager(quint16 port = Client_Server_Port, QObject* parent = nullptr);
 
     ~ClientManager() override;
 
-    void createRoom(const QString &name, const QString &password, ServerManager *serverManager);
+    void createRoom(const QString& name, const QString& password, ServerManager* serverManager);
 
-    bool joinRoom(const QString &name, const QString &password, ServerManager *serverManager);
+    bool joinRoom(const QString& name, const QString& password, ServerManager* serverManager);
 
     void leaveRoom();
 
-    bool sendMessage(const Message &message);
+    bool sendMessage(const Message& message);
 
-    Q_INVOKABLE void setUserName(const QString &name);
+    Q_INVOKABLE void setUserName(const QString& name);
     Q_INVOKABLE QString getUserName();
 
     void exportMessage();
@@ -56,7 +54,6 @@ public:
     std::shared_ptr<Room> currentRoom;
     std::shared_ptr<QMap<QString, Room>> roomList;
 
-
 signals:
-    void messageSent(const QString &messageText);
+    void messageSent(const QString& messageText);
 };

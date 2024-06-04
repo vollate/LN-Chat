@@ -7,22 +7,21 @@ Room::Room(QString name, QString passWord) {
     peers.clear();
 }
 
-void Room::addPeer(Peer &&peer) {
+void Room::addPeer(Peer&& peer) {
     peers.append(peer);
 }
-
 
 QList<Peer> Room::getPeers() {
     return peers;
 }
 
-void Room::addMessage(Message &&message) {
+void Room::addMessage(Message&& message) {
     messages.append(message);
 }
 
 void Room::removePeer(QString name) {
-    for (int i = 0; i < peers.size(); i++) {
-        if (peers[i].name == name) {
+    for(int i = 0; i < peers.size(); i++) {
+        if(peers[i].name == name) {
             peers.removeAt(i);
             return;
         }
@@ -32,4 +31,3 @@ void Room::removePeer(QString name) {
 QString Room::getName() const {
     return name;
 }
-

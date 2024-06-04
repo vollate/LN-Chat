@@ -6,15 +6,13 @@
 #include <QQmlContext>
 #include <random>
 
-
 #include "ClientController.hpp"
-
 
 // #include "add_environment.h"
 // #include "import_qml_components_plugins.h"
 // #include "import_qml_plugins.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
@@ -35,24 +33,21 @@ int main(int argc, char *argv[]) {
     serverManager.startRpcClient();
     engine.rootContext()->setContextProperty("serverManager", &serverManager);
 
-
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(
-            &engine,
-            &QQmlApplicationEngine::objectCreated,
-            &app,
-            [url](QObject *obj, const QUrl &objUrl) {
-                if (!obj && url == objUrl)
-                    QCoreApplication::exit(-1);
-            },
-            Qt::QueuedConnection);
+        &engine, &QQmlApplicationEngine::objectCreated, &app,
+        [url](QObject* obj, const QUrl& objUrl) {
+            if(!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        },
+        Qt::QueuedConnection);
 
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");
 
     engine.load(url);
 
-    if (engine.rootObjects().isEmpty()) {
+    if(engine.rootObjects().isEmpty()) {
         return -1;
     }
 

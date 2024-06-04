@@ -1,8 +1,8 @@
 #pragma once
 
+#include "Constant.hpp"
 #include <QString>
 #include <QTcpSocket>
-#include "Constant.hpp"
 
 struct Peer {
     Peer(QString name, QString ip);

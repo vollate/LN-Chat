@@ -8,8 +8,7 @@
 // #include "import_qml_components_plugins.h"
 // #include "import_qml_plugins.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     set_qt_environment();
 
     QGuiApplication app(argc, argv);
@@ -17,11 +16,9 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
     QObject::connect(
-        &engine,
-        &QQmlApplicationEngine::objectCreated,
-        &app,
-        [url](QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl)
+        &engine, &QQmlApplicationEngine::objectCreated, &app,
+        [url](QObject* obj, const QUrl& objUrl) {
+            if(!obj && url == objUrl)
                 QCoreApplication::exit(-1);
         },
         Qt::QueuedConnection);
@@ -31,7 +28,7 @@ int main(int argc, char *argv[])
 
     engine.load(url);
 
-    if (engine.rootObjects().isEmpty()) {
+    if(engine.rootObjects().isEmpty()) {
         return -1;
     }
 
