@@ -1,8 +1,9 @@
 #!/bin/bash
 
 VCPKG_TOOLCHAIN=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+VCPKG_INSTALLED_DIR=$VCPKG_ROOT/installed/x64-linux
 #CXX=clang++
-BUILD_CMD="cmake -DCMAKE_CXX_FLAGS=-fdiagnostics-color=always -DCMAKE_PREFIX_PATH=$VCPKG_ROOT/installed/x64-linux -DCMAKE_TOOLCHAIN_FILE=$VCPKG_TOOLCHAIN -DCMAKE_BUILD_TYPE="
+BUILD_CMD="cmake -DCMAKE_PREFIX_PATH=$VCPKG_INSTALLED_DIR -DCMAKE_TOOLCHAIN_FILE=$VCPKG_TOOLCHAIN -DCMAKE_BUILD_TYPE="
 if [ $# -eq 0 ]
 then
     echo "Usage: dev.sh [debug|release]"
@@ -17,7 +18,7 @@ then
 elif [ $1 == "clean" ]
 then
     shopt -s globstar
-    rm -rf build-* **/*.cc **/*.h
+    rm -rf build-*
     exit 0
 else
     echo "Usage: dev.sh [debug|release|clean]"
