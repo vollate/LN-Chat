@@ -9,17 +9,17 @@
 #include <qmap.h>
 #include <thread>
 
-class ServerManager : public QObject {
+class ServerManager final : public QObject {
     Q_OBJECT
 public:
-    ServerManager(QObject* parent = nullptr);
+    explicit ServerManager(QObject* parent = nullptr);
 
-    void setIp(const QString& ip);
-    void setPort(const QString& port);
+    void setIp(const QString& target_ip);
+    void setPort(const QString& target_port);
     void setName(const QString& name);
     void startRpcClient();
 
-    ~ServerManager();
+    ~ServerManager() override;
 
     bool registerClient();
 
@@ -28,6 +28,8 @@ public:
     void startHeartBeat();
 
     void stopHeartBeat();
+
+    std::vector<QString> getRoomList();
 
     std::optional<std::list<Peer>> getPeers(const std::string& room_name, const std::string& room_password);
     //    Q_INVOKABLE bool registerRoom(QString name, QString passWord);

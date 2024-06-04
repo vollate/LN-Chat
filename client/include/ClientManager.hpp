@@ -26,7 +26,7 @@ public:
 
     ~ClientManager() override;
 
-    void createRoom(const QString& name, const QString& password, ServerManager* serverManager);
+    static void createRoom(const QString& name, const QString& password, ServerManager* serverManager);
 
     bool joinRoom(const QString& name, const QString& password, ServerManager* serverManager);
 
@@ -35,13 +35,11 @@ public:
     bool sendMessage(const Message& message);
 
     Q_INVOKABLE void setUserName(const QString& name);
-    Q_INVOKABLE QString getUserName();
+    Q_INVOKABLE QString getUserName() const;
 
     void exportMessage();
 
     void loadMessage();
-
-    void getRoomList();
 
     Q_INVOKABLE void handleNewConnection();
 
@@ -50,7 +48,7 @@ public:
 
     QString userName;
 
-    std::unique_ptr<QTcpServer> tcp_server;
+    QTcpServer tcp_server;
     std::shared_ptr<Room> currentRoom;
     std::shared_ptr<QMap<QString, Room>> roomList;
 

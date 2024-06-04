@@ -57,12 +57,12 @@ void ServerManager::stopHeartBeat() {
     }
 }
 
-void ServerManager::setIp(const QString& ip) {
-    this->ip = ip;
+void ServerManager::setIp(const QString& target_ip) {
+    this->ip = target_ip;
 }
 
-void ServerManager::setPort(const QString& port) {
-    this->port = port;
+void ServerManager::setPort(const QString& target_port) {
+    this->port = target_port;
 }
 
 void ServerManager::setName(const QString& name) {
@@ -73,4 +73,15 @@ void ServerManager::startRpcClient() {
     rpc_client = std::move(RpcClient(ip.toStdString(), port.toStdString()));
     while(!registerClient()) {}
     startHeartBeat();
+}
+
+std::vector<QString> ServerManager::getRoomList() {
+    std::vector<std::string> rooms;
+    std::vector<QString> res;
+    if(rpc_client.value().GetAllRooms(client_id, rooms)) {
+        for(const auto& room_name : rooms) {
+            res.push_back(QString::fromStdString(room_name));
+        }
+    }
+    return res;
 }

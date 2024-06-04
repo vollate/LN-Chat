@@ -96,3 +96,27 @@ bool RpcClient::HeartBeat(uint64_t clientId) {
         return false;
     }
 }
+
+bool RpcClient::GetAllRooms(uint64_t clientId, std::vector<std::string>& rooms) {
+    LN_Chat::GetAllRoomsRequest request;
+    request.set_clientid(clientId);
+
+    LN_Chat::GetAllRoomsReply reply;
+    grpc::ClientContext context;
+
+    grpc::Status status = stub_->GetAllRooms(&context, request, &reply);
+
+    if(status.ok() && reply.success()) {
+        rooms.clear();
+        rooms.reserve(reply.rooms_size());
+
+        for(const auto& room : reply.rooms()) {
+            rooms.push_back(room);
+        }
+
+        return true;
+    } else {
+        std::cout << "GetAllRooms failed: " << std::endl;
+        return false;
+    }
+}

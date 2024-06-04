@@ -79,6 +79,15 @@ public:
      */
     bool HeartBeat(uint64_t clientId);
 
+    /**
+     * @brief Retrieves the list of all rooms from the server.
+     *
+     * @param clientId The ID of the client requesting the room list.
+     * @param rooms Reference to a vector of strings where the room names will be stored.
+     * @return true if the room list was retrieved successfully, false otherwise.
+     */
+    bool GetAllRooms(uint64_t clientId, std::vector<std::string>& rooms);
+
 private:
     std::unique_ptr<LN_Chat::ChatService::Stub> stub_;  ///< gRPC stub for interacting with the LN_Chat service.
 

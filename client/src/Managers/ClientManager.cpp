@@ -9,17 +9,16 @@
 #include "utils.hpp"
 
 ClientManager::ClientManager(quint16 port, QObject* parent)
-    : QObject{ parent }, tcp_server{ std::make_unique<QTcpServer>(this) }, roomList{ std::make_shared<QMap<QString, Room>>() },
-      ip{ "127.0.0.1" } {
-    if(!tcp_server->listen(QHostAddress::Any, port)) {
-        qCritical() << "Server could not start:" << tcp_server->errorString();
+    : QObject{ parent }, tcp_server{ this }, roomList{ std::make_shared<QMap<QString, Room>>() }, ip{ "127.0.0.1" } {
+    if(!tcp_server.listen(QHostAddress::Any, port)) {
+        qCritical() << "Server could not start:" << tcp_server.errorString();
     } else {
         qDebug() << "Server started on port " << port << '\n';
-        connect(tcp_server.get(), &QTcpServer::newConnection, this, &ClientManager::handleNewConnection);
+        connect(&tcp_server, &QTcpServer::newConnection, this, &ClientManager::handleNewConnection);
     }
 }
 
-QString ClientManager::getUserName() {
+QString ClientManager::getUserName() const {
     return userName;
 }
 
@@ -48,7 +47,7 @@ void ClientManager::setUserName(const QString& name) {
 }
 
 ClientManager::~ClientManager() {
-    tcp_server->close();
+    tcp_server.close();
 }
 
 bool ClientManager::sendMessage(const Message& message) {
@@ -75,7 +74,7 @@ bool ClientManager::sendMessage(const Message& message) {
 }
 
 void ClientManager::handleNewConnection() {
-    QTcpSocket* clientSocket = tcp_server->nextPendingConnection();
+    QTcpSocket* clientSocket = tcp_server.nextPendingConnection();
     if(clientSocket != nullptr) {
         connect(clientSocket, &QTcpSocket::readyRead, this, [this, clientSocket]() {
             QByteArray data = clientSocket->readAll();
@@ -99,3 +98,13 @@ void ClientManager::leaveRoom() {
         qDebug() << "You are not in a room";
     }
 }
+
+void ClientManager::exportMessage() {
+    // TODO
+}
+
+void ClientManager::loadMessage() {
+    // TODO
+}
+
+
