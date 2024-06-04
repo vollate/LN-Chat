@@ -61,9 +61,9 @@ void ChatServer::handleRpcInThreadPool() {
 
 CallData::CallData(ChatService::AsyncService* service, grpc::ServerCompletionQueue* server_cq, RequestType type,
                    std::shared_ptr<Storage> storage)
-    : m_service{ service }, m_completion_queue{ server_cq }, m_register_client_responder(&m_context),
-      m_heart_beat_responder(&m_context), m_publish_room_responder(&m_context), m_get_room_peers_responder(&m_context),
-      m_storage{ std::move(storage) }, m_status{ CREATE }, m_type{ type } {
+    : m_service{ service }, m_completion_queue{ server_cq }, m_register_client_responder{ &m_context },
+      m_heart_beat_responder{ &m_context }, m_publish_room_responder{ &m_context }, m_get_room_peers_responder{ &m_context },
+      m_get_all_rooms_responder{ &m_context }, m_storage{ std::move(storage) }, m_status{ CREATE }, m_type{ type } {
     proceed();
 }
 
@@ -100,6 +100,10 @@ void CallData::handleCreate() {
             m_service->RequestGetRoomPeers(&m_context, &m_get_room_peers_request, &m_get_room_peers_responder, m_completion_queue,
                                            m_completion_queue, this);
             break;
+        case GET_ALL_ROOMS:
+            m_service->RequestGetAllRooms(&m_context, &m_get_all_rooms_request, &m_get_all_rooms_responder, m_completion_queue,
+                                          m_completion_queue, this);
+            break;
     }
 }
 
@@ -108,19 +112,24 @@ void CallData::handleProcess() {
 
     switch(m_type) {
         case REGISTER_CLIENT: {
-            Controller::handleRegisterClient(this);
+            Control::handleRegisterClient(this);
             break;
         }
         case HEAR_BEAT: {
-            Controller::handleHeartBeat(this);
+            Control::handleHeartBeat(this);
             break;
         }
         case PUBLISH_ROOM: {
-            Controller::handlePublishRoom(this);
+            Control::handlePublishRoom(this);
             break;
         }
         case GET_ROOM_PEERS: {
-            Controller::handleGetRoomPeers(this);
+            Control::handleGetRoomPeers(this);
+            break;
+        }
+
+        case GET_ALL_ROOMS: {
+            Control::handleGetAllRooms(this);
             break;
         }
         default: {

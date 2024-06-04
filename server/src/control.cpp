@@ -1,6 +1,7 @@
 #include "control.hpp"
 #include "server.hpp"
 #include "utils.hpp"
+#include <cstdio>
 
 void Controller::handlePublishRoom(CallData* call_data) {
     dPrint("PublishRoom: " << call_data->m_publish_room_request.name()
@@ -77,4 +78,8 @@ void Controller::handleHeartBeat(CallData* call_data) {
     call_data->m_heart_beat_reply.set_success(call_data->m_storage->activateClient(call_data->m_heart_beat_request.clientid()));
     call_data->m_status = CallData::FINISH;
     call_data->m_heart_beat_responder.Finish(call_data->m_heart_beat_reply, grpc::Status::OK, call_data);
+}
+
+void Controller::handleGetAllRooms(CallData* call_data) {
+    dPrint("GetAllRoom: client_id=" << call_data->m_get_all_rooms_request.clientid());
 }

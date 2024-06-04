@@ -6,6 +6,7 @@ service ChatService {
     rpc PublishRoom(PublishRoomRequest) returns (PublishRoomReply);
     rpc GetRoomPeers(GetRoomPeersRequest) returns (GetRoomPeersReply);
     rpc RegisterClient(RegisterClientRequest) returns (RegisterClientReply);
+    rpc GetAllRooms(GetAllRoomsRequest) returns (GetAllRoomsReply);
 }
 message RegisterClientRequest {
     string name = 1;
@@ -21,6 +22,14 @@ message PublishRoomRequest {
     uint64 clientId = 1;
     string name = 2;
     string password = 3;
+}
+
+message GetAllRoomsRequest {
+    uint64 clientId = 1;
+}
+
+message GetAllRoomsReply {
+    repeated string rooms = 1;
 }
 
 message PublishRoomReply {

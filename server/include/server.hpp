@@ -36,7 +36,7 @@ private:
 
 class CallData final {
 public:
-    enum RequestType { REGISTER_CLIENT, PUBLISH_ROOM, GET_ROOM_PEERS, HEAR_BEAT };
+    enum RequestType { REGISTER_CLIENT, PUBLISH_ROOM, GET_ROOM_PEERS, HEAR_BEAT, GET_ALL_ROOMS };
 
     CallData(LN_Chat::ChatService::AsyncService* service, grpc::ServerCompletionQueue* completion_queue, RequestType type,
              std::shared_ptr<Storage> storage);
@@ -44,7 +44,8 @@ public:
     void proceed();
 
 private:
-    friend Controller;
+    using Control = Controller;
+    friend Control;
 
     LN_Chat::ChatService::AsyncService* m_service;
     grpc::ServerCompletionQueue* m_completion_queue;
@@ -65,6 +66,10 @@ private:
     LN_Chat::GetRoomPeersRequest m_get_room_peers_request;
     LN_Chat::GetRoomPeersReply m_get_room_peers_reply;
     grpc::ServerAsyncResponseWriter<LN_Chat::GetRoomPeersReply> m_get_room_peers_responder;
+
+    LN_Chat::GetAllRoomsRequest m_get_all_rooms_request;
+    LN_Chat::GetAllRoomsReply m_get_all_rooms_reply;
+    grpc::ServerAsyncResponseWriter<LN_Chat::GetAllRoomsReply> m_get_all_rooms_responder;
 
     std::shared_ptr<Storage> m_storage;
 

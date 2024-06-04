@@ -1,5 +1,6 @@
 #pragma once
 class CallData;
+
 struct Controller final {
     Controller() = delete;
 
@@ -7,4 +8,5 @@ struct Controller final {
     static void handleRegisterClient(CallData* call_data);
     static void handleHeartBeat(CallData* call_data);
     static void handleGetRoomPeers(CallData* call_data);
+    static void handleGetAllRooms(CallData* call_data);
 };
