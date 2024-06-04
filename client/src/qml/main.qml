@@ -24,6 +24,7 @@ ApplicationWindow {
                 border.color: "#498C8B" // 左侧rectangle边框颜色
                 border.width: 3 // 左侧rectangle边框宽度
                 width: parent.width / 7 // 左侧rectangle宽度为bar的1/7
+                radius: 20
                 height: parent.height
                 color: "#E2F5EA"
 
@@ -46,6 +47,7 @@ ApplicationWindow {
                 border.width: 3 // 左侧rectangle边框宽度
                 width: parent.width / 7
                 height: parent.height
+                radius: 20
                 color: "#E2F5EA"
                 MouseArea {
                     anchors.fill: parent
@@ -95,7 +97,7 @@ ApplicationWindow {
                         onClicked: {
                             console.log(model.text + " button clicked")
                             clearAllData()
-                            // updateDataFromLists(testMessages1)
+                            updateDataFromLists(testMessages1)
                         }
                     }
                 }
@@ -153,7 +155,7 @@ ApplicationWindow {
             Rectangle {
                 color: "#354759"
                 height: 50
-                width: parent.width - 250 // 留出按钮空间
+                width: parent.width - 300 // 留出按钮空间
                 anchors.bottom: parent.bottom
                 TextField {
                     id: inputField
@@ -165,16 +167,36 @@ ApplicationWindow {
             Row {
                 spacing: 10
                 height: 50
-                width: 250 // 给按钮足够空间
+                width: 280 // 给按钮足够空间
                 anchors.right: parent.right // 与输入框右侧对齐
                 anchors.bottom: parent.bottom
 
                 Button {
                     text: "Send"
+                    width: 95
                     onClicked: {
                         // 发送按键逻辑
                         clientController.sendMessage(clientManager, inputField.text)
                     }
+                }
+                Button {
+                    text: "Export"
+                     font.pixelSize: 9
+                    width: 90
+                    onClicked: {
+
+
+                    }
+                }
+                Button {
+                    text: "Load"
+                     font.pixelSize: 11
+                   width: 75
+                   onClicked: {
+                       popup2.x = (root.width - popup2.width) / 2;
+                       popup2.y = (root.height - popup2.height) / 2;
+                       popup2.visible = true;
+                   }
                 }
             }
         }
@@ -321,6 +343,46 @@ ApplicationWindow {
         }
     }
 
+    Rectangle{
+        id: popup2
+        width: 450
+        height: 300
+        color: "lightblue"
+        border.color: "black"
+        border.width: 2
+        visible: false
+        radius: 10
+
+        Column {
+            anchors.centerIn: parent
+            spacing: 10
+
+            TextField {
+                id: roomName
+                placeholderText: "Room Name For Load"
+                width: parent.width
+            }
+
+            Row {
+                spacing: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Button {
+                    text: "Load"
+                    onClicked: {
+
+                        popup2.visible = false
+                    }
+                }
+
+                Button {
+                    text: "Close"
+                    onClicked: popup2.visible = false
+                }
+            }
+        }
+    }
+
     ListModel {
         id: messageModel
         // ListElement { userName: "Alice"; timestamp: "2021-01-01 10:00:00"; text: "Hello, welcome to the chat!" }
@@ -396,8 +458,8 @@ function updateDataFromLists(messageList)
 //});
 }
 
-// var testMessages1 = [
-//     {userName: "Alice", timestamp: "2024-06-01 08:30:00", text: "Good morning!"},
-//     {userName: "Bob", timestamp: "2024-06-01 08:35:00", text: "Hello Alice, how are you today?"}
-// ];
+ //var testMessages1 = [
+   //  {userName: "Alice", timestamp: "2024-06-01 08:30:00", text: "Good morning!"},
+    // {userName: "Bob", timestamp: "2024-06-01 08:35:00", text: "Hello Alice, how are you today?"}
+ //];
 }
