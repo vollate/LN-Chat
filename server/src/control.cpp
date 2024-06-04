@@ -1,7 +1,6 @@
 #include "control.hpp"
 #include "server.hpp"
 #include "utils.hpp"
-#include <cstdio>
 
 void Controller::handlePublishRoom(CallData* call_data) {
     dPrint("PublishRoom: " << call_data->m_publish_room_request.name()
@@ -73,7 +72,7 @@ void Controller::handleRegisterClient(CallData* call_data) {
 }
 
 void Controller::handleHeartBeat(CallData* call_data) {
-    dPrint("HeartBeat: client_id=" << call_data->m_heart_beat_request.clientid());
+    dPrint("HeartBeat: client_id: " << call_data->m_heart_beat_request.clientid());
     auto lock = call_data->m_storage->getLock();
     call_data->m_heart_beat_reply.set_success(call_data->m_storage->activateClient(call_data->m_heart_beat_request.clientid()));
     call_data->m_status = CallData::FINISH;
@@ -81,5 +80,17 @@ void Controller::handleHeartBeat(CallData* call_data) {
 }
 
 void Controller::handleGetAllRooms(CallData* call_data) {
-    dPrint("GetAllRoom: client_id=" << call_data->m_get_all_rooms_request.clientid());
+    dPrint("GetAllRoom: client_id: " << call_data->m_get_all_rooms_request.clientid());
+    auto lock = call_data->m_storage->getLock();
+    if(auto client_opt = call_data->m_storage->getClient(call_data->m_get_all_rooms_request.clientid()); !client_opt) {
+        call_data->m_get_all_rooms_reply.set_success(false);
+    } else {
+        call_data->m_get_all_rooms_reply.set_success(true);
+        auto rooms = call_data->m_storage->getAllRooms();
+        for(const auto& room_name : rooms) {
+            call_data->m_get_all_rooms_reply.add_rooms(room_name);
+        }
+    }
+    call_data->m_status = CallData::FINISH;
+    call_data->m_get_all_rooms_responder.Finish(call_data->m_get_all_rooms_reply, grpc::Status::OK, call_data);
 }

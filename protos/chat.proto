@@ -29,7 +29,8 @@ message GetAllRoomsRequest {
 }
 
 message GetAllRoomsReply {
-    repeated string rooms = 1;
+    bool success = 1;
+    repeated string rooms = 2;
 }
 
 message PublishRoomReply {

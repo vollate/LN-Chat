@@ -51,6 +51,7 @@ public:
     auto activateClient(uint64_t user_id) -> bool;
     auto getLock(bool defer = false) -> std::unique_lock<std::shared_mutex>;
     auto getSharedLock(bool defer = false) -> std::shared_lock<std::shared_mutex>;
+    auto getAllRooms() -> std::vector<std::string>;
 
     // Provide concurrent access and get for member container
     template <typename C, typename T> auto get(C& container, const T& key) -> std::optional<T> {

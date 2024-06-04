@@ -50,6 +50,7 @@ void ChatServer::handleRpcInThreadPool() {
     new CallData(&m_service, m_completion_queue.get(), CallData::HEAR_BEAT, m_storage);
     new CallData(&m_service, m_completion_queue.get(), CallData::PUBLISH_ROOM, m_storage);
     new CallData(&m_service, m_completion_queue.get(), CallData::GET_ROOM_PEERS, m_storage);
+    new CallData(&m_service, m_completion_queue.get(), CallData::GET_ALL_ROOMS, m_storage);
     void* tag = nullptr;
     bool success = false;
     while(!m_shutdown) {
@@ -127,7 +128,6 @@ void CallData::handleProcess() {
             Control::handleGetRoomPeers(this);
             break;
         }
-
         case GET_ALL_ROOMS: {
             Control::handleGetAllRooms(this);
             break;

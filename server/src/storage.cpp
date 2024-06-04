@@ -133,3 +133,11 @@ auto Storage::getSharedLock(bool defer) -> std::shared_lock<std::shared_mutex> {
     }
     return std::shared_lock(m_mutex);
 }
+
+auto Storage::getAllRooms() -> std::vector<std::string> {
+    std::vector<std::string> res(m_chatrooms.size());
+    for(auto& [name, _] : m_chatrooms) {
+        res.push_back(name);
+    }
+    return res;
+}
