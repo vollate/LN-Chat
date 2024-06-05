@@ -205,6 +205,9 @@ ApplicationWindow {
                     onClicked: {
                         // 发送按键逻辑
                         clientController.sendMessage(clientManager, inputField.text)
+                        // TODO: delete this line (12012710)
+                        clientController.getCurrentRoomMsgs(clientManager);
+
                     }
                 }
 

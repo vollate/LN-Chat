@@ -45,3 +45,13 @@ void ClientController::sendMessage(ClientManager* clientManager, QString message
 void ClientController::leaveRoom(ClientManager* clientManager) {
     clientManager->leaveRoom();
 }
+
+void ClientController::getCurrentRoomMsgs(ClientManager* clientManager) {
+    qDebug() << "Current room messages: ";
+    if (clientManager->currentRoom != nullptr) {
+        auto msgs = clientManager->currentRoom->messages;
+        for(const auto& msg : msgs) {
+            qDebug() << msg.sender << ": " << msg.text;
+        }
+    }
+}
