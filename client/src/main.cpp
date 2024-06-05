@@ -8,10 +8,6 @@
 
 #include "ClientController.hpp"
 
-// #include "add_environment.h"
-// #include "import_qml_components_plugins.h"
-// #include "import_qml_plugins.h"
-
 int main(int argc, char* argv[]) {
     QGuiApplication app(argc, argv);
 
@@ -24,13 +20,6 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("clientManager", &clientManager);
 
     ServerManager serverManager;
-    serverManager.setIp("10.32.7.228");
-    serverManager.setPort("11451");
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    int rand = gen();
-    serverManager.setName(QString::fromStdString("Client" + std::to_string(rand)));
-    serverManager.startRpcClient();
     engine.rootContext()->setContextProperty("serverManager", &serverManager);
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));

@@ -9,6 +9,18 @@ void ClientController::createRoom(ClientManager* clientManager, ServerManager* s
     qDebug() << "Room " << roomName << " created";
 }
 
+void ClientController::connectToServer(ServerManager* serverManager, QString ip, QString port) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    int rand = gen();
+    serverManager->setIp(ip);
+    serverManager->setPort(port);
+    serverManager->setName(QString::fromStdString("Client" + std::to_string(rand)));
+    qDebug() << "Try to connect to ip: " << ip << " port: " << port;
+    serverManager->startRpcClient();
+    qDebug() << "Server ip: " << ip << " port: " << port;
+}
+
 void ClientController::joinRoom(ClientManager* clientManager, ServerManager* serverManager, QString roomName, QString password) {
     if(clientManager->joinRoom(roomName, password, serverManager)) {
         qDebug() << "Joined room " << roomName;

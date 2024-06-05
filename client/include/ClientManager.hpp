@@ -17,6 +17,8 @@
 #include <qobject.h>
 #include <qobjectdefs.h>
 
+#include <random>
+
 class ClientManager final : public QObject {
 
     Q_OBJECT
@@ -44,6 +46,7 @@ public:
     Q_INVOKABLE void handleNewConnection();
 
     QString ip;
+    QString serverIp;
     std::mutex mutex;
 
     QString userName;

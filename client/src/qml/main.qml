@@ -424,7 +424,7 @@ ApplicationWindow {
 
             TextField {
                 id: ip
-                placeholderText: "My IP"
+                placeholderText: "Server IP"
                 width: parent.width
             }
 
@@ -435,7 +435,7 @@ ApplicationWindow {
                 Button {
                     text: "Run"
                     onClicked: {
-                        clientController.init(ip.text)
+                        clientController.connectToServer(serverManager, ip.text, "11451")
                         initialPopup.visible = false
                         content.visible = true
                     }
