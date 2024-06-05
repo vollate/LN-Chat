@@ -119,7 +119,7 @@ ApplicationWindow {
                         onClicked: {
                             console.log(model.text + " button clicked")
                             clearAllData()
-                            updateDataFromLists(testMessages1)
+                            //updateDataFromLists(testMessages1)
                         }
                     }
                 }
@@ -211,6 +211,18 @@ ApplicationWindow {
                     popup2.y = (root.height - popup2.height) / 2;
                     popup2.visible = true;
                    }
+                }
+
+                Button {
+                    text: "File"
+
+                    width: 70
+                    onClicked: {
+                        console.log(" button clicked")
+                        popup3.x = (root.width - popup3.width) / 2;
+                        popup3.y = (root.height - popup3.height) / 2;
+                        popup3.visible = true;
+                    }
                 }
 
 
@@ -399,6 +411,48 @@ ApplicationWindow {
             }
         }
     }
+    Rectangle{
+        id: popup3
+        width: 450
+        height: 300
+        color: "lightblue"
+        border.color: "black"
+        border.width: 2
+        visible: false
+        radius: 10
+
+        Column {
+            anchors.centerIn: parent
+            spacing: 10
+
+            TextField {
+                id: filePath
+                placeholderText: "File Path"
+                width: parent.width
+            }
+
+            Row {
+                spacing: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Button {
+                    text: "Upload"
+                    onClicked: {
+                        clearAllMessage()
+
+                        popup3.visible = false
+                    }
+                }
+
+                Button {
+                    text: "Close"
+                    onClicked: popup3.visible = false
+                }
+            }
+        }
+    }
+
+
 
     ListModel {
         id: messageModel
