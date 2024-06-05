@@ -85,6 +85,29 @@ ApplicationWindow {
 
                 }
             }
+
+            Rectangle {
+                border.color: "#498C8B" // 左侧rectangle边框颜色
+                border.width: 3 // 左侧rectangle边框宽度
+                width: parent.width / 7
+                height: parent.height
+                radius: 20
+                color: "#E2F5EA"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        popup2.x = (root.width - popup2.width) / 2;
+                        popup2.y = (root.height - popup2.height) / 2;
+                        popup2.visible = true;
+                    }
+                }
+                Text {
+                    anchors.centerIn: parent
+                    text: "Load"
+
+                }
+            }
+
         }
     }
     Rectangle {
@@ -203,27 +226,16 @@ ApplicationWindow {
                 }
 
                 Button {
-                    text: "Load"
+                    text: "File"
 
                    width: 90
                    onClicked: {
-                    popup2.x = (root.width - popup2.width) / 2;
-                    popup2.y = (root.height - popup2.height) / 2;
-                    popup2.visible = true;
+                    popup3.x = (root.width - popup3.width) / 2;
+                    popup3.y = (root.height - popup3.height) / 2;
+                    popup3.visible = true;
                    }
                 }
 
-                Button {
-                    text: "File"
-
-                    width: 80
-                    onClicked: {
-                        console.log(" button clicked")
-                        popup3.x = (root.width - popup3.width) / 2;
-                        popup3.y = (root.height - popup3.height) / 2;
-                        popup3.visible = true;
-                    }
-                }
 
 
             }
@@ -452,6 +464,37 @@ ApplicationWindow {
             }
         }
     }
+    //load失败
+    Rectangle {
+        id: popup4
+        width: 300
+        height: 200
+        color: "lightblue"
+        border.color: "black"
+        border.width: 2
+        visible: false
+        radius: 10
+
+
+        Column {
+            anchors.centerIn: parent
+            spacing: 10
+
+            Text {
+                text: "Load Fail"
+                color: "black"
+                font.pixelSize: 20
+            }
+
+            Button {
+                text: "Close"
+                onClicked: {
+                    popup4.visible = false;
+                }
+            }
+        }
+    }
+
 
 
 
