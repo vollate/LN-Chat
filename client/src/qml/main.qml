@@ -13,6 +13,8 @@ ApplicationWindow {
 
     //top menu bar
     Rectangle {
+        id: topbar
+        visible: true
         width: parent.width // 宽度和窗口宽度相同
         height: 50 // 设置条的高度
         color: "#498C8B" // 设置条的颜色
@@ -85,33 +87,12 @@ ApplicationWindow {
 
                 }
             }
-
-            Rectangle {
-                border.color: "#498C8B" // 左侧rectangle边框颜色
-                border.width: 3 // 左侧rectangle边框宽度
-                width: parent.width / 7
-                height: parent.height
-                radius: 20
-                color: "#E2F5EA"
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        popup2.x = (root.width - popup2.width) / 2;
-                        popup2.y = (root.height - popup2.height) / 2;
-                        popup2.visible = true;
-                    }
-                }
-                Text {
-                    anchors.centerIn: parent
-                    text: "Load"
-
-                }
-            }
-
         }
     }
     Rectangle {
         id: sidebar
+        visible: true
+
         color: "#3D5F69"
         width: 240
         height: parent.height - 50
@@ -142,7 +123,7 @@ ApplicationWindow {
                         onClicked: {
                             console.log(model.text + " button clicked")
                             clearAllData()
-                            //updateDataFromLists(testMessages1)
+                            updateDataFromLists(testMessages1)
                         }
                     }
                 }
@@ -155,6 +136,8 @@ ApplicationWindow {
     Rectangle {
         id: content
         color: "#2e3e4e"
+        visible: false
+
         width: parent.width - 240
         height: parent.height - 50
         anchors.left: sidebar.right
@@ -226,16 +209,15 @@ ApplicationWindow {
                 }
 
                 Button {
-                    text: "File"
+                    text: "Load"
 
                    width: 90
                    onClicked: {
-                    popup3.x = (root.width - popup3.width) / 2;
-                    popup3.y = (root.height - popup3.height) / 2;
-                    popup3.visible = true;
+                    popup2.x = (root.width - popup2.width) / 2;
+                    popup2.y = (root.height - popup2.height) / 2;
+                    popup2.visible = true;
                    }
                 }
-
 
 
             }
@@ -364,7 +346,6 @@ ApplicationWindow {
                     text: "Join Room"
                     onClicked: {
                         // 在此处处理创建房间的逻辑
-
                         clientManager.setUserName(nicknameField1.text)
                         clientController.joinRoom(clientManager, serverManager, roomNameField1.text, passwordField1.text)
                         // popup1.joinRoom(roomNameField1.text, passwordField1.text, nicknameField1.text)
@@ -412,7 +393,9 @@ ApplicationWindow {
                     onClicked: {
                         clearAllMessage()
                         clientController.loadMessage(roomName.text)
-                        popup2.visible = false
+                        sidebar.visible = true
+                        topbar.visible = true
+                        content.visible = true
                     }
                 }
 
@@ -424,23 +407,24 @@ ApplicationWindow {
         }
     }
     Rectangle{
-        id: popup3
+        id: initialPopup
         width: 450
         height: 300
         color: "lightblue"
         border.color: "black"
+        x: (root.width - initialPopup.width) / 2;
+        y: (root.height - initialPopup.height) / 2;
         border.width: 2
-        visible: false
+        visible: true
         radius: 10
-
 
         Column {
             anchors.centerIn: parent
             spacing: 10
 
             TextField {
-                id: filePath
-                placeholderText: "File Path"
+                id: ip
+                placeholderText: "My IP"
                 width: parent.width
             }
 
@@ -449,54 +433,18 @@ ApplicationWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Button {
-                    text: "Upload"
+                    text: "Run"
                     onClicked: {
-                        clearAllMessage()
-
-                        popup3.visible = false
+                        clientController.init(ip.text)
+                        initialPopup.visible = false
+                        content.visible = true
                     }
                 }
 
-                Button {
-                    text: "Close"
-                    onClicked: popup3.visible = false
-                }
+
             }
         }
     }
-    //load失败
-    Rectangle {
-        id: popup4
-        width: 300
-        height: 200
-        color: "lightblue"
-        border.color: "black"
-        border.width: 2
-        visible: false
-        radius: 10
-
-
-        Column {
-            anchors.centerIn: parent
-            spacing: 10
-
-            Text {
-                text: "Load Fail"
-                color: "black"
-                font.pixelSize: 20
-            }
-
-            Button {
-                text: "Close"
-                onClicked: {
-                    popup4.visible = false;
-                }
-            }
-        }
-    }
-
-
-
 
     ListModel {
         id: messageModel
@@ -571,7 +519,6 @@ function clearAllMessage(){
 // userList.forEach(function(user) {
 //   userListModel.append({
 //     userName: user.userName,
-
 //});
 //});
 }
