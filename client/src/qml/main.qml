@@ -216,7 +216,7 @@ ApplicationWindow {
                 Button {
                     text: "File"
 
-                    width: 70
+                    width: 80
                     onClicked: {
                         console.log(" button clicked")
                         popup3.x = (root.width - popup3.width) / 2;
@@ -420,6 +420,7 @@ ApplicationWindow {
         border.width: 2
         visible: false
         radius: 10
+
 
         Column {
             anchors.centerIn: parent
