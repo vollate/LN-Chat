@@ -5,7 +5,7 @@ import QtQuick.Controls 2.15
 ApplicationWindow {
     id: root
     visible: true
-    width: 960
+    width: 1200
     height: 640
     minimumWidth: 640
     minimumHeight: 480
@@ -24,6 +24,7 @@ ApplicationWindow {
                 border.color: "#498C8B" // 左侧rectangle边框颜色
                 border.width: 3 // 左侧rectangle边框宽度
                 width: parent.width / 7 // 左侧rectangle宽度为bar的1/7
+                radius: 20
                 height: parent.height
                 color: "#E2F5EA"
 
@@ -46,6 +47,7 @@ ApplicationWindow {
                 border.width: 3 // 左侧rectangle边框宽度
                 width: parent.width / 7
                 height: parent.height
+                radius: 20
                 color: "#E2F5EA"
                 MouseArea {
                     anchors.fill: parent
@@ -61,6 +63,51 @@ ApplicationWindow {
 
                 }
             }
+
+            Rectangle {
+                border.color: "#498C8B" // 左侧rectangle边框颜色
+                border.width: 3 // 左侧rectangle边框宽度
+                width: parent.width / 7
+                height: parent.height
+                radius: 20
+                color: "#E2F5EA"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        popup1.x = (root.width - popup1.width) / 2;
+                        popup1.y = (root.height - popup1.height) / 2;
+                        popup1.visible = true;
+                    }
+                }
+                Text {
+                    anchors.centerIn: parent
+                    text: "Export"
+
+                }
+            }
+
+            Rectangle {
+                border.color: "#498C8B" // 左侧rectangle边框颜色
+                border.width: 3 // 左侧rectangle边框宽度
+                width: parent.width / 7
+                height: parent.height
+                radius: 20
+                color: "#E2F5EA"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        popup2.x = (root.width - popup2.width) / 2;
+                        popup2.y = (root.height - popup2.height) / 2;
+                        popup2.visible = true;
+                    }
+                }
+                Text {
+                    anchors.centerIn: parent
+                    text: "Load"
+
+                }
+            }
+
         }
     }
     Rectangle {
@@ -95,7 +142,7 @@ ApplicationWindow {
                         onClicked: {
                             console.log(model.text + " button clicked")
                             clearAllData()
-                            // updateDataFromLists(testMessages1)
+                            //updateDataFromLists(testMessages1)
                         }
                     }
                 }
@@ -153,7 +200,7 @@ ApplicationWindow {
             Rectangle {
                 color: "#354759"
                 height: 50
-                width: parent.width - 250 // 留出按钮空间
+                width: parent.width - 300 // 留出按钮空间
                 anchors.bottom: parent.bottom
                 TextField {
                     id: inputField
@@ -165,17 +212,32 @@ ApplicationWindow {
             Row {
                 spacing: 10
                 height: 50
-                width: 250 // 给按钮足够空间
+                width: 280 // 给按钮足够空间
                 anchors.right: parent.right // 与输入框右侧对齐
                 anchors.bottom: parent.bottom
 
                 Button {
                     text: "Send"
+                    width: 95
                     onClicked: {
                         // 发送按键逻辑
                         clientController.sendMessage(clientManager, inputField.text)
                     }
                 }
+
+                Button {
+                    text: "File"
+
+                   width: 90
+                   onClicked: {
+                    popup3.x = (root.width - popup3.width) / 2;
+                    popup3.y = (root.height - popup3.height) / 2;
+                    popup3.visible = true;
+                   }
+                }
+
+
+
             }
         }
 
@@ -321,6 +383,121 @@ ApplicationWindow {
         }
     }
 
+    Rectangle{
+        id: popup2
+        width: 450
+        height: 300
+        color: "lightblue"
+        border.color: "black"
+        border.width: 2
+        visible: false
+        radius: 10
+
+        Column {
+            anchors.centerIn: parent
+            spacing: 10
+
+            TextField {
+                id: roomName
+                placeholderText: "Room Name For Load"
+                width: parent.width
+            }
+
+            Row {
+                spacing: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Button {
+                    text: "Load"
+                    onClicked: {
+                        clearAllMessage()
+                        clientController.loadMessage(roomName.text)
+                        popup2.visible = false
+                    }
+                }
+
+                Button {
+                    text: "Close"
+                    onClicked: popup2.visible = false
+                }
+            }
+        }
+    }
+    Rectangle{
+        id: popup3
+        width: 450
+        height: 300
+        color: "lightblue"
+        border.color: "black"
+        border.width: 2
+        visible: false
+        radius: 10
+
+
+        Column {
+            anchors.centerIn: parent
+            spacing: 10
+
+            TextField {
+                id: filePath
+                placeholderText: "File Path"
+                width: parent.width
+            }
+
+            Row {
+                spacing: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Button {
+                    text: "Upload"
+                    onClicked: {
+                        clearAllMessage()
+
+                        popup3.visible = false
+                    }
+                }
+
+                Button {
+                    text: "Close"
+                    onClicked: popup3.visible = false
+                }
+            }
+        }
+    }
+    //load失败
+    Rectangle {
+        id: popup4
+        width: 300
+        height: 200
+        color: "lightblue"
+        border.color: "black"
+        border.width: 2
+        visible: false
+        radius: 10
+
+
+        Column {
+            anchors.centerIn: parent
+            spacing: 10
+
+            Text {
+                text: "Load Fail"
+                color: "black"
+                font.pixelSize: 20
+            }
+
+            Button {
+                text: "Close"
+                onClicked: {
+                    popup4.visible = false;
+                }
+            }
+        }
+    }
+
+
+
+
     ListModel {
         id: messageModel
         // ListElement { userName: "Alice"; timestamp: "2021-01-01 10:00:00"; text: "Hello, welcome to the chat!" }
@@ -386,6 +563,9 @@ function updateDataFromLists(messageList)
     text: message.text
 });
 });
+function clearAllMessage(){
+    messageModel.clear();
+}
 
 // 遍历 userList，每个元素是一个 QVariant 包装的 User 对象
 // userList.forEach(function(user) {
@@ -396,8 +576,8 @@ function updateDataFromLists(messageList)
 //});
 }
 
-// var testMessages1 = [
-//     {userName: "Alice", timestamp: "2024-06-01 08:30:00", text: "Good morning!"},
-//     {userName: "Bob", timestamp: "2024-06-01 08:35:00", text: "Hello Alice, how are you today?"}
-// ];
+ //var testMessages1 = [
+   //  {userName: "Alice", timestamp: "2024-06-01 08:30:00", text: "Good morning!"},
+    // {userName: "Bob", timestamp: "2024-06-01 08:35:00", text: "Hello Alice, how are you today?"}
+ //];
 }
