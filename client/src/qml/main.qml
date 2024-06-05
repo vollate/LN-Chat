@@ -5,7 +5,7 @@ import QtQuick.Controls 2.15
 ApplicationWindow {
     id: root
     visible: true
-    width: 960
+    width: 1200
     height: 640
     minimumWidth: 640
     minimumHeight: 480
@@ -60,6 +60,28 @@ ApplicationWindow {
                 Text {
                     anchors.centerIn: parent
                     text: "Enter"
+
+                }
+            }
+
+            Rectangle {
+                border.color: "#498C8B" // 左侧rectangle边框颜色
+                border.width: 3 // 左侧rectangle边框宽度
+                width: parent.width / 7
+                height: parent.height
+                radius: 20
+                color: "#E2F5EA"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        popup1.x = (root.width - popup1.width) / 2;
+                        popup1.y = (root.height - popup1.height) / 2;
+                        popup1.visible = true;
+                    }
+                }
+                Text {
+                    anchors.centerIn: parent
+                    text: "Export"
 
                 }
             }
@@ -179,25 +201,19 @@ ApplicationWindow {
                         clientController.sendMessage(clientManager, inputField.text)
                     }
                 }
-                Button {
-                    text: "Export"
-                     font.pixelSize: 9
-                    width: 90
-                    onClicked: {
 
-
-                    }
-                }
                 Button {
                     text: "Load"
-                     font.pixelSize: 11
-                   width: 75
+
+                   width: 90
                    onClicked: {
-                       popup2.x = (root.width - popup2.width) / 2;
-                       popup2.y = (root.height - popup2.height) / 2;
-                       popup2.visible = true;
+                    popup2.x = (root.width - popup2.width) / 2;
+                    popup2.y = (root.height - popup2.height) / 2;
+                    popup2.visible = true;
                    }
                 }
+
+
             }
         }
 
@@ -370,7 +386,8 @@ ApplicationWindow {
                 Button {
                     text: "Load"
                     onClicked: {
-
+                        clearAllMessage()
+                        clientController.loadMessage(roomName.text)
                         popup2.visible = false
                     }
                 }
@@ -448,6 +465,9 @@ function updateDataFromLists(messageList)
     text: message.text
 });
 });
+function clearAllMessage(){
+    messageModel.clear();
+}
 
 // 遍历 userList，每个元素是一个 QVariant 包装的 User 对象
 // userList.forEach(function(user) {
