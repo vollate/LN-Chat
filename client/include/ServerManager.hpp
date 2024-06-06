@@ -14,16 +14,19 @@ class ServerManager final : public QObject {
 public:
     explicit ServerManager(QObject* parent = nullptr);
 
-    void setIp(const QString& target_ip);
-    void setPort(const QString& target_port);
-    void setName(const QString& name);
-    void startRpcClient();
-
     ~ServerManager() override;
+
+    void setIp(const QString& target_ip);
+
+    void setPort(const QString& target_port);
+
+    void setName(const QString& name);
+
+    void startRpcClient();
 
     bool registerClient();
 
-    bool registerRoom(QString room_name, QString room_password);
+    bool registerRoom(const QString& room_name, const QString& room_password);
 
     void startHeartBeat();
 
@@ -31,7 +34,7 @@ public:
 
     std::vector<QString> getRoomList();
 
-    std::optional<std::list<Peer>> getPeers(const std::string& room_name, const std::string& room_password);
+    std::optional<std::list<Peer>> getPeers(const std::string& room_name, const std::string& room_password, std::string& self_ip);
     //    Q_INVOKABLE bool registerRoom(QString name, QString passWord);
 
     std::unique_ptr<QMap<QString, std::shared_ptr<Room>>> serverRoomList;

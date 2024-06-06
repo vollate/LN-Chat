@@ -45,7 +45,7 @@ void Controller::handleGetRoomPeers(CallData* call_data) {
                 tmp->set_name(user->username);
             }
             call_data->m_get_room_peers_reply.set_success(true);
-            call_data->m_get_room_peers_reply.set_message("Peers retrieved successfully");
+            call_data->m_get_room_peers_reply.set_message(client_opt.value()->socket_addr);
         }
     } else {
         call_data->m_get_room_peers_reply.set_success(false);

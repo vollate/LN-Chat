@@ -5,7 +5,6 @@
 
 #include "Message.hpp"
 #include "Peer.hpp"
-#include <QList>
 
 class Room {
 public:
@@ -18,13 +17,23 @@ public:
 
     Room(const Room& room) = default;
 
-    void addPeer(Peer&& peer);
+    Room(Room&& room) = default;
 
-    void removePeer(QString name);
+    auto operator=(const Room& room) -> Room& = default;
 
-    void addMessage(Message&& message);
+    auto operator=(Room&& room) -> Room& = default;
 
-    QList<Peer> getPeers();
+    ~Room() = default;
 
-    QString getName() const;
+    void addPeer(const Peer& peer);
+
+    void removePeer(const QString& name);
+
+    void addMessage(const Message& message);
+
+    auto havePeer(const QString& name) -> bool;
+
+    [[nodiscard]] auto getPeers() const -> QList<Peer>;
+
+    [[nodiscard]] auto getName() const -> QString;
 };

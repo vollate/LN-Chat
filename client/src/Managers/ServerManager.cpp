@@ -16,19 +16,22 @@ bool ServerManager::registerClient() {
     return rpc_client.value().RegisterClient(client_name, client_id);
 }
 
-std::optional<std::list<Peer>> ServerManager::getPeers(const std::string& room_name, const std::string& room_password) {
+std::optional<std::list<Peer>> ServerManager::getPeers(const std::string& room_name, const std::string& room_password,
+                                                       std::string& self_ip) {
     std::vector<PeerInfo> peers;
-    if(!rpc_client.value().GetRoomPeers(client_id, room_name, room_password, peers)) {
+    std::string ip;
+    if(!rpc_client.value().GetRoomPeers(client_id, room_name, room_password, peers, ip)) {
         return std::nullopt;
     }
     std::list<Peer> peer_list;
     for(const auto& peer : peers) {
         peer_list.emplace_back(QString::fromStdString(peer.name), QString::fromStdString(ip_helper::extractIPAddress(peer.ip)));
     }
+    ip = ip_helper::extractIPAddress(ip);
     return peer_list;
 }
 
-bool ServerManager::registerRoom(QString room_name, QString room_password) {
+auto ServerManager::registerRoom(const QString& room_name, const QString& room_password) -> bool {
     return rpc_client.value().PublishRoom(client_id, room_name.toStdString(), room_password.toStdString());
 }
 

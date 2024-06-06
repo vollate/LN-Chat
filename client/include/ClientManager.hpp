@@ -10,21 +10,17 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <memory>
-#include <qmap.h>
-
-#include <QDebug>
 #include <mutex>
+#include <qmap.h>
 #include <qobject.h>
 #include <qobjectdefs.h>
-
-#include <random>
 
 class ClientManager final : public QObject {
 
     Q_OBJECT
 
 public:
-    ClientManager(quint16 port = Client_Server_Port, QObject* parent = nullptr);
+    explicit ClientManager(quint16 port = Client_Server_Port, QObject* parent = nullptr);
 
     ~ClientManager() override;
 
@@ -36,12 +32,13 @@ public:
 
     bool sendMessage(const Message& message);
 
-    Q_INVOKABLE void setUserName(const QString& name);
-    Q_INVOKABLE QString getUserName() const;
-
     void exportMessage();
 
     void loadMessage();
+
+    Q_INVOKABLE void setUserName(const QString& name);
+
+    Q_INVOKABLE QString getUserName() const;
 
     Q_INVOKABLE void handleNewConnection();
 
@@ -57,4 +54,7 @@ public:
 
 signals:
     void messageSent(const QString& messageText);
+
+private:
+    void sendJoinSignal(const Peer& peer) const;
 };

@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "ClientManager.hpp"
+#include "Constant.hpp"
 #include "Message.hpp"
 #include "Peer.hpp"
 #include "Room.hpp"
@@ -9,7 +10,7 @@
 #include "utils.hpp"
 
 ClientManager::ClientManager(quint16 port, QObject* parent)
-    : QObject{ parent }, tcp_server{ this }, roomList{ std::make_shared<QMap<QString, Room>>() }, ip{ "127.0.0.1" } {
+    : QObject{ parent }, tcp_server{ this }, roomList{ std::make_shared<QMap<QString, Room>>() } {
     if(!tcp_server.listen(QHostAddress::Any, port)) {
         qCritical() << "Server could not start:" << tcp_server.errorString();
     } else {
@@ -26,12 +27,15 @@ void ClientManager::createRoom(const QString& name, const QString& password, Ser
     serverManager->registerRoom(name, password);
 }
 
-bool ClientManager::joinRoom(const QString& name, const QString& password, ServerManager* serverManager) {
-    if(auto peers_opt = serverManager->getPeers(name.toStdString(), password.toStdString())) {
+auto ClientManager::joinRoom(const QString& name, const QString& password, ServerManager* serverManager) -> bool {
+    std::string ip;
+    if(auto peers_opt = serverManager->getPeers(name.toStdString(), password.toStdString(), ip)) {
+        this->ip = QString::fromStdString(ip);
         auto peers = peers_opt.value();
         auto room = std::make_shared<Room>(name, password);
-        for(auto peer : peers) {
-            room->addPeer(std::move(peer));
+        for(const auto& peer : peers) {
+            sendJoinSignal(peer);
+            room->addPeer(peer);
         }
         std::lock_guard guard{ mutex };
         roomList->insert(name, *room);
@@ -56,17 +60,14 @@ bool ClientManager::sendMessage(const Message& message) {
         QJsonDocument doc(msg_json);
         auto bytes = doc.toJson();
         for(const auto& peer : currentRoom->getPeers()) {
-            std::cerr << "ip: " << peer.ip.toStdString() << " name " << peer.name.toStdString() << std::endl;
+            qDebug() << "ip: " << peer.ip << " name " << peer.name;
             auto socket = peer.getSocket();
             if(socket != nullptr && socket->isOpen()) {
                 socket->write(bytes);
-                //                socket->flush();
-                if(socket->waitForBytesWritten(3000)) {
-                    std::cout << "Message sent: " << std::endl;
-                    Message rcvMsg{ message.sender, message.time, message.text };
-                    currentRoom->addMessage(std::move(rcvMsg));
+                if(socket->waitForBytesWritten(Max_Send_Wait_Time)) {
+                    qDebug() << "Message sent to " << peer.name << " successfully";
                 } else {
-                    std::cout << "Failed to send message: ";
+                    qDebug() << "Failed to send message to " << peer.name;
                 }
             }
         }
@@ -81,13 +82,22 @@ void ClientManager::handleNewConnection() {
         connect(clientSocket, &QTcpSocket::readyRead, this, [this, clientSocket]() {
             QByteArray data = clientSocket->readAll();
             qDebug() << "Received data:" << data;
-            auto msg = json_helper::json2Message(QJsonDocument::fromJson(data).object());
-            std::lock_guard guard{ mutex };
-            auto& target_room = roomList->find(msg.second).value();
-            qDebug() << "Message received: " << msg.first.text;
-            QString rcvMsg = msg.first.sender + "\n" + msg.first.text;
-            emit messageSent(rcvMsg);
-            target_room.addMessage(std::move(msg.first));
+            auto json_data = QJsonDocument::fromJson(data).object();
+            try {
+                auto room_name = json_data["hello"].toString();
+                auto peer = json_helper::json2Peer(json_data);
+                auto& target_room = roomList->find(room_name).value();
+                target_room.addPeer(peer);
+                qDebug() << "Peer connected: " << peer.name;
+            } catch(std::exception& e) {
+                auto msg = json_helper::json2Message(json_data);
+                std::lock_guard guard{ mutex };
+                auto& target_room = roomList->find(msg.second).value();
+                qDebug() << "Message received: " << msg.first.text;
+                QString rcvMsg = msg.first.sender + "\n" + msg.first.text;
+                emit messageSent(rcvMsg);
+                target_room.addMessage(msg.first);
+            }
         });
     }
 }
@@ -109,4 +119,17 @@ void ClientManager::loadMessage() {
     // TODO
 }
 
-
+void ClientManager::sendJoinSignal(const Peer& peer) const {
+    QJsonObject json;
+    json["hello"] = "514";
+    json["name"] = userName;
+    json["ip"] = ip;
+    QJsonDocument doc(json);
+    auto bytes = doc.toJson();
+    peer.getSocket()->write(bytes);
+    if(peer.getSocket()->waitForBytesWritten(Max_Send_Wait_Time)) {
+        qDebug() << "Join signal sent to " << peer.name;
+    } else {
+        qDebug() << "Failed to send join signal to " << peer.name;
+    }
+}
