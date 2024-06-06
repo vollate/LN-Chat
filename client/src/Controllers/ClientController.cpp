@@ -2,11 +2,13 @@
 #include "ClientManager.hpp"
 #include "ServerManager.hpp"
 
+#include <random>
+
 ClientController::ClientController(QObject* parent) : QObject(parent) {}
 
 void ClientController::createRoom(ClientManager* clientManager, ServerManager* serverManager, QString roomName,
                                   QString password) {
-    clientManager->createRoom(roomName, password, serverManager);
+    ClientManager::createRoom(roomName, password, serverManager);
     qDebug() << "Room " << roomName << " created";
 }
 
@@ -49,7 +51,7 @@ void ClientController::leaveRoom(ClientManager* clientManager) {
 
 void ClientController::getCurrentRoomMsgs(ClientManager* clientManager) {
     qDebug() << "Current room messages: ";
-    if (clientManager->currentRoom != nullptr) {
+    if(clientManager->currentRoom != nullptr) {
         auto msgs = clientManager->currentRoom->messages;
         for(const auto& msg : msgs) {
             qDebug() << msg.sender << ": " << msg.text;
@@ -57,6 +59,6 @@ void ClientController::getCurrentRoomMsgs(ClientManager* clientManager) {
     }
 }
 
-void ClientController::exportMessage(ClientManager* clientManager){
+    void ClientController::exportMessage(ClientManager* clientManager){
     
 }

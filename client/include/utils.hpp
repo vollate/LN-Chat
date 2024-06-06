@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Message.hpp"
+#include "Peer.hpp"
+
 #include <QJsonObject>
 #include <QString>
 
@@ -8,6 +10,8 @@ namespace json_helper {
     QJsonObject message2Json(const Message& msg, const QString& room_name);
 
     QPair<Message, QString> json2Message(const QJsonObject& text);
+
+    Peer json2Peer(const QJsonObject& peer);
 
 }  // namespace json_helper
 
