@@ -100,7 +100,8 @@ void ClientManager::handleNewConnection() {
                 auto& target_room = roomList->find(msg.second).value();
                 qDebug() << "Message received: " << msg.first.text;
                 QString rcvMsg = msg.first.sender + "\n" + msg.first.text;
-                emit messageSent(rcvMsg);
+                if (currentRoom == target_room)
+                    emit messageSent(rcvMsg);
                 target_room->addMessage(msg.first);
             }
         });
