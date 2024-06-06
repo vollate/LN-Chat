@@ -27,7 +27,7 @@ std::optional<std::list<Peer>> ServerManager::getPeers(const std::string& room_n
     for(const auto& peer : peers) {
         peer_list.emplace_back(QString::fromStdString(peer.name), QString::fromStdString(ip_helper::extractIPAddress(peer.ip)));
     }
-    ip = ip_helper::extractIPAddress(ip);
+    self_ip = ip_helper::extractIPAddress(ip);
     return peer_list;
 }
 
