@@ -1,6 +1,8 @@
 #include "utils.hpp"
+#include <istream>
 #include <regex>
 #include <string>
+#include <sstream>
 
 QJsonObject json_helper::message2Json(const Message& msg, const QString& room_name) {
     QJsonObject message;
@@ -27,7 +29,7 @@ std::string ip_helper::urlDecode(const std::string& encoded) {
     for(size_t i = 0; i < encoded.length(); ++i) {
         if(encoded[i] == '%' && i + 2 < encoded.length()) {
             std::stringstream ss;
-            ss << std::hex << encoded.substr(i + 1, 2);
+            ss << std::iostream::hex << encoded.substr(i + 1, 2);
             ss >> hex;
             tempChar = static_cast<char>(hex);
             decoded += tempChar;
