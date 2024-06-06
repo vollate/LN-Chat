@@ -78,10 +78,11 @@ void ClientController::exportMessage(ClientManager* clientManager){
     const auto& msgs = clientManager->currentRoom->messages;
     const auto& roomName = clientManager->currentRoom->getName();
     clientManager->exportMessage(msgs, "data/", roomName);
+    qDebug() << "Room " << clientManager->currentRoom->getName() << " save to data";
 }
 
-void ClientController::loadMessage(ClientManager* clientManager, const QString& roomName){
-    clientManager->loadMessage("data/", roomName);
+QVariantList ClientController::loadMessage(ClientManager* clientManager, const QString& roomName){
+    return clientManager->loadMessage("data/", roomName);
 }
 
 QString ClientController::toReadableTime(QString timestamp) {

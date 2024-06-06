@@ -42,7 +42,7 @@ public:
 
     void exportMessage(const QList<Message> &messages , const QString &path , const QString &name);
 
-    void loadMessage(const QString &path, const QString &name);
+    Q_INVOKABLE QVariantList loadMessage(const QString &path, const QString &name);
 
     void getRoomList();
 

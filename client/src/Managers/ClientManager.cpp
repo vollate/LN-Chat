@@ -157,14 +157,15 @@ void ClientManager::exportMessage(const QList<Message>& texts, const QString& pa
     file.close();
 }
 
-void ClientManager::loadMessage(const QString& path, const QString& name) {
+QVariantList ClientManager::loadMessage(const QString& path, const QString& name) {
     QString fileName = "chatroom-" + name + ".json";
     QString filePath = QDir(path).filePath(fileName);
+    qDebug() << "loading message from: " << filePath;
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Have no such doc";
         emit fileError(name);
-        return;
+//        return ;
     }
     QByteArray fileData = file.readAll();
     file.close();
@@ -173,7 +174,7 @@ void ClientManager::loadMessage(const QString& path, const QString& name) {
     if(!jsonDoc.isObject()) {
         qDebug() << "Failed to parse JSON file";
         emit fileError(name);
-        return;
+//        return;
     }
     QJsonObject jsonObj = jsonDoc.object();
     QVariantList mList;
@@ -185,28 +186,29 @@ void ClientManager::loadMessage(const QString& path, const QString& name) {
                 if(messageVal.isObject()) {
                     QJsonObject messageObj = messageVal.toObject();
                     QVariantMap messageMap;
-                    messageMap["content"] = messageObj["content"].toString();
+                    messageMap["text"] = messageObj["content"].toString();
                     messageMap["message_id"] = messageObj["message_id"].toInt();
                     messageMap["timestamp"] = messageObj["timestamp"].toString();
-                    messageMap["sender"] = messageObj["sender"].toString();
-                    mList.append(messageObj);
+                    messageMap["userName"] = messageObj["sender"].toString();
+                    mList.append(messageMap);
                 } else {
                     qDebug() << "Failed to parse JSON file";
                     emit fileError(name);
-                    return;
+//                    return;
                 }
             }
         } else {
             qDebug() << "Failed to parse JSON file";
             emit fileError(name);
-            return;
+//            return;
         }
         emit fileLoaded(mList, name);
-        return;
+        return mList;
+//        return;
     } else {
         qDebug() << "Failed to parse JSON file";
         emit fileError(name);
-        return;
+//        return;
     }
 }
 
