@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-QJsonObject json_helper::message2Json(const Message& msg, const QString& room_name) {
+auto json_helper::message2Json(const Message& msg, const QString& room_name) -> QJsonObject {
     QJsonObject message;
     message["timestamp"] = msg.time;
     message["roomName"] = room_name;
@@ -13,7 +13,7 @@ QJsonObject json_helper::message2Json(const Message& msg, const QString& room_na
     return message;
 }
 
-QPair<Message, QString> json_helper::json2Message(const QJsonObject& text) {
+auto json_helper::json2Message(const QJsonObject& text) -> QPair<Message, QString> {
     Message message;
     message.time = text["timestamp"].toString();
     message.text = text["content"].toString();
@@ -21,10 +21,16 @@ QPair<Message, QString> json_helper::json2Message(const QJsonObject& text) {
     return QPair<Message, QString>(message, text["roomName"].toString());
 }
 
-std::string ip_helper::urlDecode(const std::string& encoded) {
+auto json_helper::json2Peer(const QJsonObject& peer) -> Peer {
+    auto name = peer["name"].toString();
+    auto ip = peer["ip"].toString();
+    return Peer(name, ip);
+}
+
+auto ip_helper::urlDecode(const std::string& encoded) -> std::string {
     std::string decoded;
-    char tempChar;
-    int hex;
+    char tempChar = 0;
+    int hex = 0;
 
     for(size_t i = 0; i < encoded.length(); ++i) {
         if(encoded[i] == '%' && i + 2 < encoded.length()) {
@@ -41,7 +47,7 @@ std::string ip_helper::urlDecode(const std::string& encoded) {
     return decoded;
 }
 
-std::string ip_helper::extractIPAddress(const std::string& fullAddress) {
+auto ip_helper::extractIPAddress(const std::string& fullAddress) -> std::string {
     std::string decoded = urlDecode(fullAddress);
     std::smatch matches;
     std::regex ipv4_regex(R"(ipv4:([0-9]+(?:\.[0-9]+){3})(?::\d+)?)");
@@ -56,5 +62,6 @@ std::string ip_helper::extractIPAddress(const std::string& fullAddress) {
             return matches[1].str();
         }
     }
-    return "";  // 如果没有匹配，返回空字符串
+
+    return "";
 }

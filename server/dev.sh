@@ -17,7 +17,7 @@ then
 elif [ $1 == "clean" ]
 then
     shopt -s globstar
-    rm -rf build-* **/*.cc **/*.h
+    rm -rf build-*
     exit 0
 else
     echo "Usage: dev.sh [debug|release|clean]"

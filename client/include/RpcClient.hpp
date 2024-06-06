@@ -67,9 +67,11 @@ public:
      * @param name The name of the room.
      * @param password The password for the room.
      * @param peersIp Reference to a vector of strings where the IP addresses of the peers will be stored.
+     * @param selfIp Reference to a string where the IP address of the client will be stored.
      * @return true if the room peers were retrieved successfully, false otherwise.
      */
-    bool GetRoomPeers(uint64_t clientId, const std::string& name, const std::string& password, std::vector<PeerInfo>& peersIp);
+    bool GetRoomPeers(uint64_t clientId, const std::string& name, const std::string& password, std::vector<PeerInfo>& peersIp,
+                      std::string& selfIp);
 
     /**
      * @brief Sends a heartbeat message to the server to keep the client connection alive.

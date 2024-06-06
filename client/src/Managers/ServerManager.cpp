@@ -1,12 +1,9 @@
 #include "ServerManager.hpp"
 #include "utils.hpp"
 
-#include <regex>
 #include <utility>
 
-namespace {}  // namespace
-
-ServerManager::ServerManager(QObject* parent) : client_name{}, rpc_client{}, QObject(parent) {}
+ServerManager::ServerManager(QObject* parent) : QObject(parent) {}
 
 ServerManager::~ServerManager() {
     stopHeartBeat();
@@ -16,19 +13,22 @@ bool ServerManager::registerClient() {
     return rpc_client.value().RegisterClient(client_name, client_id);
 }
 
-std::optional<std::list<Peer>> ServerManager::getPeers(const std::string& room_name, const std::string& room_password) {
+auto ServerManager::getPeers(const std::string& room_name, const std::string& room_password, std::string& self_ip)
+    -> std::optional<std::list<Peer>> {
     std::vector<PeerInfo> peers;
-    if(!rpc_client.value().GetRoomPeers(client_id, room_name, room_password, peers)) {
+    std::string ip;
+    if(!rpc_client.value().GetRoomPeers(client_id, room_name, room_password, peers, ip)) {
         return std::nullopt;
     }
     std::list<Peer> peer_list;
     for(const auto& peer : peers) {
         peer_list.emplace_back(QString::fromStdString(peer.name), QString::fromStdString(ip_helper::extractIPAddress(peer.ip)));
     }
+    self_ip = ip_helper::extractIPAddress(ip);
     return peer_list;
 }
 
-bool ServerManager::registerRoom(QString room_name, QString room_password) {
+auto ServerManager::registerRoom(const QString& room_name, const QString& room_password) -> bool {
     return rpc_client.value().PublishRoom(client_id, room_name.toStdString(), room_password.toStdString());
 }
 
@@ -75,7 +75,7 @@ void ServerManager::startRpcClient() {
     startHeartBeat();
 }
 
-std::vector<QString> ServerManager::getRoomList() {
+auto ServerManager::getRoomList() -> std::vector<QString> {
     std::vector<std::string> rooms;
     std::vector<QString> res;
     if(rpc_client.value().GetAllRooms(client_id, rooms)) {

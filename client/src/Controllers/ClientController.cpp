@@ -2,11 +2,13 @@
 #include "ClientManager.hpp"
 #include "ServerManager.hpp"
 
+#include <random>
+
 ClientController::ClientController(QObject* parent) : QObject(parent) {}
 
 void ClientController::createRoom(ClientManager* clientManager, ServerManager* serverManager, QString roomName,
                                   QString password) {
-    clientManager->createRoom(roomName, password, serverManager);
+    ClientManager::createRoom(roomName, password, serverManager);
     qDebug() << "Room " << roomName << " created";
 }
 
@@ -60,6 +62,15 @@ QVariantList ClientController::getCurrentRoomMsgs(ClientManager* clientManager) 
             variantList.append(variantMap);
             qDebug() << "Sender: " << message.sender << " Text: " << message.text;
         }
+    }
+    return variantList;
+}
+
+void ClientController::setRoom(ClientManager* clientManager, QString roomName) {
+    if (clientManager->roomList->contains(roomName)) {
+        clientManager->currentRoom = clientManager->roomList->value(roomName);
+    } else {
+        qDebug() << "Room not found";
     }
     return variantList;
 }

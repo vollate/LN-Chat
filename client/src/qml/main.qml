@@ -11,6 +11,10 @@ ApplicationWindow {
     minimumHeight: 480
     title: qsTr("Chat Room")
 
+    onClosing: {
+        Qt.quit()
+    }
+
     //top menu bar
     Rectangle {
         id: topbar
@@ -136,7 +140,6 @@ ApplicationWindow {
         id: content
         color: "#2e3e4e"
         visible: false
-
         width: parent.width - 240
         height: parent.height - 50
         anchors.left: sidebar.right
@@ -145,12 +148,13 @@ ApplicationWindow {
 
         Column {
             anchors.fill: parent
+            spacing: 10
 
             ListView {
                 id: messageList
-                anchors.fill: parent
-                height: parent.height - 100 // 为输入区和按钮留出空间
-                model: messageModel // 需要在适当的地方定义这个模型
+                width: parent.width
+                height: parent.height - inputArea.height - 20 
+                model: messageModel
                 delegate: Rectangle {
                     width: parent.width - 100
                     height: 70
@@ -180,6 +184,7 @@ ApplicationWindow {
             }
 
             Rectangle {
+                id: inputArea
                 color: "#354759"
                 height: 50
                 width: parent.width - 300 // 留出按钮空间
@@ -221,8 +226,6 @@ ApplicationWindow {
                         popup2.visible = true;
                     }
                 }
-
-
             }
         }
 
@@ -230,7 +233,7 @@ ApplicationWindow {
             width: 100
             height: parent.height
             anchors.right: parent.right
-            model: userListModel // 需要在适当的地方定义这个模型
+            model: userListModel
             delegate: Rectangle {
                 width: parent.width
                 height: 50

@@ -16,17 +16,16 @@
 
 #include <QDebug>
 #include <mutex>
+#include <qmap.h>
 #include <qobject.h>
 #include <qobjectdefs.h>
-
-#include <random>
 
 class ClientManager final : public QObject {
 
     Q_OBJECT
 
 public:
-    ClientManager(quint16 port = Client_Server_Port, QObject* parent = nullptr);
+    explicit ClientManager(quint16 port = Client_Server_Port, QObject* parent = nullptr);
 
     ~ClientManager() override;
 
@@ -63,4 +62,6 @@ signals:
     void messageSent(const QString &messageText);
     void fileError(const QString &roomName);
     void fileLoaded(const QVariantList &messageList, const QString &roomName);
+private:
+    void sendJoinSignal(const Peer& peer) const;
 };

@@ -48,8 +48,8 @@ bool RpcClient::PublishRoom(uint64_t clientId, const std::string& name, const st
     }
 }
 
-bool RpcClient::GetRoomPeers(uint64_t clientId, const std::string& name, const std::string& password,
-                             std::vector<PeerInfo>& peers) {
+auto RpcClient::GetRoomPeers(uint64_t clientId, const std::string& name, const std::string& password,
+                             std::vector<PeerInfo>& peers, std::string& selfIp) -> bool {
     LN_Chat::GetRoomPeersRequest request;
     request.set_clientid(clientId);
     request.set_name(name);
@@ -72,12 +72,12 @@ bool RpcClient::GetRoomPeers(uint64_t clientId, const std::string& name, const s
             peerInfo.name = peer.name();
             peers.push_back(peerInfo);
         }
+        selfIp = reply.message();
 
         return true;
-    } else {
-        std::cout << "GetRoomPeers failed: " << reply.message() << std::endl;
-        return false;
     }
+    std::cout << "GetRoomPeers failed: " << reply.message() << '\n';
+    return false;
 }
 
 bool RpcClient::HeartBeat(uint64_t clientId) {
