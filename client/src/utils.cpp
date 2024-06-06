@@ -56,6 +56,5 @@ std::string ip_helper::extractIPAddress(const std::string& fullAddress) {
             return matches[1].str();
         }
     }
-
-    return "";
+    return "";  // 如果没有匹配，返回空字符串
 }
