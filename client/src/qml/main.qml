@@ -207,6 +207,7 @@ ApplicationWindow {
                         clientController.sendMessage(clientManager, inputField.text)
                         // TODO: delete this line (12012710)
                         clientController.getCurrentRoomMsgs(clientManager);
+                        inputField.text=""
 
                     }
                 }
@@ -298,6 +299,9 @@ ApplicationWindow {
                         clientController.joinRoom(clientManager, serverManager, roomNameField.text, passwordField.text)
                         // popup.createRoom(roomNameField.text, passwordField.text, nicknameField.text)
                         popup.visible = false
+                        roomNameField.text=""
+                        passwordField.text=""
+                        nicknameField.text=""
                     }
                 }
 
@@ -356,6 +360,9 @@ ApplicationWindow {
                         //console.log("Password:", passwordField1.text)
                         //console.log("Nickname:", nicknameField1.text)
                         popup1.visible = false
+                        roomNameField1.text=""
+                        passwordField1.text=""
+                        nicknameField1.text=""
                     }
                 }
 
@@ -399,6 +406,7 @@ ApplicationWindow {
                         sidebar.visible = true
                         topbar.visible = true
                         content.visible = true
+                        roomName.text=""
                     }
                 }
 
@@ -441,6 +449,7 @@ ApplicationWindow {
                         clientController.connectToServer(serverManager, ip.text, "11451")
                         initialPopup.visible = false
                         content.visible = true
+                        ip.text=""
                     }
                 }
 
