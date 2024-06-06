@@ -203,7 +203,13 @@ ApplicationWindow {
                     spacing: 10
 
                     Button {
+                        width : 240
                         text: model.text
+                        background: Rectangle {
+                            color: "#a9d3c4"
+                            width: parent.width 
+                            height: parent.height
+                        }
                         onClicked: {
                             console.log(model.text + " button clicked");
                             clearAllData();
@@ -245,27 +251,29 @@ ApplicationWindow {
                 delegate: Rectangle {
                     width: parent.width - 100
                     height: 70
-                    color: "#f0f0f0"
-                    border.color: "#e0e0e0"
+                    color: "#354759"
+                    border.color: "#354759"
                     border.width: 1
 
                     Column {
                         anchors.fill: parent
 
                         Text {
-                            text: "Time: " + model.timestamp.toLocaleString(Qt.locale(), "yyyy-MM-dd hh:mm:ss")
+                            text: model.timestamp.toLocaleString(Qt.locale(), "yyyy-MM-dd hh:mm:ss")
                             color: "grey"
                         }
 
                         Text {
-                            text: "User: " + model.userName
-                            color: "black"
+                            text: model.userName
+                            color: "white"
                             font.bold: true
+                            font.pixelSize : 16
                         }
 
                         Text {
-                            text: "Message: " + model.text
-                            color: "blue"
+                            text: model.text
+                            color: "white"
+                            font.pixelSize : 16
                         }
 
                     }
@@ -313,7 +321,22 @@ ApplicationWindow {
 
                 Button {
                     text: "Send"
+                    background: Rectangle {
+                        color: "#6a7b82"  
+                        radius: 20
+                        width: parent.width 
+                        height: parent.height
+                        }
+                    contentItem: Text {
+                        text: qsTr("Send")
+                        color: "white"  
+                        font.pixelSize: 16 
+                        horizontalAlignment: Text.AlignHCenter 
+                        verticalAlignment: Text.AlignVCenter 
+                        anchors.centerIn: parent
+                    }
                     width: 95
+                    height:50
                     onClicked: {
                         // 发送按键逻辑
                         clientController.sendMessage(clientManager, inputField.text);
@@ -325,7 +348,22 @@ ApplicationWindow {
 
                 Button {
                     text: "Load"
-                    width: 90
+                    background: Rectangle {
+                        color: "#6a7b82"  
+                        radius: 20
+                        width: parent.width 
+                        height: parent.height
+                        }
+                    contentItem: Text {
+                        text: qsTr("Load")
+                        color: "white" 
+                        font.pixelSize: 16 
+                        horizontalAlignment: Text.AlignHCenter 
+                        verticalAlignment: Text.AlignVCenter 
+                        anchors.centerIn: parent
+                    }
+                    width: 95
+                    height:50
                     onClicked: {
                         popup2.x = (root.width - popup2.width) / 2;
                         popup2.y = (root.height - popup2.height) / 2;
