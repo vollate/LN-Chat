@@ -72,15 +72,6 @@ void ClientController::setRoom(ClientManager* clientManager, QString roomName) {
     } else {
         qDebug() << "Room not found";
     }
-    return variantList;
-}
-
-void ClientController::setRoom(ClientManager* clientManager, QString roomName) {
-    if (clientManager->roomList->contains(roomName)) {
-        clientManager->currentRoom = clientManager->roomList->value(roomName);
-    } else {
-        qDebug() << "Room not found";
-    }
 }
 
 void ClientController::exportMessage(ClientManager* clientManager){
