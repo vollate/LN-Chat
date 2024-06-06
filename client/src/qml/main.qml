@@ -230,7 +230,7 @@ ApplicationWindow {
         anchors.left: sidebar.right
         anchors.top: parent.top - 50
         anchors.bottom: parent.bottom
-
+        clip: true
         Column {
             anchors.fill: parent
             spacing: 10
@@ -287,8 +287,21 @@ ApplicationWindow {
 
                     anchors.fill: parent
                     placeholderText: qsTr("Type your message here...")
+                    color: "white"
+                     background: Rectangle {
+                        color: "#354759"
+                        radius: 5
+                    }
+                    Keys.onReturnPressed: {
+                        if (inputField.text !== "") {
+                            clientController.sendMessage(clientManager, inputField.text)
+                        // TODO: delete this line (12012710)
+                        // clientController.getCurrentRoomMsgs(clientManager);
+                            inputField.text = ""
+                        }
+                    }
                 }
-
+                
             }
 
             Row {
