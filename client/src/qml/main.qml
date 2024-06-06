@@ -193,7 +193,21 @@ ApplicationWindow {
                     id: inputField
                     anchors.fill: parent
                     placeholderText: qsTr("Type your message here...")
+                    color: "white"
+                     background: Rectangle {
+                        color: "#354759"
+                        radius: 5
+                    }
+                    Keys.onReturnPressed: {
+                        if (inputField.text !== "") {
+                            clientController.sendMessage(clientManager, inputField.text)
+                        // TODO: delete this line (12012710)
+                        // clientController.getCurrentRoomMsgs(clientManager);
+                            inputField.text = ""
+                        }
+                    }
                 }
+                
             }
 
             Row {
