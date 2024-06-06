@@ -210,6 +210,7 @@ QVariantList ClientManager::loadMessage(const QString& path, const QString& name
         emit fileError(name);
 //        return;
     }
+    return QVariantList();
 }
 
 void ClientManager::sendJoinSignal(const Peer& peer) const {
