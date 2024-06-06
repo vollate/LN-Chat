@@ -145,7 +145,7 @@ ApplicationWindow {
         anchors.left: sidebar.right
         anchors.top: parent.top - 50
         anchors.bottom: parent.bottom
-
+        clip: true
         Column {
             anchors.fill: parent
             spacing: 10
