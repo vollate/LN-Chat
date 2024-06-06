@@ -76,9 +76,7 @@ ApplicationWindow {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        popup1.x = (root.width - popup1.width) / 2;
-                        popup1.y = (root.height - popup1.height) / 2;
-                        popup1.visible = true;
+
                     }
                 }
                 Text {
@@ -457,6 +455,43 @@ ApplicationWindow {
             }
         }
     }
+
+
+
+
+    //load失败
+        Rectangle {
+            id: popup4
+            width: 300
+            height: 200
+            color: "lightblue"
+            border.color: "black"
+            border.width: 2
+            visible: false
+            radius: 10
+
+
+            Column {
+                anchors.centerIn: parent
+                spacing: 10
+
+                Text {
+                    text: "Load Fail"
+                    color: "black"
+                    font.pixelSize: 20
+                }
+
+                Button {
+                    text: "Close"
+                    onClicked: {
+                        popup4.visible = false;
+                    }
+                }
+            }
+        }
+
+
+
 
     ListModel {
         id: messageModel

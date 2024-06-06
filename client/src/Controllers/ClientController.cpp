@@ -1,4 +1,5 @@
 #include "ClientController.hpp"
+#include "ClientManager.hpp"
 #include "ServerManager.hpp"
 
 #include <random>
@@ -56,4 +57,8 @@ void ClientController::getCurrentRoomMsgs(ClientManager* clientManager) {
             qDebug() << msg.sender << ": " << msg.text;
         }
     }
+}
+
+void ClientController::exportMessage(ClientManager* clientManager){
+    
 }

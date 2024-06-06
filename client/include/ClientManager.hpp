@@ -10,6 +10,11 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <memory>
+#include <qchar.h>
+#include <qjsonarray.h>
+#include <qmap.h>
+
+#include <QDebug>
 #include <mutex>
 #include <qmap.h>
 #include <qobject.h>
@@ -32,13 +37,14 @@ public:
 
     bool sendMessage(const Message& message);
 
-    void exportMessage();
-
-    void loadMessage();
-
     Q_INVOKABLE void setUserName(const QString& name);
-
     Q_INVOKABLE QString getUserName() const;
+
+    void exportMessage(const QList<Message> &messages , const QString &path , const QString &name);
+
+    void loadMessage(const QString &path, const QString &name);
+
+    void getRoomList();
 
     Q_INVOKABLE void handleNewConnection();
 
@@ -53,8 +59,9 @@ public:
     std::shared_ptr<QMap<QString, std::shared_ptr<Room>>> roomList;
 
 signals:
-    void messageSent(const QString& messageText);
-
+    void messageSent(const QString &messageText);
+    void fileError(const QString &roomName);
+    void fileLoaded(const QVariantList &messageList, const QString &roomName);
 private:
     void sendJoinSignal(const Peer& peer) const;
 };
