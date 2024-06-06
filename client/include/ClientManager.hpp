@@ -11,6 +11,8 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <memory>
+#include <qchar.h>
+#include <qjsonarray.h>
 #include <qmap.h>
 
 #include <QDebug>
@@ -39,9 +41,9 @@ public:
     Q_INVOKABLE void setUserName(const QString &name);
     Q_INVOKABLE QString getUserName();
 
-    void exportMessage();
+    void exportMessage(const QList<Message> &messages , const QString &path , const QString &name);
 
-    void loadMessage();
+    void loadMessage(const QString &path, const QString &name);
 
     void getRoomList();
 
@@ -59,4 +61,6 @@ public:
 
 signals:
     void messageSent(const QString &messageText);
+    void fileError(const QString &roomName);
+    void fileLoaded(const QVariantList &messageList, const QString &roomName);
 };

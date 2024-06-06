@@ -1,5 +1,17 @@
 #include <memory>
 #include <QJsonDocument>
+#include <QJsonArray>
+#include <QCoreApplication>
+#include <QJsonObject>
+#include <QFile>
+#include <QDateTime>
+#include <QString>
+#include <QVariant>
+#include <QDir>
+#include <QPair>
+#include <qdebug.h>
+#include <qglobal.h>
+#include <qjsonarray.h>
 
 #include "ClientManager.hpp"
 #include "Message.hpp"
@@ -100,5 +112,98 @@ void ClientManager::leaveRoom() {
         currentRoom = nullptr;
     } else {
         qDebug() << "You are not in a room";
+    }
+}
+
+void ClientManager::exportMessage(const QList<Message> &texts , const QString &path ,const QString &chatroomName) {
+    QJsonArray messagesArray;
+    for (int i = 0; i < texts.size(); ++i) {
+        QJsonObject m;
+        m["message_id"] = i;
+        m["timestamp"] = texts[i].time;
+        m["sender"] = texts[i].sender;
+        m["content"] = texts[i].text;
+        messagesArray.append(m);
+    }
+    QString fileName = "chatroom-" + chatroomName +".json";
+    QString filePath = QDir(path).filePath(fileName);
+
+    QJsonObject chatroomObject;
+    chatroomObject["name"] = chatroomName;
+    chatroomObject["messages"] = messagesArray;
+
+    QJsonObject mainObject;
+    mainObject["chatroom"] = chatroomObject;
+
+    QJsonDocument jsonDocument(mainObject);
+
+    QDir dir(path);
+    if (!dir.exists()) {
+        if (!dir.mkpath(".")) {
+            qDebug() << "Couldn't create directory.";
+            return;
+        }
+    }
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly)) {
+        qDebug() << "Couldn't open file for writing.";
+        return;
+    }
+
+    file.write(jsonDocument.toJson());
+    file.close();
+}
+
+void ClientManager::loadMessage(const QString &path, const QString &name){
+    QString fileName = "chatroom-" + name +".json";
+    QString filePath = QDir(path).filePath(fileName);
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qDebug() << "Have no such doc";
+        emit fileError(name);
+        return;
+    }
+    QByteArray fileData = file.readAll();
+    file.close();
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(fileData);
+    if (!jsonDoc.isObject()) {
+        qDebug() << "Failed to parse JSON file";
+        emit fileError(name);
+        return;
+    }
+    QJsonObject jsonObj = jsonDoc.object();
+    QVariantList mList ;
+    if (jsonObj.contains("chatroom") && jsonObj["chatroom"].isObject()) {
+        QJsonObject chatroomObj = jsonObj["chatroom"].toObject();
+        if (chatroomObj.contains("messages") && chatroomObj["messages"].isArray()) {
+            QJsonArray messagesArray = chatroomObj["messages"].toArray();
+            for (const QJsonValue &messageVal : messagesArray) {
+                if (messageVal.isObject()) {
+                    QJsonObject messageObj = messageVal.toObject();
+                    QVariantMap messageMap;
+                    messageMap["content"] = messageObj["content"].toString();
+                    messageMap["message_id"] = messageObj["message_id"].toInt();
+                    messageMap["timestamp"] = messageObj["timestamp"].toString();
+                    messageMap["sender"] = messageObj["sender"].toString();
+                    mList.append(messageObj);
+                }else {
+                qDebug() << "Failed to parse JSON file";
+                emit fileError(name);
+                return;
+                }
+            }
+        }else {
+            qDebug() << "Failed to parse JSON file";
+            emit fileError(name);
+            return;
+        }
+        emit fileLoaded(mList,name);
+        return;
+    }else {
+        qDebug() << "Failed to parse JSON file";
+        emit fileError(name);
+        return;
     }
 }

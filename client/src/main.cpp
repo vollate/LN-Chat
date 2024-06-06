@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("clientManager", &clientManager);
 
     ServerManager serverManager;
-    serverManager.setIp("10.32.59.102");
+    serverManager.setIp("10.32.7.228");
     serverManager.setPort("11451");
     std::random_device rd;
     std::mt19937 gen(rd());

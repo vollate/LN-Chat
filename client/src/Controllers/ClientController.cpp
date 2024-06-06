@@ -1,4 +1,5 @@
 #include "ClientController.hpp"
+#include "ClientManager.hpp"
 #include "ServerManager.hpp"
 
 ClientController::ClientController(QObject* parent) : QObject(parent) {}
@@ -32,4 +33,8 @@ void ClientController::sendMessage(ClientManager* clientManager, QString message
 
 void ClientController::leaveRoom(ClientManager* clientManager) {
     clientManager->leaveRoom();
+}
+
+void ClientController::exportMessage(ClientManager* clientManager){
+    
 }
