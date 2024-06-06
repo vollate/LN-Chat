@@ -76,7 +76,6 @@ bool ClientManager::sendMessage(const Message& message) {
                 if(socket->waitForBytesWritten(3000)) {
                     std::cout << "Message sent: " << std::endl;
                     Message rcvMsg{ message.sender, message.time, message.text };
-                    currentRoom->addMessage(std::move(rcvMsg));
                 } else {
                     std::cout << "Failed to send message: ";
                 }

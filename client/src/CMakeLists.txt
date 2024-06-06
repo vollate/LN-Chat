@@ -59,3 +59,10 @@ add_executable(chat_client ${SOURCE_FILES} ${MOC_SOURCES})
 
 target_link_libraries(chat_client PRIVATE chat_rpc)
 target_link_libraries(chat_client PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::Quick)
+
+add_custom_command(
+        TARGET chat_client
+        PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:chat_client>/data)
+
+

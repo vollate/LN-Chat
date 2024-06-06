@@ -121,7 +121,8 @@ ApplicationWindow {
                         onClicked: {
                             console.log(model.text + " button clicked")
                             clearAllData()
-                            updateDataFromLists(testMessages1)
+                            clientController.setRoom(clientManager, model.text)
+                            updateDataFromLists(clientController.getCurrentRoomMsgs(clientManager))
                         }
                     }
                 }
@@ -151,7 +152,7 @@ ApplicationWindow {
                 height: parent.height - 100 // 为输入区和按钮留出空间
                 model: messageModel // 需要在适当的地方定义这个模型
                 delegate: Rectangle {
-                    width: parent.width-100
+                    width: parent.width - 100
                     height: 70
                     color: "#f0f0f0"
                     border.color: "#e0e0e0"
@@ -204,8 +205,8 @@ ApplicationWindow {
                         // 发送按键逻辑
                         clientController.sendMessage(clientManager, inputField.text)
                         // TODO: delete this line (12012710)
-                        clientController.getCurrentRoomMsgs(clientManager);
-                        inputField.text=""
+                        // clientController.getCurrentRoomMsgs(clientManager);
+                        inputField.text = ""
 
                     }
                 }
@@ -213,12 +214,12 @@ ApplicationWindow {
                 Button {
                     text: "Load"
 
-                   width: 90
-                   onClicked: {
-                    popup2.x = (root.width - popup2.width) / 2;
-                    popup2.y = (root.height - popup2.height) / 2;
-                    popup2.visible = true;
-                   }
+                    width: 90
+                    onClicked: {
+                        popup2.x = (root.width - popup2.width) / 2;
+                        popup2.y = (root.height - popup2.height) / 2;
+                        popup2.visible = true;
+                    }
                 }
 
 
@@ -297,9 +298,9 @@ ApplicationWindow {
                         clientController.joinRoom(clientManager, serverManager, roomNameField.text, passwordField.text)
                         // popup.createRoom(roomNameField.text, passwordField.text, nicknameField.text)
                         popup.visible = false
-                        roomNameField.text=""
-                        passwordField.text=""
-                        nicknameField.text=""
+                        roomNameField.text = ""
+                        passwordField.text = ""
+                        nicknameField.text = ""
                     }
                 }
 
@@ -322,6 +323,7 @@ ApplicationWindow {
         radius: 10
 
         signal joinRoom(string roomName, string password, string nick)
+
         Column {
             anchors.centerIn: parent
             spacing: 10
@@ -358,9 +360,9 @@ ApplicationWindow {
                         //console.log("Password:", passwordField1.text)
                         //console.log("Nickname:", nicknameField1.text)
                         popup1.visible = false
-                        roomNameField1.text=""
-                        passwordField1.text=""
-                        nicknameField1.text=""
+                        roomNameField1.text = ""
+                        passwordField1.text = ""
+                        nicknameField1.text = ""
                     }
                 }
 
@@ -372,7 +374,7 @@ ApplicationWindow {
         }
     }
 
-    Rectangle{
+    Rectangle {
         id: popup2
         width: 450
         height: 300
@@ -404,7 +406,7 @@ ApplicationWindow {
                         sidebar.visible = true
                         topbar.visible = true
                         content.visible = true
-                        roomName.text=""
+                        roomName.text = ""
                     }
                 }
 
@@ -415,7 +417,7 @@ ApplicationWindow {
             }
         }
     }
-    Rectangle{
+    Rectangle {
         id: initialPopup
         width: 450
         height: 300
@@ -447,7 +449,7 @@ ApplicationWindow {
                         clientController.connectToServer(serverManager, ip.text, "11451")
                         initialPopup.visible = false
                         content.visible = true
-                        ip.text=""
+                        ip.text = ""
                     }
                 }
 
@@ -457,40 +459,36 @@ ApplicationWindow {
     }
 
 
-
-
     //load失败
-        Rectangle {
-            id: popup4
-            width: 300
-            height: 200
-            color: "lightblue"
-            border.color: "black"
-            border.width: 2
-            visible: false
-            radius: 10
+    Rectangle {
+        id: popup4
+        width: 300
+        height: 200
+        color: "lightblue"
+        border.color: "black"
+        border.width: 2
+        visible: false
+        radius: 10
 
 
-            Column {
-                anchors.centerIn: parent
-                spacing: 10
+        Column {
+            anchors.centerIn: parent
+            spacing: 10
 
-                Text {
-                    text: "Load Fail"
-                    color: "black"
-                    font.pixelSize: 20
-                }
+            Text {
+                text: "Load Fail"
+                color: "black"
+                font.pixelSize: 20
+            }
 
-                Button {
-                    text: "Close"
-                    onClicked: {
-                        popup4.visible = false;
-                    }
+            Button {
+                text: "Close"
+                onClicked: {
+                    popup4.visible = false;
                 }
             }
         }
-
-
+    }
 
 
     ListModel {
@@ -511,7 +509,7 @@ ApplicationWindow {
         //server应该有一个signal为chatRoomListChanged（string roomName）, 传入参数为新房间的名字
         //当chatroom列表发生变化时，会向qml发送chatRoomListChanged信号，当qml收到信号时，会做出如下的变化（在sidebar的list append新的list element）
         onRoomJoined: {
-            chatRoomList.append({ text: roomName });
+            chatRoomList.append({text: roomName});
         }
     }
 
@@ -520,58 +518,57 @@ ApplicationWindow {
         clientManager.messageSent.connect(onNewMessageReceived)
     }
 
-function onNewMessageReceived(message)
-{
-    var parts = message.split("\n");
-    var now = new Date();
-    messageModel.append({
-            userName: parts[0],
-            timestamp: Qt.formatTime(now, "hh:mm:ss"),
-            text: parts[1]
+    function onNewMessageReceived(message) {
+        var parts = message.split("\n");
+        var now = new Date();
+        messageModel.append({
+                userName: parts[0],
+                timestamp: Qt.formatTime(now, "hh:mm:ss"),
+                text: parts[1]
+            }
+        );
+        console.log("New message received: " + message);
+    }
+
+    function onUserListUpdated(user) {
+
+        userListModel.append({
+            userName: user.userName,
+            IP: user.IP
+        });
+
+    }
+
+    function clearAllData() {
+        messageModel.clear();
+        userListModel.clear();
+    }
+
+    function updateDataFromLists(messageList) {
+        // 遍历 messageList，每个元素是一个 QVariant 包装的 Message 对象
+        messageList.forEach(function (message) {
+            console.log("QML Message: " + message.userName + " " + message.timestamp + " " + message.text)
+            messageModel.append({
+                userName: message.userName,
+                timestamp: message.timestamp,
+                text: message.text
+            });
+        });
+
+        function clearAllMessage() {
+            messageModel.clear();
         }
-    );
-    console.log("New message received: " + message);
-}
 
-function onUserListUpdated(user)
-{
+        // 遍历 userList，每个元素是一个 QVariant 包装的 User 对象
+        // userList.forEach(function(user) {
+        //   userListModel.append({
+        //     userName: user.userName,
+        //});
+        //});
+    }
 
-    userListModel.append({
-    userName: user.userName,
-    IP: user.IP});
-
-}
-
-function clearAllData()
-{
-    messageModel.clear();
-    userListModel.clear();
-}
-
-function updateDataFromLists(messageList)
-{
-    // 遍历 messageList，每个元素是一个 QVariant 包装的 Message 对象
-    messageList.forEach(function(message) {
-    messageModel.append({
-    userName: message.userName,
-    timestamp: message.timestamp,
-    text: message.text
-});
-});
-function clearAllMessage(){
-    messageModel.clear();
-}
-
-// 遍历 userList，每个元素是一个 QVariant 包装的 User 对象
-// userList.forEach(function(user) {
-//   userListModel.append({
-//     userName: user.userName,
-//});
-//});
-}
-
- //var testMessages1 = [
-   //  {userName: "Alice", timestamp: "2024-06-01 08:30:00", text: "Good morning!"},
+    //var testMessages1 = [
+    //  {userName: "Alice", timestamp: "2024-06-01 08:30:00", text: "Good morning!"},
     // {userName: "Bob", timestamp: "2024-06-01 08:35:00", text: "Hello Alice, how are you today?"}
- //];
+    //];
 }

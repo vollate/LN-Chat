@@ -47,16 +47,42 @@ void ClientController::leaveRoom(ClientManager* clientManager) {
     clientManager->leaveRoom();
 }
 
-void ClientController::getCurrentRoomMsgs(ClientManager* clientManager) {
-    qDebug() << "Current room messages: ";
-    if (clientManager->currentRoom != nullptr) {
-        auto msgs = clientManager->currentRoom->messages;
-        for(const auto& msg : msgs) {
-            qDebug() << msg.sender << ": " << msg.text;
+QVariantList ClientController::getCurrentRoomMsgs(ClientManager* clientManager) {
+    QList<Message> messages;
+    QVariantList variantList;
+    if (clientManager->currentRoom){
+        messages = clientManager->currentRoom->messages;
+        for (const auto& message : messages) {
+            QVariantMap variantMap;
+            variantMap["userName"] = message.sender;
+            variantMap["timestamp"] = toReadableTime(message.time);
+            variantMap["text"] = message.text;
+            variantList.append(variantMap);
+            qDebug() << "Sender: " << message.sender << " Text: " << message.text;
         }
+    }
+    return variantList;
+}
+
+void ClientController::setRoom(ClientManager* clientManager, QString roomName) {
+    if (clientManager->roomList->contains(roomName)) {
+        clientManager->currentRoom = clientManager->roomList->value(roomName);
+    } else {
+        qDebug() << "Room not found";
     }
 }
 
 void ClientController::exportMessage(ClientManager* clientManager){
-    
+    const auto& msgs = clientManager->currentRoom->messages;
+    const auto& roomName = clientManager->currentRoom->getName();
+    clientManager->exportMessage(msgs, "data/", roomName);
+}
+
+void ClientController::loadMessage(ClientManager* clientManager, const QString& roomName){
+    clientManager->loadMessage("data/", roomName);
+}
+
+QString ClientController::toReadableTime(QString timestamp) {
+    QDateTime time = QDateTime::fromSecsSinceEpoch(timestamp.toInt());
+    return time.toString("yyyy-MM-dd hh:mm:ss");
 }
