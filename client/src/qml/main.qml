@@ -139,7 +139,6 @@ ApplicationWindow {
         id: content
         color: "#2e3e4e"
         visible: false
-
         width: parent.width - 240
         height: parent.height - 50
         anchors.left: sidebar.right
@@ -148,14 +147,15 @@ ApplicationWindow {
 
         Column {
             anchors.fill: parent
+            spacing: 10
 
             ListView {
                 id: messageList
-                anchors.fill: parent
-                height: parent.height - 100 // 为输入区和按钮留出空间
-                model: messageModel // 需要在适当的地方定义这个模型
+                width: parent.width
+                height: parent.height - inputArea.height - 20 
+                model: messageModel
                 delegate: Rectangle {
-                    width: parent.width-100
+                    width: parent.width - 100
                     height: 70
                     color: "#f0f0f0"
                     border.color: "#e0e0e0"
@@ -183,6 +183,7 @@ ApplicationWindow {
             }
 
             Rectangle {
+                id: inputArea
                 color: "#354759"
                 height: 50
                 width: parent.width - 300 // 留出按钮空间
@@ -209,23 +210,19 @@ ApplicationWindow {
                         clientController.sendMessage(clientManager, inputField.text)
                         // TODO: delete this line (12012710)
                         clientController.getCurrentRoomMsgs(clientManager);
-                        inputField.text=""
-
+                        inputField.text = ""
                     }
                 }
 
                 Button {
                     text: "Load"
-
-                   width: 90
-                   onClicked: {
-                    popup2.x = (root.width - popup2.width) / 2;
-                    popup2.y = (root.height - popup2.height) / 2;
-                    popup2.visible = true;
-                   }
+                    width: 90
+                    onClicked: {
+                        popup2.x = (root.width - popup2.width) / 2;
+                        popup2.y = (root.height - popup2.height) / 2;
+                        popup2.visible = true;
+                    }
                 }
-
-
             }
         }
 
@@ -233,7 +230,7 @@ ApplicationWindow {
             width: 100
             height: parent.height
             anchors.right: parent.right
-            model: userListModel // 需要在适当的地方定义这个模型
+            model: userListModel
             delegate: Rectangle {
                 width: parent.width
                 height: 50
