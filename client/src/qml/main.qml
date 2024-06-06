@@ -11,6 +11,10 @@ ApplicationWindow {
     minimumHeight: 480
     title: qsTr("Chat Room")
 
+    onClosing: {
+        Qt.quit()
+    }
+
     //top menu bar
     Rectangle {
         id: topbar
