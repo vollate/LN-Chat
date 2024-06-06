@@ -57,7 +57,7 @@ public:
 
     QTcpServer tcp_server;
     std::shared_ptr<Room> currentRoom;
-    std::shared_ptr<QMap<QString, Room>> roomList;
+    std::shared_ptr<QMap<QString, std::shared_ptr<Room>>> roomList;
 
 signals:
     void messageSent(const QString &messageText);

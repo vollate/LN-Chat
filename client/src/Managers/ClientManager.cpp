@@ -21,7 +21,7 @@
 #include "utils.hpp"
 
 ClientManager::ClientManager(quint16 port, QObject* parent)
-    : QObject{ parent }, tcp_server{ this }, roomList{ std::make_shared<QMap<QString, Room>>() }, ip{ "127.0.0.1" } {
+    : QObject{ parent }, tcp_server{ this }, roomList{ std::make_shared<QMap<QString, std::shared_ptr<Room>>>() }, ip{ "127.0.0.1" } {
     if(!tcp_server.listen(QHostAddress::Any, port)) {
         qCritical() << "Server could not start:" << tcp_server.errorString();
     } else {
@@ -46,7 +46,7 @@ bool ClientManager::joinRoom(const QString& name, const QString& password, Serve
             room->addPeer(std::move(peer));
         }
         std::lock_guard guard{ mutex };
-        roomList->insert(name, *room);
+        roomList->insert(name, room);
         currentRoom = room;
         return true;
     }
@@ -99,7 +99,7 @@ void ClientManager::handleNewConnection() {
             qDebug() << "Message received: " << msg.first.text;
             QString rcvMsg = msg.first.sender + "\n" + msg.first.text;
             emit messageSent(rcvMsg);
-            target_room.addMessage(std::move(msg.first));
+            target_room->addMessage(std::move(msg.first));
         });
     }
 }
