@@ -59,6 +59,6 @@ void ClientController::getCurrentRoomMsgs(ClientManager* clientManager) {
     }
 }
 
-void ClientController::exportMessage(ClientManager* clientManager){
+    void ClientController::exportMessage(ClientManager* clientManager){
     
 }
