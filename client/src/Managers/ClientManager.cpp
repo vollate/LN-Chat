@@ -10,7 +10,7 @@
 #include "utils.hpp"
 
 ClientManager::ClientManager(quint16 port, QObject *parent)
-        : QObject{parent}, tcp_server{this}, roomList{std::make_shared<QMap<QString, Room>>()} {
+        : QObject{parent}, tcp_server{this}, roomList{std::make_shared<QMap<QString, std::shared_ptr<Room>>>()} {
     if (!tcp_server.listen(QHostAddress::Any, port)) {
         qCritical() << "Server could not start:" << tcp_server.errorString();
     } else {
@@ -34,12 +34,12 @@ auto ClientManager::joinRoom(const QString &name, const QString &password, Serve
         auto peers = peers_opt.value();
         auto room = std::make_shared<Room>(name, password);
         currentRoom = room;
+        roomList->insert(name, room);
         for (const auto &peer: peers) {
             sendJoinSignal(peer);
             room->addPeer(peer);
         }
         std::lock_guard guard{mutex};
-        roomList->insert(name, *room);
         return true;
     }
     qDebug() << "Room not found or wrong password";
@@ -87,7 +87,7 @@ void ClientManager::handleNewConnection() {
             if (!json_data["hello"].toString().isEmpty()) {
                 auto peer = json_helper::json2Peer(json_data);
                 auto &target_room = roomList->find(room_name).value();
-                target_room.addPeer(peer);
+                target_room->addPeer(peer);
                 qDebug() << "Peer connected: " << peer.name;
             } else {
                 auto msg = json_helper::json2Message(json_data);
@@ -96,7 +96,7 @@ void ClientManager::handleNewConnection() {
                 qDebug() << "Message received: " << msg.first.text;
                 QString rcvMsg = msg.first.sender + "\n" + msg.first.text;
                 emit messageSent(rcvMsg);
-                target_room.addMessage(msg.first);
+                target_room->addMessage(msg.first);
             }
 
         });
@@ -124,7 +124,7 @@ void ClientManager::sendJoinSignal(const Peer &peer) const {
     QJsonObject json;
     json["hello"] = "514";
     json["name"] = userName;
-    json["room"] = currentRoom->getName();
+    json["roomName"] = currentRoom->getName();
     json["ip"] = ip;
     QJsonDocument doc(json);
     auto bytes = doc.toJson();
