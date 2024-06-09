@@ -19,5 +19,7 @@ RUN git clone https://github.com/vollate/LN-Chat.git&&\
     export VCPKG_ROOT=/workspace/vcpkg &&\
     ./dev.sh release
 
+EXPOSE 11451
+
 ENTRYPOINT ["/bin/sh", "-c", "cd /workspace/LN-Chat/server/build-release/src && ./ln_server"]
 

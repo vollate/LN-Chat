@@ -1,8 +1,16 @@
-客户端逻辑：
-1. 发送register请求注册客户端
-2. 创建或加入房间
-3. 无需退出，超时自动清理
+# Local Network ChatRoom
 
-具体详情见".proto"文件定义
+## Server Deploy
 
-配置环境变量: $VCPKG_ROOT 为vcpkg的根目录
+```sh
+docker run -d -p ${YOUR_EXPOSE_PORT}:11451 lambillda/ln-chat-server:${TAG_NAME}
+```
+
+## Client Build
+
+1. Use [vcpkg](https://github.com/microsoft/vcpkg) install `grpc`
+1. Install `qt5` develop envrionment with your package manager
+1. export `VCPKG_ROOT` environment variable as your vcpkg root path
+1. enter `client` directory
+1. run `./dev.sh [debug|release]` to build, the binary is at `build-[debug|release]/src/chat_client`
+
