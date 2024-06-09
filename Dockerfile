@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-RUN apt update && apt install -y git zip unzip curl wget tar build-essential pkg-config python3
+RUN apt update && apt install -y git zip unzip curl wget tar build-essential pkg-config python3 cmake ninja-build
 
 WORKDIR /workspace
 
@@ -12,8 +12,6 @@ RUN git clone https://github.com/microsoft/vcpkg.git &&\
 # Build the target
 
 WORKDIR /workspace
-
-RUN apt install -y cmake ninja-build
 
 RUN git clone https://github.com/vollate/LN-Chat.git&&\
     cd LN-Chat &&\
