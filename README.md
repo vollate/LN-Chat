@@ -3,7 +3,7 @@
 ## Server Deploy
 
 ```sh
-docker run -d -p ${YOUR_EXPOSE_PORT}:11451 lambillda/ln-chat-server:${TAG_NAME}
+docker run -d -p ${YOUR_EXPOSE_PORT}:11451 lambillda/ln-chat-server
 ```
 
 ## Client Build
